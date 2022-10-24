@@ -10,4 +10,4 @@
 :---:|:---:|:---:|:---:|:---:|:---:|:---:|
 FE 팀장|FE 팀원|FE 팀원|FE 팀원|BE 팀원|BE 팀원|BE 팀원
 깃헙|그림|또는|사진|넣기|<img src="https://user-images.githubusercontent.com/100268187/197087475-418d469d-d1c1-4310-856b-917e44d2845f.jpg" width=120>|예시   
-자기|깃헙|링크|넣기|입니다|[hea0408never](https://github.com/hea0408never)|예시
+자기|깃헙|링크|넣기|입니다|[hea0408never](https://github.com/hea0408never)|[montsaintandco](https://github.com/montsaintandco)
