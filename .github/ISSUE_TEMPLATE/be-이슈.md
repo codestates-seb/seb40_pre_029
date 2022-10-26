@@ -1,8 +1,8 @@
 ---
-name: Issue Task Card
-about: Issue Task Card
+name: BE 이슈
+about: IssueTaskCard
 title: ''
-labels: ''
+labels: BE
 assignees: ''
 
 ---
