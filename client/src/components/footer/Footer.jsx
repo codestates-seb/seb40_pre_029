@@ -41,7 +41,7 @@ export default function Footer() {
       {/* <div className="text-center text-white">https://github.com/codestates-seb/seb40_pre_029</div> */}
       <div className="text-center">
         {teamMember.map((member, index) => {
-          return <Member key={index} devRole={member.devRole} name={member.name} email={member.email} />;
+          return <Member key={index} devRole={member.devRole} name={member.name} github={member.github} />;
         })}
       </div>
     </div>
