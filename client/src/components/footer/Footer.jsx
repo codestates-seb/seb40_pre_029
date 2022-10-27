@@ -40,18 +40,9 @@ export default function Footer() {
       <Banner />
       {/* <div className="text-center text-white">https://github.com/codestates-seb/seb40_pre_029</div> */}
       <div className="text-center">
-        {/* {teamMember.map(member => {
-          const { devRole, name, email } = member;
-          console.log({ devRole, name, email });
-          <Member devRole={member.devRole} name={member.name} email={member.email} />;
-        })} */}
-        <Member devRole={teamMember[0].devRole} name={teamMember[0].name} github={teamMember[0].github} />
-        <Member devRole={teamMember[1].devRole} name={teamMember[1].name} github={teamMember[1].github} />
-        <Member devRole={teamMember[2].devRole} name={teamMember[2].name} github={teamMember[2].github} />
-        <Member devRole={teamMember[3].devRole} name={teamMember[3].name} github={teamMember[3].github} />
-        <Member devRole={teamMember[4].devRole} name={teamMember[4].name} github={teamMember[4].github} />
-        <Member devRole={teamMember[5].devRole} name={teamMember[5].name} github={teamMember[5].github} />
-        <Member devRole={teamMember[6].devRole} name={teamMember[6].name} github={teamMember[6].github} />
+        {teamMember.map((member, index) => {
+          return <Member key={index} devRole={member.devRole} name={member.name} email={member.email} />;
+        })}
       </div>
     </div>
   );
