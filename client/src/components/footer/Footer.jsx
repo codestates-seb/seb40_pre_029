@@ -22,12 +22,12 @@ function Banner() {
 
 export default function Footer() {
   const teamMember = [
-    { devRole: "Front-End", name: "정준일", github: "https://github.com/EthanJcoding", email: "ethan.95j@gmail.com" },
-    { devRole: "Front-End", name: "최동환", github: "https://github.com/DalDalChoi", email: "ethan.95j@gmail.com" },
-    { devRole: "Back-End", name: "김창일", github: "https://github.com/INewWorldI", email: "kk971107@naver.com" },
-    { devRole: "Back-End", name: "이혜광", github: "https://github.com/hea0408never", email: "hea0408never@naver.com" },
-    { devRole: "Front-End", name: "류지환", github: "https://github.com/lactofreemilk", email: "jihwan4743@gmail.com" },
-    { devRole: "Front-End", name: "김광민", github: "https://github.com/kwngmin", email: "kwngmink@gmail.com" },
+    { devRole: "Front-End", name: "정준일", github: "https://github.com/EthanJcoding" },
+    { devRole: "Front-End", name: "최동환", github: "https://github.com/DalDalChoi" },
+    { devRole: "Back-End", name: "김창일", github: "https://github.com/INewWorldI" },
+    { devRole: "Back-End", name: "이혜광", github: "https://github.com/hea0408never" },
+    { devRole: "Front-End", name: "류지환", github: "https://github.com/lactofreemilk" },
+    { devRole: "Front-End", name: "김광민", github: "https://github.com/kwngmin" },
     {
       devRole: "Back-End",
       name: "정회승",
