@@ -7,12 +7,8 @@ const Tag = () => {
   const [tagList, setTagList] = useState([]);
   const [tagAmount, setTagAmout] = useState(0);
 
-  const onKeyPress = (e) => {
-    if (
-      e.target.value !== "" &&
-      e.key === "Enter" &&
-      tagList.indexOf(e.target.value) === -1
-    ) {
+  const onKeyPress = e => {
+    if (e.target.value !== "" && e.key === "Enter" && tagList.indexOf(e.target.value) === -1) {
       submitTagItem();
     }
   };
@@ -29,11 +25,9 @@ const Tag = () => {
     }
   };
 
-  const deleteTagItem = (e) => {
+  const deleteTagItem = e => {
     const deleteTagItem = e.target.parentElement.firstChild.innerText;
-    const filteredTagList = tagList.filter(
-      (tagItem) => tagItem !== deleteTagItem
-    );
+    const filteredTagList = tagList.filter(tagItem => tagItem !== deleteTagItem);
     setTagList(filteredTagList);
     setTagAmout(tagAmount - 1);
   };
@@ -46,8 +40,7 @@ const Tag = () => {
             return (
               <div
                 className="p-1 tag-item flex flex-row justify-center items-center rounded m-1 bg-sky-200"
-                key={index}
-              >
+                key={index}>
                 <div className="p-1">{tagItem}</div>
                 <button className="p-1" onClick={deleteTagItem}>
                   ❌
@@ -59,10 +52,9 @@ const Tag = () => {
           <input
             className="w-auto p-2 bg-transparent outline-none"
             type="text"
-            onChange={(e) => setTagItem(e.target.value)}
+            onChange={e => setTagItem(e.target.value)}
             value={tagItem}
-            onKeyPress={onKeyPress}
-          ></input>
+            onKeyPress={onKeyPress}></input>
         </div>
       </div>
     </div>

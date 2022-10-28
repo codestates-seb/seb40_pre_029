@@ -3,21 +3,16 @@ import Member from "./Member.jsx";
 function Banner() {
   return (
     <a
-      className="mx-auto flex flex-col mb-8"
+      className="mx-auto flex flex-col mb-8 w-fit m-4"
       href="https://github.com/codestates-seb/seb40_pre_029"
       target="_blank"
-      rel="noreferrer"
-    >
+      rel="noreferrer">
       <span className="text-center text-emerald-400">Team GitHub</span>
-      <span className="text-center text-slate-500 text-xl">
-        Codestates Front-End & Back-End Bootcamp 40th
-      </span>
+      <span className="text-center text-slate-500 text-xl">Codestates Front-End & Back-End Bootcamp 40th</span>
       <div className="text-center">
         <span className="text-center text-gray-300 text-2xl">Pre-Project</span>
         <span className="border-l-gray-500 border-l border-solid mx-4 text-xs"></span>
-        <span className="text-center text-gray-300 text-2xl">
-          seb40_pre_029
-        </span>
+        <span className="text-center text-gray-300 text-2xl">seb40_pre_029</span>
         <span className="border-l-gray-500 border-l border-solid mx-4 text-xs"></span>
         <span className="text-center text-gray-300 text-2xl">퍼킹룰렛</span>
       </div>
@@ -70,14 +65,7 @@ export default function Footer() {
       {/* <div className="text-center text-white">https://github.com/codestates-seb/seb40_pre_029</div> */}
       <div className="text-center">
         {teamMember.map((member, index) => {
-          return (
-            <Member
-              key={index}
-              devRole={member.devRole}
-              name={member.name}
-              github={member.github}
-            />
-          );
+          return <Member key={index} devRole={member.devRole} name={member.name} github={member.github} />;
         })}
       </div>
     </div>
