@@ -1,7 +1,12 @@
 import "./App.css";
+import Footer from "./components/footer/Footer.jsx";
 
 function App() {
-  return <div>hi 저는 정준일 입니다 퍼킹 룰렛 레스기릿!!!1</div>;
+  return (
+    <>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
