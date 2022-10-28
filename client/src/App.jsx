@@ -1,10 +1,10 @@
 import "./App.css";
 import Footer from "./components/footer/Footer.jsx";
-import Question from "./components/question/QuestionList.jsx";
+import Ask from "./components/question/Ask.jsx";
 function App() {
   return (
     <>
-      <Question />
+      <Ask />
       <Footer />
     </>
   );
