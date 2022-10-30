@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class Post {
+public class Question {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_ID")
+    @Column(name = "QUESTION_ID")
     private Integer id;
 
     @OneToOne
