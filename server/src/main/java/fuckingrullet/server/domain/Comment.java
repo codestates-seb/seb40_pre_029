@@ -12,14 +12,14 @@ public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMENT_ID")
-    private Integer id;
+    private Long commentId;
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
     @Column(name = "RECOMMENT_ID")
-    private Integer commentId;
+    private Long recommentId;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String article;
