@@ -11,9 +11,10 @@ import java.util.List;
 @Getter @Setter
 public class Tag {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TAG_ID")
     private Integer id;
+
     private String tag;
 
     @OneToMany(mappedBy = "tag")
