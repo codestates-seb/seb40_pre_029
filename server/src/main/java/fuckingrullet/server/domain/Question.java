@@ -19,8 +19,8 @@ public class Question {
     private Member member;
 
     @OneToOne
-    @JoinColumn(name = "COMMENT_ID")
-    private Comment comment;
+    @JoinColumn(name = "ANSWERED_ID")
+    private Answered answered;
 
     @Column(nullable = false)
     private String title;
