@@ -12,7 +12,7 @@ public class Question {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QUESTION_ID")
-    private Integer id;
+    private Long questionId;
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
