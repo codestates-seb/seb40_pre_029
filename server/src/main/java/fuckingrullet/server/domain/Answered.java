@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class Comment {
+public class Answered {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMENT_ID")
-    private Long commentId;
+    private Long answeredId;
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
