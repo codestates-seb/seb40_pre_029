@@ -16,6 +16,9 @@ public class Member {
     private Integer id;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
