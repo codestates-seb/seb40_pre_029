@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Recommends {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RECOMMEND_ID")
     private Integer id;
 
