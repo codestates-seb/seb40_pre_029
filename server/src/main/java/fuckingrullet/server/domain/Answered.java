@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Answered {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COMMENT_ID")
+    @Column(name = "ANSWERED_ID")
     private Long answeredId;
 
     @OneToOne
