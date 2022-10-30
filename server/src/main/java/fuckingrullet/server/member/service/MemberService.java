@@ -15,8 +15,14 @@ public class MemberService {
 
     private MemberRepository memberRepository;
 
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
     public Member registerMember(Member member) {
-        return null;
+        verifyExistsEmail(member.getEmail());
+        Member savedMember = memberRepository.save(member);
+        return savedMember;
     }
 
     @Transactional(readOnly = true)
@@ -29,8 +35,9 @@ public class MemberService {
         return findMember;
     }
 
-    private boolean existsEmail(String email) {
+    private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
-        return member.isPresent();
+        if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }
