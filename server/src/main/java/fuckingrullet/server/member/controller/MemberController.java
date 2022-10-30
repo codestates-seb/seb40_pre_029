@@ -27,7 +27,6 @@ public class MemberController {
     public ResponseEntity registerMember(@Valid @RequestBody MemberRegisterDto memberRegisterDto) {
         Member member = mapper.memberRegisterDtoToMember(memberRegisterDto);
         Member registerMember = memberService.registerMember(member);
-        System.out.println(member);
         return new ResponseEntity<>(registerMember, HttpStatus.CREATED);
     }
 }
