@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.*;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class MemberRegisterDto {
 
     @Email(message = "올바른 이메일 형식이 아닙니다.")
