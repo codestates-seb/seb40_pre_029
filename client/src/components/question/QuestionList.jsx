@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const QuestionList = () => {
   const [filterClicked, setFilterClicked] = useState(false);
+  // const [isLast, setIsLast] = useState(false);
   const [idOn, setIdOn] = useState(0);
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");
@@ -87,7 +88,17 @@ const QuestionList = () => {
   //if this is on, have to [GET] for its relating data
   const filterOnClick = idx => {
     setIdOn(idx);
+    console.log(idx);
+    console.log(idOn);
+    console.log(filterClicked);
     setFilterClicked(!filterClicked);
+    if (filterClicked) {
+      setFilterClicked(true);
+    }
+    // if (Number(e.target.value) === filterMap.length - 1) {
+    //   setIsLast(true);
+    //   console.log(isLast);
+    // }
   };
 
   return (
@@ -104,11 +115,15 @@ const QuestionList = () => {
             return (
               <button
                 key={idx}
-                onClick={() => filterOnClick(idx)}
+                onClick={() => {
+                  filterOnClick(idx);
+                }}
                 value={el.id}
                 className={
                   filterClicked && idOn === el.id
-                    ? "p-2 px-4 inline-block border-gray-400 border-r text-zinc-500 bg-slate-200"
+                    ? // ? isLast
+                      //   ? "p-2 px-4 inline-block border-gray-400 border-r text-zinc-500 bg-slate-200 -mr-1"
+                      "p-2 px-4 inline-block border-gray-400 border-r text-zinc-500 bg-slate-200"
                     : "p-2 px-4 inline-block border-gray-400 border-r text-gray-500 hover:bg-slate-100"
                 }>
                 {el.name}

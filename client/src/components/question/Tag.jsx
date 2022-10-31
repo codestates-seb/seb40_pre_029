@@ -32,7 +32,7 @@ const Tag = () => {
     setTagAmout(tagAmount - 1);
   };
   return (
-    <div className="question-tag-container border-2 border-#E3E6E8 w-4/5 mb-12 rounded">
+    <div className="question-tag-container border-2 border-#E3E6E8 mb-12 rounded">
       <div className="question-tag p-4 bg-#FFFFFF">
         <div className="p-1">Tags</div>
         <div className="p-1 text-xs mb-2">
