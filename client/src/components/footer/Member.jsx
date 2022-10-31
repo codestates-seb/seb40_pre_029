@@ -8,7 +8,12 @@ export default function Member({ devRole, name, github }) {
   };
   return (
     <div className="text-center mx-4 w-24 inline-block">
-      <img src={require("../images/GitHub-Mark-Light-120px-plus.png")} alt="" className="w-9 mb-1 mx-auto" />
+      <img
+        //prettier-ignore
+        src={require("../images/GitHub-Mark-Light-120px-plus.png")}
+        alt=""
+        className="w-9 mb-1 mx-auto"
+      />
       <div className="flex flex-col items-center">
         <a className="text-gray-300 hover:text-emerald-400 my-1" href={github} target="_blank" rel="noreferrer">
           {name}
