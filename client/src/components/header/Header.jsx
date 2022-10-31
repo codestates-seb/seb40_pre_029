@@ -1,7 +1,6 @@
 import HeaderButton from "../buttons/HeaderButton.jsx";
 import SearchBar from "./SearchBar.jsx";
 import ThemeButton from "../buttons/ThemeButton.jsx";
-import LoginModal from "../modal/Login.jsx";
 import { useState } from "react";
 
 export default function Header() {
@@ -21,7 +20,6 @@ export default function Header() {
     } else if (modalOpen.signup === true) {
       modalOpen.login === false;
     }
-    console.log(temp);
   };
 
   return (
