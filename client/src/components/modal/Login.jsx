@@ -10,7 +10,7 @@ export default function LoginModal() {
     password: false,
   });
 
-  const onChange = (ele) => {
+  const onChange = ele => {
     const { value, name } = ele.target;
 
     const idpattern = new RegExp("^[a-zA-Z0-9]+$");

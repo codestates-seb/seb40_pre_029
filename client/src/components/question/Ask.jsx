@@ -8,42 +8,10 @@ const Ask = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  // const [textarea, setTextArea] = useState({
-  //   value: "",
-  //   rows: 10,
-  //   minRows: 5,
-  //   maxRows: 15,
-  // });
-
   const onPostClick = () => {
     setQuestion({ title, body });
     console.log(question);
   };
-
-  // const textOnChange = (e) => {
-  //   setBody(e.target.value);
-  //   const textareaLineHeight = 12;
-  //   const { minRows, maxRows } = textarea;
-  //   console.log(e.target.scrollHeight);
-  //   const previousRows = e.target.rows;
-  //   e.target.rows = minRows;
-
-  //   const currentRows = e.target.scrollHeight / textareaLineHeight;
-
-  //   if (currentRows === previousRows) {
-  //     e.target.rows = currentRows;
-  //   }
-
-  //   if (currentRows >= maxRows) {
-  //     e.target.rows = maxRows;
-  //     e.target.scrollTop = e.target.scrollHeight;
-  //   }
-
-  //   setTextArea({
-  //     value: e.target.value,
-  //     rows: currentRows < maxRows ? currentRows : maxRows,
-  //   });
-  // };
 
   return (
     <div className="flex flex-col bg-#F8F9F9 w-3/5">
@@ -56,7 +24,8 @@ const Ask = () => {
             <input
               className="question-title rounded w-full p-2 placeholder:italic border-2 border-gray-400"
               onChange={e => setTitle(e.target.value)}
-              placeholder="title"></input>
+              placeholder="title"
+              required></input>
           </div>
         </form>
         <form className="border-2 border-#E3E6E8 w-4/5 mb-12 rounded">
@@ -66,7 +35,8 @@ const Ask = () => {
               onChange={e => setBody(e.target.value)}
               rows={12}
               className="question-body w-full p-2 bg-#F1F2F3 rounded border-2 border-gray-400 placeholder:italic resize-y "
-              placeholder="text area"></textarea>
+              placeholder="text area"
+              required></textarea>
           </div>
         </form>
         <Tag />

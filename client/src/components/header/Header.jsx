@@ -12,7 +12,7 @@ export default function Header() {
     signup: false,
   });
 
-  const openModalHandler = (el) => {
+  const openModalHandler = el => {
     console.log(el.target.id);
     let temp = el.target.id;
     setModalOpen(!modalOpen.temp);
@@ -21,30 +21,19 @@ export default function Header() {
     } else if (modalOpen.signup === true) {
       modalOpen.login === false;
     }
+    console.log(temp);
   };
 
   return (
     <>
       <div className="h-1 bg-emerald-500"></div>
       <div className="px-4 h-16 bg-slate-100 flex flex-row items-center">
-        <img
-          src={require("../images/stack_overflow.png")}
-          alt=""
-          className="inline-block w-48 mb-2"
-        />
+        <img src={import("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
         <SearchBar />
-        {darkMode ? (
-          <ThemeButton theme="dark_mode" />
-        ) : (
-          <ThemeButton theme="light_mode" />
-        )}
+        {darkMode ? <ThemeButton theme="dark_mode" /> : <ThemeButton theme="light_mode" />}
         <div className="flex flex-col">
           {!logIn ? (
-            <HeaderButton
-              name="로그인"
-              id="login"
-              openModalHandler={openModalHandler}
-            />
+            <HeaderButton name="로그인" id="login" openModalHandler={openModalHandler} />
           ) : (
             <HeaderButton name="마이페이지" />
           )}
@@ -52,11 +41,7 @@ export default function Header() {
         </div>
         <div className="flex flex-col">
           {!logIn ? (
-            <HeaderButton
-              name="회원가입"
-              id="signup"
-              openModalHandler={openModalHandler}
-            />
+            <HeaderButton name="회원가입" id="signup" openModalHandler={openModalHandler} />
           ) : (
             <HeaderButton name="로그아웃" />
           )}
