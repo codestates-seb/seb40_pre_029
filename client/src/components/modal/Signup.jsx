@@ -20,7 +20,7 @@ export default function SignupModal() {
   const onChange = ele => {
     const { value, name } = ele.target;
     const idpattern=new RegExp("^[a-zA-Z0-9]+$");
-    const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
+    // const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
     const nicknamepattern=new RegExp("^[a-zA-Z0-9]+$");
     
     setSignupInputs({
