@@ -6,7 +6,7 @@ import SignupModal from "../modal/Signup.jsx";
 import { useState } from "react";
 
 export default function Header() {
-  const [logIn, setLogin] = useState(false);
+  const [logIn, setLogin] = useState(true);
   const [darkMode] = useState(true);
   const [modalOpen, setModalOpen] = useState({
     login: false,
