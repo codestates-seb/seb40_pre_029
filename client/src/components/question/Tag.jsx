@@ -50,7 +50,7 @@ const Tag = () => {
           })}
 
           <input
-            className="w-auto p-2 bg-transparent outline-none"
+            className="w-max p-2 bg-transparent outline-none"
             type="text"
             onChange={e => setTagItem(e.target.value)}
             value={tagItem}
