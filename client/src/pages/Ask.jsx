@@ -1,6 +1,17 @@
-// 질문하는 페이지
+import AskQuestion from "../components/question/AskQuestion.jsx";
+import Header from "../components/header/Header.jsx";
+import Footer from "../components/footer/Footer.jsx";
+
 const Ask = () => {
-  return <div>Ask 페이지 입니다</div>;
+  return (
+    <>
+      <Header />
+      <div className="flex justify-center align-center">
+        <AskQuestion />
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default Ask;
