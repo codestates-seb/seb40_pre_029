@@ -28,21 +28,25 @@ public class QuestionController {
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
-    @PostMapping("/question/post")
+    @PostMapping("/question/post") // 맴버 제외
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto){
         Question question = questionService.createQuestion(
                 mapper.questionPostDtoToQuestion(/*memberService,*/questionPostDto));
         return new ResponseEntity<>(question,HttpStatus.CREATED);
     }
 
-//    @PatchMapping("/question/patch/{question-id}")
-//    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive @NotNull long questionId, @Valid @RequestBody QuestionPatchDto questionPatchDto){
-//        questionPatchDto.setQuestionId(questionId);
-//        Question question = mapper.questionPostDtoToQuestion(questionService, memberService, questionPatchDto);
-//
-//    }
+    @PatchMapping("/question/patch/{question-id}") // 로그인 제외
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive @NotNull int questionId,
+                                        @Valid @RequestBody QuestionPatchDto questionPatchDto){
+        questionPatchDto.setQuestionId(questionId);
+        Question question = mapper.questionPatchDtoToQuestion(questionService, /*memberService,*/ questionPatchDto);
+        Question updateQuestion = questionService.updateQuestion(question);
 
-    @GetMapping("/questions") // 수정필요
+        return new ResponseEntity<>(updateQuestion,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/question") // 수정필요(페이지가 안넘어감)
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
                                        @RequestParam(value = "sort", defaultValue = "title") String sort){
@@ -51,10 +55,18 @@ public class QuestionController {
         return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
     }
 
-    @GetMapping("questions/{question-id}")
+    @GetMapping("question/{question-id}") // 댓글 제외
     public ResponseEntity getQuestion(@PathVariable("question-id") int questionId){
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity<>(question,HttpStatus.OK);
+    }
+
+    @DeleteMapping("question/delete/{question-id}") // 로그인 제외
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive int questionId){
+        questionService.deleteQuestion(questionId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
 

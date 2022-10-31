@@ -2,7 +2,9 @@ package fuckingrullet.server.question.mapper;
 
 
 import fuckingrullet.server.domain.Question;
+import fuckingrullet.server.question.dto.QuestionPatchDto;
 import fuckingrullet.server.question.dto.QuestionPostDto;
+import fuckingrullet.server.question.service.QuestionService;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -19,4 +21,13 @@ public interface QuestionMapper {
         return question;
 
     }
+
+    default Question questionPatchDtoToQuestion(QuestionService questionService, QuestionPatchDto questionPatchDto){
+        Question question = new Question();
+        question.setQuestionId(questionPatchDto.getQuestionId());
+        question.setTitle(questionPatchDto.getTitle());
+        question.setArticle(questionPatchDto.getArticle());
+
+        return question;
+    };
 }

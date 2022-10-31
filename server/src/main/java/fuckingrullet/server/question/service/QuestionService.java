@@ -18,6 +18,21 @@ public class QuestionService {
 //    private final MemberService memberService;
     private final QuestionRepository questionRepository;
 
+    public Question updateQuestion(Question question){
+
+        Question findQuestion = findVerifiedQuestion(question.getQuestionId());
+
+        Optional.ofNullable(question.getModifiedAt())
+                .ifPresent(questionModifiedAt -> findQuestion.setModifiedAt(questionModifiedAt));
+        Optional.ofNullable(question.getTitle())
+                .ifPresent(questionTitle -> findQuestion.setTitle(questionTitle));
+        Optional.ofNullable(question.getArticle())
+                .ifPresent(questionArticle -> findQuestion.setArticle(questionArticle));
+
+        Question updateQuestion = questionRepository.save(findQuestion);
+        return updateQuestion;
+    };
+
     public Question createQuestion(Question question){
         verifyExistsTitle(question.getTitle());
         return questionRepository.save(question);
@@ -45,4 +60,13 @@ public class QuestionService {
         Question findQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return findQuestion;
     }
+
+    public void deleteQuestion(int questionId) {
+        Question question = questionRepository.findById(questionId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        questionRepository.delete(question);
+
+    }
+
+
 }
