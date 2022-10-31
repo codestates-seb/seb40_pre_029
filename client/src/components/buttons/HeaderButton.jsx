@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function HeaderButton({ name, id, openModalHandler }) {
+export default function HeaderButton({ name }) {
   HeaderButton.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,

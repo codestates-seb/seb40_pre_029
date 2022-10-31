@@ -22,6 +22,7 @@ export default function Header() {
     } else if (logIn) {
       setLogin(false);
     }
+    console.log(temp);
   };
 
   return (

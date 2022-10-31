@@ -32,25 +32,26 @@ const Tag = () => {
     setTagAmout(tagAmount - 1);
   };
   return (
-    <div className="question-tag-container border-2 border-#E3E6E8 w-4/5 mb-12 rounded">
+    <div className="question-tag-container border-2 border-#E3E6E8 mb-12 rounded">
       <div className="question-tag p-4 bg-#FFFFFF">
-        <div className="p-1">태그</div>
-        <div className="flex flex-wrap w-full border-2 focus-within:border-pink-300 rounded">
+        <div className="p-1">Tags</div>
+        <div className="p-1 text-xs mb-2">
+          Add up to 5 tags to describe what your question is about. Start typing to see suggestions.
+        </div>
+        <div className="py-0.5 px-1 flex items-center flex-wrap w-full border border-gray-400 rounded focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-100">
           {tagList.map((tagItem, index) => {
             return (
               <div
-                className="p-1 tag-item flex flex-row justify-center items-center rounded m-1 bg-sky-200"
+                className="px-2 h-8 mr-1 my-0.5 flex flex-row items-center justify-center items-center rounded bg-emerald-100 text-sm text-black"
                 key={index}>
-                <div className="p-1">{tagItem}</div>
-                <button className="p-1" onClick={deleteTagItem}>
-                  ❌
-                </button>
+                <div className="mr-1">{tagItem}</div>
+                <button onClick={deleteTagItem}>❎</button>
               </div>
             );
           })}
 
           <input
-            className="w-auto p-2 bg-transparent outline-none"
+            className="h-8 my-0.5 mx-1 grow outline-none text-sm"
             type="text"
             onChange={e => setTagItem(e.target.value)}
             value={tagItem}
