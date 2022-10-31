@@ -33,7 +33,7 @@ export default function Dropdown() {
       <button className="flex justify-center pb-3" onClick={() => setActive(!active)}>
         Tags
         <img
-          src={import("../images/caret-down-regular-24.png")}
+          src={require("../images/caret-down-regular-24.png")}
           alt=""
           className={active ? "flex rotate-180 inline-block w-6" : "flex inline-block w-6"}
         />

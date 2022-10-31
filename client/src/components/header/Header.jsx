@@ -28,7 +28,7 @@ export default function Header() {
     <>
       <div className="h-1 bg-emerald-500"></div>
       <div className="px-4 h-16 bg-slate-100 flex flex-row items-center">
-        <img src={import("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
+        <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
         <SearchBar />
         {darkMode ? <ThemeButton theme="dark_mode" /> : <ThemeButton theme="light_mode" />}
         <div className="flex flex-col">
