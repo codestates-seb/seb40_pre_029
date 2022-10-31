@@ -14,13 +14,13 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private Long questionId;
 
-    @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
-    private Member member;
-
-    @OneToOne
-    @JoinColumn(name = "ANSWERED_ID")
-    private Answered answered;
+//    @OneToOne
+//    @JoinColumn(name = "MEMBER_ID", nullable = false)
+//    private Member member;
+//
+//    @OneToOne
+//    @JoinColumn(name = "ANSWERED_ID")
+//    private Answered answered;
 
     @Column(nullable = false)
     private String title;
@@ -29,19 +29,19 @@ public class Question {
     private String article;
 
     @Column(nullable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createAt = LocalDateTime.now();
 
     @Column(nullable = false)
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @Column(nullable = false)
     private Integer views;
 
-    @OneToOne
-    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
-    private Recommends recommends;
-
-    @ManyToOne
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
+//    @OneToOne
+//    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
+//    private Recommends recommends;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "TAG_ID")
+//    private Tag tag;
 }

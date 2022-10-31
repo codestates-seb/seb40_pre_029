@@ -12,6 +12,9 @@ public interface QuestionMapper {
 
         question.setTitle(questionPostDto.getTitle());
         question.setArticle(questionPostDto.getArticle());
+        question.setViews(0);
+        question.getCreateAt();
+        question.getModifiedAt();
 
         return question;
 
