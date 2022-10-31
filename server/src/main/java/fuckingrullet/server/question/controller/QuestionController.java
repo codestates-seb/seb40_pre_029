@@ -51,9 +51,11 @@ public class QuestionController {
         return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
     }
 
-//    @GetMapping("questions/{question-id}")
-//    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId,
-//                                      @Positive)
+    @GetMapping("questions/{question-id}")
+    public ResponseEntity getQuestion(@PathVariable("question-id") int questionId){
+        Question question = questionService.findQuestion(questionId);
+        return new ResponseEntity<>(question,HttpStatus.OK);
+    }
 
 
 }

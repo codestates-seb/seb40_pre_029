@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionPatchDto {
-    private long questionId;
+    private Integer questionId;
 
     private String title;
     private String article;
