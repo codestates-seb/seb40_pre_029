@@ -2,10 +2,11 @@ import HeaderButton from "../buttons/HeaderButton.jsx";
 import SearchBar from "./SearchBar.jsx";
 import ThemeButton from "../buttons/ThemeButton.jsx";
 import LoginModal from "../modal/Login.jsx";
+import SignupModal from "../modal/Signup.jsx";
 import { useState } from "react";
 
 export default function Header() {
-  const [logIn] = useState(false);
+  const [logIn, setLogin] = useState(true);
   const [darkMode] = useState(true);
   const [modalOpen, setModalOpen] = useState({
     login: false,
@@ -13,13 +14,13 @@ export default function Header() {
   });
 
   const openModalHandler = el => {
-    console.log(el.target.id);
     let temp = el.target.id;
-    setModalOpen(!modalOpen.temp);
-    if (modalOpen.login === true) {
-      modalOpen.signup === false;
-    } else if (modalOpen.signup === true) {
-      modalOpen.login === false;
+    let change = !modalOpen[temp];
+    console.log(temp);
+    if (!logIn) {
+      setModalOpen({ ...modalOpen, [temp]: change });
+    } else if (logIn) {
+      setLogin(false);
     }
     console.log(temp);
   };
@@ -43,9 +44,9 @@ export default function Header() {
           {!logIn ? (
             <HeaderButton name="회원가입" id="signup" openModalHandler={openModalHandler} />
           ) : (
-            <HeaderButton name="로그아웃" />
+            <HeaderButton openModalHandler={openModalHandler} name="로그아웃" />
           )}
-          {modalOpen.signup ? <LoginModal /> : null}
+          {modalOpen.signup ? <SignupModal /> : null}
         </div>
       </div>
     </>

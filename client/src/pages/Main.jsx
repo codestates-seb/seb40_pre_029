@@ -1,3 +1,4 @@
+import Ask from "../components/question/Ask.jsx";
 import QuestionList from "../components/question/QuestionList.jsx";
 import Header from "../components/header/Header.jsx";
 import Navigation from "../components/navigation/Navigation.jsx";
