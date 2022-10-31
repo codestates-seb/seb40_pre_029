@@ -22,7 +22,7 @@ export default function SignupModal() {
   };
 
   //prettier-ignore
-  const onChange = (ele) => {
+  const onChange = ele => {
     const { value, name } = ele.target;
     console.log(value);
     console.log(signupinputs);
