@@ -57,13 +57,13 @@ public class QuestionController {
         return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
     }
 
-    @GetMapping("question/{question-id}") // 댓글 제외
+    @GetMapping("/question/{question-id}") // 댓글 제외
     public ResponseEntity getQuestion(@PathVariable("question-id") int questionId){
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity<>(question,HttpStatus.OK);
     }
 
-    @DeleteMapping("question/delete/{question-id}") // 로그인 제외
+    @DeleteMapping("/question/delete/{question-id}") // 로그인 제외
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive int questionId){
         questionService.deleteQuestion(questionId);
 
