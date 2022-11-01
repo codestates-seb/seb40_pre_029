@@ -32,13 +32,13 @@ const Tag = () => {
     setTagAmout(tagAmount - 1);
   };
   return (
-    <div className="question-tag-container border-2 border-#E3E6E8 mb-12 rounded">
-      <div className="question-tag p-4 bg-#FFFFFF">
+    <div className="question-tag-container border-2 border-#E3E6E8 mb-12 rounded max-w-screen-sm">
+      <div className="question-tag p-4 bg-#FFFFFF ">
         <div className="p-1">Tags</div>
         <div className="p-1 text-xs mb-2">
           Add up to 5 tags to describe what your question is about. Start typing to see suggestions.
         </div>
-        <div className="py-0.5 px-1 flex items-center flex-wrap w-full border border-gray-400 rounded focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-100">
+        <div className="py-0.5 px-1 flex items-center flex-wrap w-full border border-gray-400 rounded focus-within:text-black focus-within:outline-none focus-within:border-emerald-500 focus-within:ring-4 focus-within:border focus-within:ring-emerald-100">
           {tagList.map((tagItem, index) => {
             return (
               <div

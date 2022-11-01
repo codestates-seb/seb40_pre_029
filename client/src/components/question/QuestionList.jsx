@@ -1,7 +1,8 @@
 //author 누르면 페이지 이동 title 클릭하면 질문페이지로 이동
 //tag 부분 유효성검사 구현
-import AskButton from "../buttons/AskButton.jsx";
+// import AskButton from "../buttons/AskButton.jsx";
 import { useState } from "react";
+import DefaultButton from "../buttons/DefaultButton.jsx";
 
 const QuestionList = () => {
   const [filterClicked, setFilterClicked] = useState(false);
@@ -82,8 +83,11 @@ const QuestionList = () => {
 
   //handling filter click tab event
   const filterMap = [
-    { name: "Recent", id: 0 },
-    { name: "Hot", id: 1 },
+    { name: "Interesting", id: 0 },
+    { name: "Bountied", id: 1 },
+    { name: "Hot", id: 2 },
+    { name: "Week", id: 3 },
+    { name: "Month", id: 4 },
   ];
   //if this is on, have to [GET] for its relating data
   const filterOnClick = idx => {
@@ -102,15 +106,13 @@ const QuestionList = () => {
   };
 
   return (
-    <section className="mb-4 p-4 lg:w-2/5 w-full ">
-      <div className="flex justify-between mb-8">
-        <h1 className="text-2xl">Recent Questions</h1>
-        <div>
-          <AskButton />
-        </div>
+    <section className="py-8 pl-12 w-full ">
+      <div className="flex justify-between mb-4">
+        <h1 className="text-3xl mt-1 font-medium">All Questions</h1>
+        <DefaultButton name="Ask Question" />
       </div>
       <div className="flex justify-end mb-4">
-        <div className="rounded border-gray-400 border text-gray-500">
+        <div className="rounded text-gray-500 text-sm font-medium">
           {filterMap.map((el, idx) => {
             return (
               <button
@@ -121,10 +123,8 @@ const QuestionList = () => {
                 value={el.id}
                 className={
                   filterClicked && idOn === el.id
-                    ? // ? isLast
-                      //   ? "p-2 px-4 inline-block border-gray-400 border-r text-zinc-500 bg-slate-200 -mr-1"
-                      "p-2 px-4 inline-block border-gray-400 border-r text-zinc-500 bg-slate-200"
-                    : "p-2 px-4 inline-block border-gray-400 border-r text-gray-500 hover:bg-slate-100"
+                    ? "p-2 px-4 inline-block border border-gray-400 text-zinc-500 bg-slate-200 h-10 -mr-1 pt-1.5 first:rounded-l last:rounded-r"
+                    : "p-2 px-4 inline-block border border-gray-400 text-gray-500 bg-white hover:bg-slate-100 h-10 -mr-1 pt-1.5 first:rounded-l last:rounded-r"
                 }>
                 {el.name}
               </button>
@@ -137,33 +137,33 @@ const QuestionList = () => {
           return (
             <div className="question-summary p-4 border-t-2 flex grow " key={article.id}>
               <div className="question-stats flex flex-col flex-wrap shrink-0 items-end mr-4 p-1 mb-1">
-                <div className="question-upvote">{article.upVote} votes</div>
+                <div className="question-upvote text-sm">{article.upVote} votes</div>
                 {article.isSelected ? (
-                  <div className="question-answer border-2 border-green-600 text-green-800 p-1 rounded">
+                  <div className="question-answer text-sm border-2 border-green-600 text-green-800 p-1 rounded">
                     {article.commentsAmount} answers
                   </div>
                 ) : (
-                  <div className="question-answer">{article.commentsAmount} answers</div>
+                  <div className="question-answer text-sm">{article.commentsAmount} answers</div>
                 )}
 
-                <div className="question-views">{article.views} views</div>
+                <div className="question-views text-sm">{article.views} views</div>
               </div>
               <li className="question">
                 <div className="question-content grow-1 max-w-full flex-col">
                   <div className="question-title break-words mb-1 p-1">{article.title}</div>
-                  <div className="question-summary-meta flex flex-wrap items-center space-x-16 gap-x-1 gap-y-2">
+                  <div className="question-summary-meta flex flex-wrap justify-end space-x-16 gap-x-1 gap-y-2">
                     <div className="question-tag inline-flex">
                       {tags.map((el, idx) => {
                         return (
-                          <div className="border-2 mr-1 mb-1 p-1" key={idx}>
+                          <div className="border-2 mr-1 mb-1 p-1 text-xs" key={idx}>
                             {el.tag}
                           </div>
                         );
                       })}
                     </div>
-                    <div className="author-info flex items-center ml-auto justify-end gap-1 ">
-                      <div className="question-author">{article.author_id}</div>
-                      <div className="question-createdAt">{article.date_published}</div>
+                    <div className="author-info flex items-center ml-auto gap-1 ">
+                      <div className="question-author text-sm">{article.author_id}</div>
+                      <div className="question-createdAt text-sm">{article.date_published}</div>
                     </div>
                   </div>
                 </div>
