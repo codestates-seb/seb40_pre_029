@@ -2,8 +2,9 @@
   <img src="https://i.imgur.com/dU8a9Hw.png">
 </p>
 
-# ⚔TeamRoulette(feat.29)
+# 🎰 Team Roulette (feat.29)
 코드스테이츠 소프트엔지니어링 프리 프로젝트.
+>절대 룰렛
 
 <br/><br/>
 ## 팀원 소개
