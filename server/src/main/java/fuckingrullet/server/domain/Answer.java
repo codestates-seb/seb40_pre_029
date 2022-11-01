@@ -1,18 +1,22 @@
 package fuckingrullet.server.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
+@NoArgsConstructor
 @Getter @Setter
-public class Answered {
+@Table(name = "ANSWER")
+public class Answer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ANSWERED_ID")
-    private Long answeredId;
+    @Column(name = "ANSWER_ID")
+    private Long answerId;
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
