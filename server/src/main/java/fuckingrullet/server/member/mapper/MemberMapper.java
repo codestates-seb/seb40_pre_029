@@ -1,6 +1,7 @@
 package fuckingrullet.server.member.mapper;
 
 import fuckingrullet.server.domain.Member;
+import fuckingrullet.server.member.dto.MemberLoginDto;
 import fuckingrullet.server.member.dto.MemberRegisterDto;
 import org.mapstruct.Mapper;
 
@@ -8,5 +9,6 @@ import org.mapstruct.Mapper;
 public interface MemberMapper {
 
     Member memberRegisterDtoToMember(MemberRegisterDto memberRegisterDto);
+    Member memberLoginDtoToMember(MemberLoginDto memberLoginDto);
 
 }
