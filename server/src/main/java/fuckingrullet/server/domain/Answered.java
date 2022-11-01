@@ -8,18 +8,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class Comment {
+public class Answered {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COMMENT_ID")
-    private Integer id;
+    @Column(name = "ANSWERED_ID")
+    private Long answeredId;
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
     @Column(name = "RECOMMENT_ID")
-    private Integer commentId;
+    private Long recommentId;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String article;

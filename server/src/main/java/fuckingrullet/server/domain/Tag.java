@@ -11,12 +11,12 @@ import java.util.List;
 @Getter @Setter
 public class Tag {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TAG_ID")
     private String id;
 
     private String tag;
 
-    @OneToMany(mappedBy = "tag")
-    private List<Question> questions = new ArrayList<>();
+//    @OneToMany(mappedBy = "tag")
+//    private List<Question> questions = new ArrayList<>();
 }
