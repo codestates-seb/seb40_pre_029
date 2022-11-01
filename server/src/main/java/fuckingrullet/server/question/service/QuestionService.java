@@ -6,10 +6,12 @@ import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,4 +71,20 @@ public class QuestionService {
     }
 
 
+    public Page<Question> searchQuestion(String keyWord, int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
+        List<Question> searchResult = questionRepository.searchQuestionsByKeyWord(keyWord);
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
+        verifiedNoQuestion(questions);
+
+        return questions;
+    }
+
+    private void verifiedNoQuestion(Page<Question> findAllQuestion) {
+        if(findAllQuestion.getTotalElements()==0){
+            throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
+        }
+    }
 }

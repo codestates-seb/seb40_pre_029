@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -46,11 +47,12 @@ public class QuestionController {
 
     }
 
-    @GetMapping("/question") // 수정필요(페이지가 안넘어감)
+    @GetMapping("/question")
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
-                                       @RequestParam(value = "sort", defaultValue = "title") String sort){
+                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
         Page<Question> pageQuestions = questionService.findQuestions(page-1,size,sort);
+        List<Question> questions = pageQuestions.getContent();
 
         return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
     }
@@ -66,7 +68,17 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
+    @GetMapping("/question/search")
+    public ResponseEntity getQuestions(@RequestParam("search") String keyWord,
+                                       @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                       @Positive @RequestParam(value = "size", defaultValue = "5") int size,
+                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
+        Page<Question> searchResult = questionService.searchQuestion(keyWord, page-1, size, sort);
+        List<Question> questions = searchResult.getContent();
+
+        return new ResponseEntity<>(searchResult,HttpStatus.OK);
     }
 
 
