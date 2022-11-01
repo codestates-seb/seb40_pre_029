@@ -22,14 +22,14 @@ public class Member {
     @Column(nullable = false)
     private String displayName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100) // 비밀번호가 암호화 되기때문에 길이를 넉넉하게 추가.
     private String password;
 
     @Column(nullable = true)
     private String image; // 옵션 :: 프로필 이미지 삽입 -> 아직 구현 안해서 null 허용
 
-    @Column(nullable = true)
-    private String role; // 옵션 :: 유저 등급 설정  -> 아직 구현 안해서 null 허용
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Recommends> recommends = new ArrayList<>();
