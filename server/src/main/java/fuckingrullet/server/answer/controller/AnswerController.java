@@ -43,10 +43,10 @@ public class AnswerController {
         return new ResponseEntity<>(answer, HttpStatus.CREATED);
     }
 
-//    @PatchMapping("/answer/{answer-id}")
-//    public ResponseEntity patchAnswer(@PathVariable("answer-id") long answerId,
-//                                      @Valid @RequestBody AnswerPatchDto answerPatchDto){
-//        Answer answer = answerService.updateAnswer(answerId, answerPatchDto);
-//        return new ResponseEntity<>(answer, HttpStatus.OK);
-//    }
+    @PatchMapping("/answer/{answer-id}")
+    public ResponseEntity patchAnswer(@PathVariable("answer-id") long answerId,
+                                      @Valid @RequestBody AnswerPatchDto answerPatchDto){
+        Answer answer = answerService.updateAnswer(answerId, answerPatchDto);
+        return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
 }
