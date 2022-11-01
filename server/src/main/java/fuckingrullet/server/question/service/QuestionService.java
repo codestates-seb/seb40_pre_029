@@ -50,6 +50,7 @@ public class QuestionService {
 
     public Page<Question> findQuestions(int page, int size, String sort){
         Page<Question> findAllQuestion = questionRepository.findAll(PageRequest.of(page,size, Sort.by(sort).descending()));
+        VerifiedNoQuestion(findAllQuestion);
         return findAllQuestion;
     }
 
@@ -77,12 +78,12 @@ public class QuestionService {
         int start = (int)pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
         Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
-        verifiedNoQuestion(questions);
+        VerifiedNoQuestion(questions);
 
         return questions;
     }
 
-    private void verifiedNoQuestion(Page<Question> findAllQuestion) {
+    private void VerifiedNoQuestion(Page<Question> findAllQuestion) {
         if(findAllQuestion.getTotalElements()==0){
             throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
         }
