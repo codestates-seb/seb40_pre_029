@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-@RestController
-@RequestMapping("/")
 @Validated
 @AllArgsConstructor
-
+@RestController
 public class AnswerController {
 
     private AnswerService answerService;

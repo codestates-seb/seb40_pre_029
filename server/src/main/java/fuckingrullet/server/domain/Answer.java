@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Table(name = "ANSWER")
 public class Answer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment
     @Column(name = "ANSWER_ID")
     private Long answerId;
 
     @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JoinColumn(name = "MEMBER_ID", nullable = true)
     private Member member;
 
     @Column(name = "RECOMMENT_ID")
@@ -28,17 +28,17 @@ public class Answer {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String article;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime createAt;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime modifiedAt;
 
 
     private Boolean pick;
 
     @OneToOne
-    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
+    @JoinColumn(name = "RECOMMEND_ID", nullable = true)
     private Recommends recommends;
 
     @ManyToOne
