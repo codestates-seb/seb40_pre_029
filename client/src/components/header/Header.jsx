@@ -28,9 +28,9 @@ export default function Header() {
     <>
       <div className="h-1 bg-emerald-500"></div>
       <div className="bg-slate-100 ">
-        <div className="lg:w-[80rem] max-lg:w-full mx-auto px-4 h-16 flex flex-row items-center">
-          <a href="/">
-            <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2 mr-2" />
+        <div className="xl:w-[80rem] max-xl:w-full mx-auto px-4 h-16 flex flex-row items-center">
+          <a href="/" className="flex-none">
+            <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
           </a>
           <SearchBar />
           {darkMode ? <ThemeButton theme="dark_mode" /> : <ThemeButton theme="light_mode" />}
