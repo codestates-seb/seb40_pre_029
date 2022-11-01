@@ -8,9 +8,9 @@ const Main = () => {
   return (
     <>
       <Header />
-      <div className="flex">
-        <Navigation className="w-1/5" />
-        <QuestionList className="w-4/5" />
+      <div className="flex lg:w-[80rem] max-lg:w-full mx-auto ">
+        <Navigation className="" />
+        <QuestionList className="grow" />
       </div>
       <Footer />
     </>
