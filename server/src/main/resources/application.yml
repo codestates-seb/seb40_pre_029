@@ -18,3 +18,12 @@ logging:
     org.hibernate:
       type.descriptor.sql: trace
       org.hibernate.SQLQuery: debug
+
+mail:
+  address:
+    admin: admin@gmail.com
+
+jwt:
+  secret-key: newworld123412341234  # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

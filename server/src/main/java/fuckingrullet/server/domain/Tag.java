@@ -11,9 +11,9 @@ import java.util.List;
 @Getter @Setter
 public class Tag {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "TAG_ID")
-    private Integer id;
+    private String id;
 
     private String tag;
 
