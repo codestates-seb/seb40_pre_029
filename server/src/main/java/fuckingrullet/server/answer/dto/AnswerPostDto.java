@@ -1,9 +1,11 @@
 package fuckingrullet.server.answer.dto;
 
+import lombok.Getter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-
+@Getter
 public class AnswerPostDto {
     @Positive
     @NotNull

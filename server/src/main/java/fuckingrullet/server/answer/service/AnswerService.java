@@ -18,7 +18,5 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
-    public void test(){
-        answerRepository.finaAllByQuestionAndAnswerStatus(null, null, null);
+
     }
-}

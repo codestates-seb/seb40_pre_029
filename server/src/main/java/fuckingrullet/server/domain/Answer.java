@@ -40,4 +40,10 @@ public class Answer {
     @OneToOne
     @JoinColumn(name = "RECOMMEND_ID", nullable = false)
     private Recommends recommends;
-}
+
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
+    }
+
+

@@ -11,7 +11,6 @@ public interface AnswerMapper {
     default Answer answerPostDtoToAnswer(QuestionService questionService, MemberService memberService, AnswerPostDto answerPostDto){
         Answer answer = new Answer();
         answer.setArticle(answerPostDto.getArticle());
-        answer.setPick(answerPostDto.getPick());
 
         return answer;
     }
