@@ -110,7 +110,7 @@ export default function SignupModal() {
       <div className="flex w-72 h-full justify-center items-center ">
           <form className="w-96 h-3/5 z-0 absolute flex flex-col space-y-3 border-4 bg-white p-2 " onSubmit={createID}>
             <span className="text-sm">Email</span>
-            <input className="border p-2" name="id" value={signupinputs.email} onChange={onChange} ></input>
+            <input className="border p-2" name="email" value={signupinputs.email} onChange={onChange} ></input>
             {isValid.email? null:<span className={signupinputs.email.length === 0?"text-black-500 text-sm":"text-red-500 text-sm"}>이메일 형식으로만 입력 가능합니다.</span>}
             <span className="text-sm">Nickname</span>
             <input className="border p-2" name="nickname" onChange={onChange} value={signupinputs.nickname}></input>
