@@ -13,10 +13,10 @@ public class Tag {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TAG_ID")
-    private Long tagId;
+    private String id;
 
     private String tag;
 
-    @OneToMany(mappedBy = "tag")
-    private List<Question> questions = new ArrayList<>();
+//    @OneToMany(mappedBy = "tag")
+//    private List<Question> questions = new ArrayList<>();
 }
