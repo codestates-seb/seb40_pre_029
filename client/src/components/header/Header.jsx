@@ -6,7 +6,7 @@ import SignupModal from "../modal/Signup.jsx";
 import { useState } from "react";
 
 export default function Header() {
-  const [logIn, setLogin] = useState(true);
+  const [logIn, setLogin] = useState(false);
   const [darkMode] = useState(true);
   const [modalOpen, setModalOpen] = useState({
     login: false,
@@ -16,7 +16,6 @@ export default function Header() {
   const openModalHandler = el => {
     let temp = el.target.id;
     let change = !modalOpen[temp];
-    console.log(temp);
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
     } else if (logIn) {
