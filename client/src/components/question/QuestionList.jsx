@@ -4,82 +4,13 @@
 import { useState } from "react";
 import DefaultButton from "../buttons/DefaultButton.jsx";
 import TabDefault from "../tabs/TabDefault.jsx";
+import { useNavigate } from "react-router-dom";
+import dummyArticle from "../../dummydata.js";
 
 export default function QuestionList() {
+  const navigate = useNavigate();
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
-  const getParsedDate = createdAt => {
-    return new Date(createdAt).toLocaleDateString("ko-KR");
-  };
-
-  //dummy article
-  const dummyArticle = [
-    {
-      author_id: "신동엽",
-      title: "Z-Index Text Over Image Outlook Email Client",
-      tags: [
-        { tag: "엔터테인먼트", tagId: 23 },
-        { tag: "자바스크립트", tagId: 17 },
-        { tag: "방송", tagId: 14 },
-        { tag: "프로젝트", tagId: 13 },
-        { tag: "화이팅", tagId: 12 },
-      ],
-      views: 12,
-      commentsAmount: 7,
-      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
-      id: 0,
-      recommendId: ["유재석"],
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      upVote: 3,
-      downVote: 0,
-      isSelected: true,
-    },
-    {
-      author_id: "유재석",
-      title: "Google Search Console API data is always off unless I make another API call",
-      tags: [
-        { tag: "엔터테인먼트", tagId: 23 },
-        { tag: "자바스크립트", tagId: 17 },
-        { tag: "방송", tagId: 14 },
-        { tag: "방송", tagId: 13 },
-        { tag: "방송", tagId: 12 },
-      ],
-      views: 40,
-      commentsAmount: 10,
-      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
-      id: 2,
-      recommendId: ["강호동", "신동엽"],
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      upVote: 7,
-      downVote: 3,
-      isSelected: false,
-    },
-    {
-      author_id: "강호동",
-      title: "Can`t put new text into the checkedListBox, ArgumentOutOfRangeException [duplicate]",
-      tags: [
-        { tag: "엔터테인먼트", tagId: 23 },
-        { tag: "자바스크립트", tagId: 17 },
-        { tag: "백엔드도", tagId: 14 },
-        { tag: "프로젝트", tagId: 13 },
-        { tag: "화이팅", tagId: 12 },
-      ],
-      views: 65,
-      commentsAmount: 3,
-      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
-      id: 1,
-      recommendId: ["유재석", "신동엽"],
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      upVote: 17,
-      downVote: 1,
-      isSelected: true,
-    },
-  ];
-
-  const tags = dummyArticle[0].tags;
 
   //handling filter click tab event
   const filterMap = [
@@ -88,6 +19,10 @@ export default function QuestionList() {
     { name: "Month", id: 2 },
   ];
   //if this is on, have to [GET] for its relating data
+  const onTitleClick = e => {
+    console.log(e.target.value);
+    navigate(`/questions/${e.target.value}`);
+  };
   const filterOnClick = idx => {
     setIdOn(idx);
     setFilterClicked(!filterClicked);
@@ -111,9 +46,9 @@ export default function QuestionList() {
       </div>
       <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
       <ul className="questions-container relative">
-        {dummyArticle.map(article => {
+        {dummyArticle.map((article, idx) => {
           return (
-            <div className="flex py-6 border-t border-gray-300" key={article.id}>
+            <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-36 flex-none">
                 {article.isSelected ? (
                   <div className="border-2 border-sky-700 text-sky-700 pt-0.5 pb-1 px-2 rounded font-semibold mb-1.5">
@@ -130,12 +65,17 @@ export default function QuestionList() {
                 </div>
               </div>
               <div className="ml-6 grow">
-                <div className="text-2xl text-sky-700 mb-2 break-keep">{article.title}</div>
+                <button
+                  value={article.QUESTION_ID}
+                  onClick={onTitleClick}
+                  className="text-2xl text-sky-700 mb-2 break-keep">
+                  {article.title}
+                </button>
                 <div className="flex justify-between flex-wrap">
-                  <BodyTags target={tags} />
+                  <BodyTags target={article.tags} />
                   <div className="inline-block">
-                    <span className="text-sky-700 mr-1.5">{article.author_id}</span>
-                    <span className="text-gray-500">•&nbsp;&nbsp;{article.date_published}</span>
+                    <span className="text-sky-700 mr-1.5">{article.MEMBER_ID}</span>
+                    <span className="text-gray-500">•&nbsp;&nbsp;{article.createdAt}</span>
                   </div>
                 </div>
               </div>

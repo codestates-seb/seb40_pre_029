@@ -6,7 +6,7 @@ const getParsedDate = createdAt => {
 const dummyArticle = [
   {
     MEMBER_ID: "제임스",
-    QUESTION_ID: "2",
+    QUESTION_ID: 2,
     COMMENT_ID: ["유재석"],
     title: "detect the number of three way conversations in chat dataset using",
     article:
@@ -27,7 +27,7 @@ const dummyArticle = [
   },
   {
     MEMBER_ID: "신동엽",
-    QUESTION_ID: "1",
+    QUESTION_ID: 1,
     COMMENT_ID: ["유재석"],
     title: "국민MC가 되기 위해선 무얼 해야하나요?",
     article:
@@ -40,8 +40,6 @@ const dummyArticle = [
       { tag: "javascript", id: 1 },
       { tag: "python", id: 2 },
       { tag: "java", id: 3 },
-      { tag: "php", id: 4 },
-      { tag: "mysql", id: 5 },
     ],
     commentsAmount: 7, // 댓글 개수
     isSelected: false,
