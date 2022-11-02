@@ -24,6 +24,6 @@ mail:
     admin: admin@gmail.com
 
 jwt:
-  secret-key: newworld123412341234  # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  secret-key: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY2NzMxMjMwOCwiaWF0IjoxNjY3MzEyMzA4fQ.ki5gEGWfkVOo08QGeYAAPEW4pfScj38Wz_uHsaUFOPI  # 민감한 정보는 시스템 환경 변수에서 로드한다.
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420

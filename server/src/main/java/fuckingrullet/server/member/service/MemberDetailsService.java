@@ -1,8 +1,6 @@
 package fuckingrullet.server.member.service;
 
 import fuckingrullet.server.domain.Member;
-import fuckingrullet.server.exception.BusinessLogicException;
-import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.security.util.CustomAuthorityUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +25,9 @@ public class MemberDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
-        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member findMember = optionalMember.orElseThrow(() -> new UsernameNotFoundException("사용자가 존재하지 않습니다."));
         return new MemberDetails(findMember);
     }
 
