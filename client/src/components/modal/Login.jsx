@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LoginModal(setLogin) {
+export default function LoginModal({ setLogin, userMenu }) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -68,23 +68,60 @@ export default function LoginModal(setLogin) {
     }
   };
 
-  //prettier-ignore
   return (
     <>
-      <div className="flex fixed inset-0 bg-gray-600 bg-opacity-80 h-full w-full z-50 justify-center items-center">
-        <div className="flex h-full justify-center items-center absolute inset-0">          
-          <form className="flex flex-col w-96 lg:h-[32rem] z-0 space-y-4 border-4 bg-white p-2 justify-around items-center rounded-md" onSubmit={loginProcess}  >
+      <div className="flex fixed inset-0 bg-gray-600 bg-opacity-80 h-full w-full z-40 justify-center items-center">
+        <div className="flex z-50 justify-center items-center" ref={userMenu}>
+          <form
+            className="flex flex-col w-96 lg:h-[32rem] space-y-4 border-4 bg-white p-2 justify-around items-center rounded-md"
+            onSubmit={loginProcess}>
             <div className="flex flex-col">
               <span className="text-3xl text-center font-bold p-4 mb-4">Login</span>
               <span className="h-5 mb-1">Email</span>
-              <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="email" onChange={onChange} value={inputs.email} type='text' placeholder="Type your email"></input>
-              {isValid.email? <span className="h-5 w-80 mb-1"></span>:<span className={inputs.email.length === 0?"text-black-500 text-sm h-5 w-80 mb-1":"text-red-500 h-5 text-sm w-80 mb-1"}>닉네임 형식에 맞춰 입력 가능합니다.</span>}
+              <input
+                className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm"
+                name="email"
+                onChange={onChange}
+                value={inputs.email}
+                type="text"
+                placeholder="Type your email"></input>
+              {isValid.email ? (
+                <span className="h-5 w-80 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    inputs.email.length === 0
+                      ? "text-black-500 text-sm h-5 w-80 mb-1"
+                      : "text-red-500 h-5 text-sm w-80 mb-1"
+                  }>
+                  닉네임 형식에 맞춰 입력 가능합니다.
+                </span>
+              )}
               <span className="h-5 mb-1">Password</span>
-              <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="pw" onChange={onChange} value={inputs.pw} type='password' placeholder="Type your password"></input>
-              {isValid.pw? <span className="h-5 w-80 mb-1"></span>:<span className={inputs.pw.length === 0?"text-black-500 text-sm h-5 w-80":"text-red-500 text-sm h-5 w-80"}>비밀번호에는 영문,숫자,특수문자만 입력 가능합니다.</span>}
+              <input
+                className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm"
+                name="pw"
+                onChange={onChange}
+                value={inputs.pw}
+                type="password"
+                placeholder="Type your password"></input>
+              {isValid.pw ? (
+                <span className="h-5 w-80 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    inputs.pw.length === 0 ? "text-black-500 text-sm h-5 w-80" : "text-red-500 text-sm h-5 w-80"
+                  }>
+                  비밀번호에는 영문,숫자,특수문자만 입력 가능합니다.
+                </span>
+              )}
             </div>
-            <div className="flex justify-center items-end pt-5">              
-              <button className="shadow-sky-300 shadow-tline border border-sky-500 hover:bg-sky-500 h-12 w-40 min-w-36 bg-blue-500 rounded text-white" type="submit">Login</button>              
+            <div className="flex justify-center items-end pt-5">
+              <button
+                className="shadow-sky-300 shadow-tline border border-sky-500 hover:bg-sky-500 h-12 w-40 min-w-36 bg-blue-500 rounded text-white"
+                type="submit">
+                Login
+              </button>
             </div>
             <div className="text-xs">Or Sign Up Using</div>
             <div className="flex">
@@ -94,7 +131,7 @@ export default function LoginModal(setLogin) {
             </div>
           </form>
         </div>
-      </div>  
+      </div>
     </>
   );
 }
