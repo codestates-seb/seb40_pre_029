@@ -2,16 +2,25 @@
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
 import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import Tag from "./Tag.jsx";
 
 const AskQuestion = () => {
+  // const navigate = useNavigate();
   const [question, setQuestion] = useState({});
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [article, setArticle] = useState("");
 
   const onPostClick = () => {
-    setQuestion({ title, body });
+    setQuestion({ title, article });
     console.log(question);
+    const response = fetch("/question/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(question),
+    });
+    return response;
+    // navigate("/");
   };
 
   return (
@@ -37,7 +46,7 @@ const AskQuestion = () => {
               The body of your question contains your problem details and results. Minimum 30 characters.
             </div>
             <textarea
-              onChange={e => setBody(e.target.value)}
+              onChange={e => setArticle(e.target.value)}
               rows={12}
               className="question-body w-full p-2 bg-#F1F2F3 rounded border border-gray-400 resize-y border rounded border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 "></textarea>
           </div>

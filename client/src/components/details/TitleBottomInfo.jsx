@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 export default function TitleBottomInfo({ element, value }) {
   TitleBottomInfo.propTypes = {
     element: PropTypes.string,
-    value: PropTypes.number, // PropTypes string 애러 나서 잠시 바꿈!
+    value: PropTypes.string, // PropTypes string 애러 나서 잠시 바꿈!
   };
   return (
     <>
