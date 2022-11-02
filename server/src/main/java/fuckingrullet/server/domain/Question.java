@@ -12,19 +12,19 @@ public class Question {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QUESTION_ID")
-    private Integer questionId;
-
-    @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
-    private Member member;
-
-    public void addMember(Member member){
-        this.member = member;
-    }
+    private Long questionId;
 
 //    @OneToOne
-//    @JoinColumn(name = "ANSWER_ID")
-//    private Answer answer;
+//    @JoinColumn(name = "MEMBER_ID", nullable = false)
+//    private Member member;
+
+//    public void addMember(Member member){
+//        this.member = member;
+//    }
+
+    @OneToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answer answer;
 
     @Column(nullable = false)
     private String title;

@@ -40,7 +40,7 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question findQuestion(int questionId){
+    public Question findQuestion(long questionId){
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
         questionRepository.save(findQuestion);
@@ -58,14 +58,14 @@ public class QuestionService {
         Optional<Question> question = questionRepository.findByTitle(title);
     }
 
-    public Question findVerifiedQuestion(int questionId){
+    public Question findVerifiedQuestion(long questionId){
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return findQuestion;
     }
 
     public void deleteQuestion(int questionId) {
-        Question question = questionRepository.findById(questionId).orElseThrow(() ->
+        Question question = questionRepository.findById((long) questionId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         questionRepository.delete(question);
 
