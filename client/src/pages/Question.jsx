@@ -1,6 +1,19 @@
-// 질문 보는 페이지
+import Details from "../components/details/Details.jsx";
+import Header from "../components/header/Header.jsx";
+import Navigation from "../components/navigation/Navigation.jsx";
+import Footer from "../components/footer/Footer.jsx";
+
 const Question = () => {
-  return <div>Question 페이지 입니다</div>;
+  return (
+    <>
+      <Header />
+      <div className="flex">
+        <Navigation />
+        <Details />
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default Question;

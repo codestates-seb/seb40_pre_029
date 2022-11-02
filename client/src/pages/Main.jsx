@@ -8,8 +8,8 @@ const Main = () => {
     <>
       <Header />
       <div className="flex lg:w-[80rem] max-lg:w-full mx-auto ">
-        <Navigation className="" />
-        <QuestionList className="grow" />
+        <Navigation />
+        <QuestionList />
       </div>
       <Footer />
     </>
