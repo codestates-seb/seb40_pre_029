@@ -11,8 +11,8 @@ export default function QuestionBody() {
         code
       </p>
       <div className="mt-8 mb-12">
-        <span className="text-cyan-700 text-sm px-2 pt-0.5 pb-1 bg-blue-100 rounded-sm mr-2">algorithm</span>
-        <span className="text-cyan-700 text-sm px-2 pt-0.5 pb-1 bg-blue-100 rounded-sm mr-2">algorithm</span>
+        <span className="text-cyan-700 text-sm px-2 pt-0.5 pb-1 bg-blue-50 rounded-sm mr-1">algorithm</span>
+        <span className="text-cyan-700 text-sm px-2 pt-0.5 pb-1 bg-blue-50 rounded-sm mr-1">algorithm</span>
       </div>
       <ArticleBottomSet date="2010.10.20" nickname="최함수" />
     </div>

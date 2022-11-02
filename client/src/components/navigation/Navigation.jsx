@@ -13,7 +13,7 @@ export default function Navigation() {
           <NavigationDefault name="Companies" icon="apartment" />
           <Dropdown icon="tag" />
         </div>
-        <div className="pl-2 pr-4">
+        <div className="pr-4 max-xl:px-4">
           <Donate />
         </div>
       </div>
