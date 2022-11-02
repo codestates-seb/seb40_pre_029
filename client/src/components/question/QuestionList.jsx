@@ -3,23 +3,81 @@
 // import AskButton from "../buttons/AskButton.jsx";
 import { useState } from "react";
 import DefaultButton from "../buttons/DefaultButton.jsx";
-import { useNavigate } from "react-router-dom";
-import dummyArticle from "../../dummydata.js";
-import { useDispatch, useSelector } from "react-redux";
-// import { viewsUp } from "../../redux/store.jsx";
+import TabDefault from "../tabs/TabDefault.jsx";
 
-const QuestionList = () => {
-  const dispatch = useDispatch();
-  const views = useSelector(state => {
-    console.log(state[0]);
-    return state[0].views;
-  });
-
-  views;
-
+export default function QuestionList() {
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
-  const navigate = useNavigate();
+  const getParsedDate = createdAt => {
+    return new Date(createdAt).toLocaleDateString("ko-KR");
+  };
+
+  //dummy article
+  const dummyArticle = [
+    {
+      author_id: "신동엽",
+      title: "Z-Index Text Over Image Outlook Email Client",
+      tags: [
+        { tag: "엔터테인먼트", tagId: 23 },
+        { tag: "자바스크립트", tagId: 17 },
+        { tag: "방송", tagId: 14 },
+        { tag: "프로젝트", tagId: 13 },
+        { tag: "화이팅", tagId: 12 },
+      ],
+      views: 12,
+      commentsAmount: 7,
+      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
+      id: 0,
+      recommendId: ["유재석"],
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      upVote: 3,
+      downVote: 0,
+      isSelected: true,
+    },
+    {
+      author_id: "유재석",
+      title: "Google Search Console API data is always off unless I make another API call",
+      tags: [
+        { tag: "엔터테인먼트", tagId: 23 },
+        { tag: "자바스크립트", tagId: 17 },
+        { tag: "방송", tagId: 14 },
+        { tag: "방송", tagId: 13 },
+        { tag: "방송", tagId: 12 },
+      ],
+      views: 40,
+      commentsAmount: 10,
+      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
+      id: 2,
+      recommendId: ["강호동", "신동엽"],
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      upVote: 7,
+      downVote: 3,
+      isSelected: false,
+    },
+    {
+      author_id: "강호동",
+      title: "Can`t put new text into the checkedListBox, ArgumentOutOfRangeException [duplicate]",
+      tags: [
+        { tag: "엔터테인먼트", tagId: 23 },
+        { tag: "자바스크립트", tagId: 17 },
+        { tag: "백엔드도", tagId: 14 },
+        { tag: "프로젝트", tagId: 13 },
+        { tag: "화이팅", tagId: 12 },
+      ],
+      views: 65,
+      commentsAmount: 3,
+      date_published: getParsedDate("2022-02-24T16:17:47.000Z"),
+      id: 1,
+      recommendId: ["유재석", "신동엽"],
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      upVote: 17,
+      downVote: 1,
+      isSelected: true,
+    },
+  ];
 
   const tags = dummyArticle[0].tags;
 
@@ -44,82 +102,61 @@ const QuestionList = () => {
 
   //question을 누르면 해당 id의 질문 디테일 페이지로 넘어감
   //dummyArticle[0] << 이거 수정해야함
-  const titleOnClick = () => {
-    dispatch({ type: "viewCount/viewsUp", step: 1 });
-    navigate(`/questions/${dummyArticle[0].QUESTION_ID}`);
-    console.log("hi");
-  };
 
   return (
-    <section className="py-8 pl-12 w-full ">
-      <div className="flex justify-between mb-4">
+    <section className="py-8 w-full mr-8">
+      <div className="flex justify-between pl-10 mb-4">
         <h1 className="text-3xl mt-1 font-medium">All Questions</h1>
         <DefaultButton name="Ask Question" />
       </div>
-      <div className="flex justify-end mb-4">
-        <div className="rounded text-gray-500 text-sm font-medium">
-          {filterMap.map((el, idx) => {
-            return (
-              <button
-                key={idx}
-                onClick={() => {
-                  filterOnClick(idx);
-                }}
-                value={el.id}
-                className={
-                  filterClicked && idOn === el.id
-                    ? "p-2 px-4 inline-block border border-gray-400 text-zinc-500 bg-slate-200 h-10 -mr-1 pt-1.5 first:rounded-l last:rounded-r"
-                    : "p-2 px-4 inline-block border border-gray-400 text-gray-500 bg-white hover:bg-slate-100 h-10 -mr-1 pt-1.5 first:rounded-l last:rounded-r"
-                }>
-                {el.name}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
       <ul className="questions-container relative">
         {dummyArticle.map(article => {
           return (
-            <div className="question-summary p-4 border-t-2 flex grow " key={article.QUESTION_ID}>
-              <div className="question-stats flex flex-col flex-wrap shrink-0 justify-center items-end mr-4 p-1 mb-1">
+            <div className="flex py-6 border-t border-gray-300" key={article.id}>
+              <div className="flex flex-col items-end w-36 flex-none">
                 {article.isSelected ? (
-                  <div className="question-answer text-sm border-2 border-green-600 text-green-800 p-1 rounded">
-                    {article.commentsAmount} answers
+                  <div className="border-2 border-sky-700 text-sky-700 pt-0.5 pb-1 px-2 rounded font-semibold mb-1.5">
+                    {article.commentsAmount} <span className="font-normal text-sky-800">answers</span>
                   </div>
                 ) : (
-                  <div className="question-answer text-sm">{article.commentsAmount} answers</div>
+                  <div className="text-sky-700 pt-0.5 pb-1 rounded font-semibold mb-1.5">
+                    {article.commentsAmount} <span className="font-normal text-sky-800">answers</span>
+                  </div>
                 )}
 
-                <div className="question-views text-sm">{article.views} views</div>
+                <div className="text-gray-500 pt-0.5 pb-1 rounded font-medium mb-1.5">
+                  {article.views} <span className="font-normal text-gray-500">views</span>
+                </div>
               </div>
-              <li className="question">
-                <div className="question-content grow-1 max-w-full flex-col">
-                  <button onClick={titleOnClick} className="question-title break-words mb-1 p-1">
-                    {article.title}
-                  </button>
-                  <div className="question-summary-meta flex flex-wrap justify-end space-x-16 gap-x-1 gap-y-2">
-                    <div className="question-tag inline-flex">
-                      {tags.map((el, idx) => {
-                        return (
-                          <div className="border-2 mr-1 mb-1 p-1 text-xs" key={idx}>
-                            {el.tag}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="author-info flex items-center ml-auto gap-1 ">
-                      <div className="question-author text-sm">{article.author_id}</div>
-                      <div className="question-createdAt text-sm">{article.date_published}</div>
-                    </div>
+              <div className="ml-6 grow">
+                <div className="text-2xl text-sky-700 mb-2 break-keep">{article.title}</div>
+                <div className="flex justify-between flex-wrap">
+                  <BodyTags target={tags} />
+                  <div className="inline-block">
+                    <span className="text-sky-700 mr-1.5">{article.author_id}</span>
+                    <span className="text-gray-500">•&nbsp;&nbsp;{article.date_published}</span>
                   </div>
                 </div>
-              </li>
+              </div>
             </div>
           );
         })}
       </ul>
     </section>
   );
-};
+}
 
-export default QuestionList;
+function BodyTags({ target }) {
+  return (
+    <div className="flex my-1">
+      {target.map((el, idx) => {
+        return (
+          <span className="flex-none text-sky-800 text-sm px-2 pt-1 pb-1.5 bg-slate-200 rounded-sm mr-1" key={idx}>
+            {el.tag}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
