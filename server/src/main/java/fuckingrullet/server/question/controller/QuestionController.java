@@ -5,6 +5,7 @@ import fuckingrullet.server.member.mapper.MemberMapper;
 import fuckingrullet.server.member.service.MemberService;
 import fuckingrullet.server.question.dto.QuestionPatchDto;
 import fuckingrullet.server.question.dto.QuestionPostDto;
+import fuckingrullet.server.question.dto.SingleResponseDto;
 import fuckingrullet.server.question.mapper.QuestionMapper;
 import fuckingrullet.server.question.service.QuestionService;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,8 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
 @Validated
-@AllArgsConstructor
+@AllArgsConstructor //수정필요
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
@@ -32,8 +32,8 @@ public class QuestionController {
     @PostMapping("/question/post") // 맴버 제외
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto){
         Question question = questionService.createQuestion(
-                mapper.questionPostDtoToQuestion(/*memberService,*/questionPostDto));
-        return new ResponseEntity<>(question,HttpStatus.CREATED);
+                mapper.questionPostDtoToQuestion(memberService,questionPostDto));
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(memberMapper,question)),HttpStatus.CREATED);
     }
 
     @PatchMapping("/question/patch/{question-id}") // 로그인 제외
@@ -47,7 +47,7 @@ public class QuestionController {
 
     }
 
-    @GetMapping("/question")
+    @GetMapping("/question") //수정필요
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
                                        @RequestParam(value = "sort", defaultValue = "createAt") String sort){

@@ -14,13 +14,17 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private Integer questionId;
 
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member member;
+
+    public void addMember(Member member){
+        this.member = member;
+    }
+
 //    @OneToOne
-//    @JoinColumn(name = "MEMBER_ID", nullable = false)
-//    private Member member;
-//
-//    @OneToOne
-//    @JoinColumn(name = "ANSWERED_ID")
-//    private Answered answered;
+//    @JoinColumn(name = "ANSWER_ID")
+//    private Answer answer;
 
     @Column(nullable = false)
     private String title;
