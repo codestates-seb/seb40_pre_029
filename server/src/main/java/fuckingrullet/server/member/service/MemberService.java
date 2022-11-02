@@ -7,6 +7,9 @@ import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.security.event.MemberRegistrationApplicationEvent;
 import fuckingrullet.server.security.util.CustomAuthorityUtils;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +46,11 @@ public class MemberService {
 
         publisher.publishEvent(new MemberRegistrationApplicationEvent(savedMember));
         return savedMember;
+    }
+
+    public Page<Member> findAllMember(int page, int size) {
+        return memberRepository.findAll(PageRequest.of(page, size,
+                Sort.by("memberId").descending()));
     }
 
     private void verifyExistsEmail(String email) {
