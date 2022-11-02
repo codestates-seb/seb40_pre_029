@@ -36,6 +36,7 @@ public class AppSecurityConfig {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/myPage").hasRole("USER")
                         .anyRequest().permitAll()
                 );
         return http.build();
