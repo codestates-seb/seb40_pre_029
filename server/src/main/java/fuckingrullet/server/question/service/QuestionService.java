@@ -56,6 +56,9 @@ public class QuestionService {
 
     private void verifyExistsTitle(String title){
         Optional<Question> question = questionRepository.findByTitle(title);
+        if(question.isPresent()){
+            throw new BusinessLogicException(ExceptionCode.QUESTION_EXISTS);
+        }
     }
 
     public Question findVerifiedQuestion(long questionId){

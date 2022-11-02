@@ -10,7 +10,6 @@ import fuckingrullet.server.question.dto.QuestionPostDto;
 import fuckingrullet.server.question.dto.SingleResponseDto;
 import fuckingrullet.server.question.mapper.QuestionMapper;
 import fuckingrullet.server.question.service.QuestionService;
-import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +39,6 @@ public class QuestionController {
         this.memberMapper = memberMapper;
         this.answerService = answerService;
         this.answerMapper = answerMapper;
-
     }
 
     @PostMapping("/question/post") // 맴버 제외
@@ -71,7 +69,7 @@ public class QuestionController {
         return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
     }
 
-    @GetMapping("/question/{question-id}") // 댓글 제외
+    @GetMapping("/question/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId,
                                       @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
                                       @Positive @RequestParam(value = "size" , defaultValue = "5") int answerSize,
@@ -88,7 +86,7 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/question/search")
+    @GetMapping("/question/search") //검색기능 구현 아직 안됨
     public ResponseEntity getQuestions(@RequestParam("search") String keyWord,
                                        @Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
@@ -98,6 +96,4 @@ public class QuestionController {
 
         return new ResponseEntity<>(searchResult,HttpStatus.OK);
     }
-
-
 }
