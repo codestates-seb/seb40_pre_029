@@ -1,5 +1,6 @@
 //질문하기 버튼을 누르면 보이는 창이다.
 // /ask [POST] => { title , body , tags }
+// /edit [PATCH]
 import { useState } from "react";
 import Tag from "./Tag.jsx";
 

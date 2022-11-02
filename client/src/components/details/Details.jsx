@@ -4,17 +4,23 @@ import QuestionAnswer from "./QuestionAnswer.jsx";
 import UsefulSet from "./UsefulSet.jsx";
 import DefaultButton from "../buttons/DefaultButton.jsx";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Details() {
+  const views = useSelector(state => {
+    console.log(state);
+    return state[0].views;
+  });
+  views;
   const [body, setBody] = useState("");
   return (
     <div className="mx-auto bg-gray-50 max-w-5xl pl-8">
       <div className="py-8 border-b border-gray-300">
-        <h3 className="text-3xl mb-4">value attribute in hbs not showing string after space</h3>
+        <h3 className="text-3xl mb-4">hi</h3>
         <div>
           <TitleBottomInfo element="Asked" value="today" />
           <TitleBottomInfo element="Modified" value="today" />
-          <TitleBottomInfo element="Viewed" value="3 times" />
+          <TitleBottomInfo element="Viewed" value={views} />
         </div>
       </div>
       <div className="py-8 flex flex-row">
