@@ -1,6 +1,10 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function LoginModal(setLogin) {
+export default function LoginModal() {
+  LoginModal.propTypes = {
+    setLogin: PropTypes.func,
+  };
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -54,7 +58,10 @@ export default function LoginModal(setLogin) {
 
     if (!response.ok) {
       await response.json().then(data => alert(data.message));
+
+      // .then(data => alert(data.message));
     } else {
+      await response;
       alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
@@ -64,7 +71,8 @@ export default function LoginModal(setLogin) {
         email: false,
         pw: false,
       });
-      setLogin(true);
+      // setLogin(true);
+      return location.reload();
     }
   };
 

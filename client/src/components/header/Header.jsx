@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar.jsx";
 import ThemeButton from "../buttons/ThemeButton.jsx";
 import LoginModal from "../modal/Login.jsx";
 import SignupModal from "../modal/Signup.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
   const [logIn, setLogin] = useState(false);
@@ -18,10 +18,12 @@ export default function Header() {
     let change = !modalOpen[temp];
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
-    } else if (logIn) {
+    } else if (logIn && temp === "logout") {
       setLogin(false);
     }
   };
+
+  useEffect(() => {}, [logIn]);
 
   return (
     <>
@@ -44,12 +46,12 @@ export default function Header() {
             {!logIn ? (
               <HeaderButton name="회원가입" id="signup" openModalHandler={openModalHandler} />
             ) : (
-              <HeaderButton openModalHandler={openModalHandler} name="로그아웃" />
+              <HeaderButton openModalHandler={openModalHandler} name="로그아웃" id="logout" />
             )}
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal /> : null}
+      {modalOpen.login ? <LoginModal logIn={logIn} /> : null}
       {modalOpen.signup ? <SignupModal /> : null}
     </>
   );

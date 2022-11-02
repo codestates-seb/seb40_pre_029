@@ -24,7 +24,7 @@ export default function SignupModal() {
     const pwpattern=new RegExp("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$");
     const nicknamepattern=new RegExp("^[a-zA-Z0-9가-힣]+$");
     
-
+    
     setSignupInputs({
       ...signupinputs,
       [name]: value,
