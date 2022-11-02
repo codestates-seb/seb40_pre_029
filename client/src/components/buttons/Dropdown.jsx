@@ -26,7 +26,7 @@ export default function Dropdown({ icon }) {
   };
 
   return (
-    <div className="w-28 items-start w-full">
+    <div className="items-start w-full">
       <button
         className="font-medium hover:text-emerald-700 w-full h-11 text-left px-4 flex justify-between items-center"
         onClick={() => setActive(!active)}>
