@@ -4,13 +4,11 @@ import Footer from "../components/footer/Footer.jsx";
 
 const Ask = () => {
   return (
-    <>
+    <div className="bg-slate-300">
       <Header />
-      <div className="flex lg:w-[96rem] max-lg:w-full mx-auto my-12 justify-center">
-        <AskQuestion />
-      </div>
+      <AskQuestion />
       <Footer />
-    </>
+    </div>
   );
 };
 

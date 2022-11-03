@@ -24,7 +24,7 @@ export default function QuestionList() {
     async function getData() {
       await fetch(`/question?page=${page}`, {
         method: "GET",
-        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
+        headers: { "Content-Type": "application/json" },
       })
         .then(res => res.json())
         .then(data => {
@@ -132,27 +132,29 @@ export default function QuestionList() {
         })}
       </ul>
       {/* <Pagination /> */}
-      <div className="pl-10 mb-4">
+      <div className="pl-10 mb-4 flex justify-between">
         <button
           onClick={() => setPage(1)}
           className="border border-emerald-500 hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
           처음으로
         </button>
-        {/* {console.log(totalPage)} */}
-        {totalPage.map((button, idx) => {
-          return (
-            <button
-              onClick={() => setPage(button)}
-              key={idx}
-              className={
-                page === button
-                  ? "bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 mr-1 rounded mb-1"
-                  : "hover:bg-emerald-100 text-emerald-600 w-10 h-10 mr-1 rounded mb-1"
-              }>
-              {button}
-            </button>
-          );
-        })}
+        <div>
+          {/* {console.log(totalPage)} */}
+          {totalPage.map((button, idx) => {
+            return (
+              <button
+                onClick={() => setPage(button)}
+                key={idx}
+                className={
+                  page === button
+                    ? "bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 mr-1 rounded mb-1"
+                    : "hover:bg-emerald-100 text-emerald-600 w-10 h-10 mr-1 rounded mb-1"
+                }>
+                {button}
+              </button>
+            );
+          })}
+        </div>
         <button
           onClick={() => setPage(data.totalPages)}
           className="border border-emerald-500 hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">

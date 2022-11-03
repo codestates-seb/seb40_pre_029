@@ -33,14 +33,16 @@ const AskQuestion = () => {
   };
 
   return (
-    <div className="flex flex-col bg-#F8F9F9 w-2/5">
+    <div className="flex xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center">
       <section>
         <form
-          className="question-title-container border-2 border-#E3E6E8 w-full mb-12 rounded"
+          className="question-title-container w-full mb-4 rounded bg-white shadow-md"
           onSubmit={e => e.preventDefault()}>
-          <div className="p-4 bg-#FFFFFF">
-            <div className="p-1">Title</div>
-            <div className="p-1 text-xs">Be specific and imagine you’re asking a question to another person.</div>
+          <div className="py-6 px-8 bg-#FFFFFF">
+            <div className="text-xl font-medium ">Title</div>
+            <div className="text-sm text-gray-500 mb-4 mt-2">
+              Be specific and imagine you’re asking a question to another person.
+            </div>
             <input
               className="question-title text-sm rounded w-full p-2 border border-gray-400 border rounded border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500"
               onChange={e => setTitle(e.target.value)}
@@ -49,10 +51,10 @@ const AskQuestion = () => {
               placeholder="e.g Is there an R funtion for finding the index of an element in a vector?"></input>
           </div>
         </form>
-        <form className="border-2 border-#E3E6E8 w-full mb-12 rounded">
-          <div className="p-4 bg-#FFFFFF ">
-            <div className="p-1">Body</div>
-            <div className="p-1 text-xs">
+        <form className="w-full mb-4 rounded bg-white shadow-md">
+          <div className="py-6 px-8 bg-#FFFFFF ">
+            <div className="text-xl font-medium ">Body</div>
+            <div className="text-sm text-gray-500 mb-4 mt-2">
               The body of your question contains your problem details and results. Minimum 30 characters.
             </div>
             <textarea
