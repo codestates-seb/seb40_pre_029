@@ -48,4 +48,24 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
+
+    @Column
+    private Integer answern;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "STATUS")
+    private QuestionStatus questionStatus = QuestionStatus.QUESTION_ACTIVE;
+
+    public enum QuestionStatus{
+        QUESTION_ACTIVE("활성화된 질문"),
+        QUESTION_INACTIVE("비활성화된 질문");
+
+        @Getter
+        private String status;
+
+        QuestionStatus(String status){this.status=status;}
+    }
+    public void addAnswer(Integer answern){
+        this.answern = answern+1;
+    }
 }

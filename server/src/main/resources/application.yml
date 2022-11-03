@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_HOST_NAME}/fuckingroulette?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://${DB_HOST_NAME}/${DB_STORAGE_NAME}?characterEncoding=UTF-8&serverTimezone=UTC
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
   jpa:
