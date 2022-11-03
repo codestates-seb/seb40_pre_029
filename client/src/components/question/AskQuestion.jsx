@@ -2,11 +2,11 @@
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Tag from "./Tag.jsx";
 
 const AskQuestion = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState({ title: "", article: "", tagList: [] });
   const [title, setTitle] = useState("");
   const [article, setArticle] = useState("");
@@ -24,7 +24,7 @@ const AskQuestion = () => {
     setQuestion({ title, article, tagList });
     postData(question);
     console.log(question);
-    // navigate("/");
+    navigate("/");
   };
 
   const handleOnChange = e => {
