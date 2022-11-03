@@ -1,16 +1,46 @@
 //author 누르면 페이지 이동 title 클릭하면 질문페이지로 이동
 //tag 부분 유효성검사 구현
 // import AskButton from "../buttons/AskButton.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DefaultButton from "../buttons/DefaultButton.jsx";
 import TabDefault from "../tabs/TabDefault.jsx";
 import { useNavigate } from "react-router-dom";
-import dummyArticle from "../../dummydata.js";
 
 export default function QuestionList() {
+  const getParsedDate = createdAt => {
+    return new Date(createdAt).toLocaleDateString("ko-KR");
+  };
+
   const navigate = useNavigate();
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
+  const [content, setContent] = useState([]);
+  // const hi = async data => {
+  //   console.log(data);
+  //   await fetch(`/question`, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setContent(data);
+  //     });
+  // };
+  // hi();
+  console.log(content);
+  useEffect(() => {
+    async function getData() {
+      await fetch("/question", {
+        method: "GET",
+        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setContent(data.content);
+        });
+    }
+    getData();
+  }, []);
 
   //handling filter click tab event
   const filterMap = [
@@ -46,11 +76,12 @@ export default function QuestionList() {
       </div>
       <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
       <ul className="questions-container relative">
-        {dummyArticle.map((article, idx) => {
+        {content.map((article, idx) => {
+          console.log(article);
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-36 flex-none">
-                {article.isSelected ? (
+                {/* {article.isSelected ? (
                   <div className="border-2 border-sky-700 text-sky-700 pt-0.5 pb-1 px-2 rounded font-semibold mb-1.5">
                     {article.commentsAmount} <span className="font-normal text-sky-800">answers</span>
                   </div>
@@ -58,7 +89,7 @@ export default function QuestionList() {
                   <div className="text-sky-700 pt-0.5 pb-1 rounded font-semibold mb-1.5">
                     {article.commentsAmount} <span className="font-normal text-sky-800">answers</span>
                   </div>
-                )}
+                )} */}
 
                 <div className="text-gray-500 pt-0.5 pb-1 rounded font-medium mb-1.5">
                   {article.views} <span className="font-normal text-gray-500">views</span>
@@ -66,16 +97,16 @@ export default function QuestionList() {
               </div>
               <div className="ml-6 grow">
                 <button
-                  value={article.QUESTION_ID}
+                  value={article.questionId}
                   onClick={onTitleClick}
                   className="text-2xl text-sky-700 mb-2 break-keep">
                   {article.title}
                 </button>
                 <div className="flex justify-between flex-wrap">
-                  <BodyTags target={article.tags} />
+                  {/* <BodyTags target={article.tags} /> */}
                   <div className="inline-block">
-                    <span className="text-sky-700 mr-1.5">{article.MEMBER_ID}</span>
-                    <span className="text-gray-500">•&nbsp;&nbsp;{article.createdAt}</span>
+                    {/* <span className="text-sky-700 mr-1.5">{article.MEMBER_ID}</span> */}
+                    <span className="text-gray-500">•&nbsp;&nbsp;{getParsedDate(article.createAt)}</span>
                   </div>
                 </div>
               </div>
@@ -87,16 +118,16 @@ export default function QuestionList() {
   );
 }
 
-function BodyTags({ target }) {
-  return (
-    <div className="flex my-1">
-      {target.map((el, idx) => {
-        return (
-          <span className="flex-none text-sky-800 text-sm px-2 pt-1 pb-1.5 bg-slate-200 rounded-sm mr-1" key={idx}>
-            {el.tag}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
+// function BodyTags({ target }) {
+//   return (
+//     <div className="flex my-1">
+//       {target.map((el, idx) => {
+//         return (
+//           <span className="flex-none text-sky-800 text-sm px-2 pt-1 pb-1.5 bg-slate-200 rounded-sm mr-1" key={idx}>
+//             {el.tag}
+//           </span>
+//         );
+//       })}
+//     </div>
+//   );
+// }
