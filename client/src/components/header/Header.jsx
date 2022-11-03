@@ -23,11 +23,17 @@ export default function Header() {
     }
   };
 
-  const userMenu = useRef();
+  const userMenu = useRef(null);
+  // console.log(userMenu);
 
   const modalCloseHandler = ({ target }) => {
-    if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
+    if (typeof userMenu.current === "undefined" || userMenu.current === null) {
+      return;
+    } else if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
   };
+  // const modalCloseHandler = ({ target }) => {
+  //   if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
+  // };
 
   useEffect(() => {
     window.addEventListener("mousedown", modalCloseHandler);
