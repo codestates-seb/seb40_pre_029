@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Tag = () => {
+const Tag = props => {
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
   const [tagAmount, setTagAmout] = useState(0);
@@ -27,6 +27,8 @@ const Tag = () => {
       setTagList(updatedTagList);
       setTagItem("");
       setTagAmout(tagAmount + 1);
+      props.setTagList(tagList);
+      console.log(tagList);
     } else {
       window.alert("maximum 5 tags");
     }
