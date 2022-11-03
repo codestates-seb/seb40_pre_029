@@ -48,7 +48,13 @@ public class MemberService {
         return savedMember;
     }
 
-    public Page<Member> findAllMember(int page, int size) {
+    public Optional<Member> findMember(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        //member.stream().map(() -> member.)
+        return member;
+    }
+
+    public Page<Member> findAllMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
     }
