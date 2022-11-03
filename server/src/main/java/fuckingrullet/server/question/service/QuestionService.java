@@ -40,7 +40,7 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question findQuestion(int questionId){
+    public Question findQuestion(long questionId){
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
         questionRepository.save(findQuestion);
@@ -50,21 +50,25 @@ public class QuestionService {
 
     public Page<Question> findQuestions(int page, int size, String sort){
         Page<Question> findAllQuestion = questionRepository.findAll(PageRequest.of(page,size, Sort.by(sort).descending()));
+        VerifiedNoQuestion(findAllQuestion);
         return findAllQuestion;
     }
 
     private void verifyExistsTitle(String title){
         Optional<Question> question = questionRepository.findByTitle(title);
+        if(question.isPresent()){
+            throw new BusinessLogicException(ExceptionCode.QUESTION_EXISTS);
+        }
     }
 
-    public Question findVerifiedQuestion(int questionId){
+    public Question findVerifiedQuestion(long questionId){
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return findQuestion;
     }
 
     public void deleteQuestion(int questionId) {
-        Question question = questionRepository.findById(questionId).orElseThrow(() ->
+        Question question = questionRepository.findById((long) questionId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         questionRepository.delete(question);
 
@@ -77,12 +81,12 @@ public class QuestionService {
         int start = (int)pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
         Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
-        verifiedNoQuestion(questions);
+        VerifiedNoQuestion(questions);
 
         return questions;
     }
 
-    private void verifiedNoQuestion(Page<Question> findAllQuestion) {
+    private void VerifiedNoQuestion(Page<Question> findAllQuestion) {
         if(findAllQuestion.getTotalElements()==0){
             throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
         }
