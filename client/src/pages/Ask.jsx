@@ -4,7 +4,7 @@ import Footer from "../components/footer/Footer.jsx";
 
 const Ask = () => {
   return (
-    <div className="">
+    <div className="bg-slate-300">
       <Header />
       <AskQuestion />
       <Footer />
