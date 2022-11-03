@@ -23,11 +23,13 @@ public class QuestionService {
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
 
         Optional.ofNullable(question.getModifiedAt())
-                .ifPresent(questionModifiedAt -> findQuestion.setModifiedAt(questionModifiedAt));
+                .ifPresent(findQuestion::setModifiedAt);
         Optional.ofNullable(question.getTitle())
-                .ifPresent(questionTitle -> findQuestion.setTitle(questionTitle));
+                .ifPresent(findQuestion::setTitle);
         Optional.ofNullable(question.getArticle())
-                .ifPresent(questionArticle -> findQuestion.setArticle(questionArticle));
+                .ifPresent(findQuestion::setArticle);
+        Optional.ofNullable(question.getQuestionStatus())
+                .ifPresent(findQuestion::setQuestionStatus);
 
         Question updateQuestion = questionRepository.save(findQuestion);
         return updateQuestion;
@@ -54,7 +56,8 @@ public class QuestionService {
     }
 
     public Page<Question> findQuestions(int page, int size, String sort){
-        Page<Question> findAllQuestion = questionRepository.findAll(PageRequest.of(page,size, Sort.by(sort).descending()));
+        Page<Question> findAllQuestion = questionRepository.findAllByQuestionStatus(PageRequest.of(
+                page,size, Sort.by(sort).descending()),Question.QuestionStatus.QUESTION_ACTIVE);
         VerifiedNoQuestion(findAllQuestion);
         return findAllQuestion;
     }

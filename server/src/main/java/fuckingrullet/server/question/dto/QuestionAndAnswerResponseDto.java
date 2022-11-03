@@ -1,6 +1,7 @@
 package fuckingrullet.server.question.dto;
 
 import fuckingrullet.server.answer.dto.AnswerResponseDto;
+import fuckingrullet.server.domain.Question;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,4 +22,6 @@ public class QuestionAndAnswerResponseDto {
 
     @Positive
     private Integer answern;
+
+    private Question.QuestionStatus questionStatus;
 }

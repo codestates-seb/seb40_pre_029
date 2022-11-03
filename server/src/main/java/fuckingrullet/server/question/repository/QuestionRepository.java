@@ -11,7 +11,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Optional<Question> findByTitle(String title);
 
-    Page<Question> findAll(Pageable pageable);
+    Page<Question> findAllByQuestionStatus(Pageable pageable, Question.QuestionStatus questionStatus);
 
 //    @Query(value = "select * from questions where upper(article) like upper(concat('%',keyWord,'%')) or upper(title) like upper(concat('%',keyWord,'%'))",
 //            nativeQuery = true)

@@ -35,6 +35,7 @@ public interface QuestionMapper {
         question.setQuestionId(questionPatchDto.getQuestionId());
         question.setTitle(questionPatchDto.getTitle());
         question.setArticle(questionPatchDto.getArticle());
+        question.setQuestionStatus(questionPatchDto.getQuestionStatus());
 
         return question;
     }
@@ -48,6 +49,7 @@ public interface QuestionMapper {
         questionResponseDto.setCreateAt(question.getCreateAt());
         questionResponseDto.setModifiedAt(question.getModifiedAt());
         questionResponseDto.setAnswern(question.getAnswern());
+        questionResponseDto.setQuestionStatus(question.getQuestionStatus());
 
 //        Member member = question.getMember();
         /*questionResponseDto.setMember(memberMapper.memberRegisterDtoToMember(member));*/
@@ -66,6 +68,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setCreateAt(question.getCreateAt());
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
+        questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
 
         try{
             Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);

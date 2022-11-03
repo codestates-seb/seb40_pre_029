@@ -40,14 +40,14 @@ public class QuestionController {
         this.answerMapper = answerMapper;
     }
 
-    @PostMapping("/question/post") // 맴버 제외
+    @PostMapping("/auth/question/post") // 맴버 제외
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto){
         Question question = questionService.createQuestion(
                 mapper.questionPostDtoToQuestion(questionPostDto));
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.CREATED);
     }
 
-    @PatchMapping("/question/patch/{question-id}") // 로그인 제외
+    @PatchMapping("/auth/question/patch/{question-id}") // 로그인 제외
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive @NotNull Long questionId,
                                         @Valid @RequestBody QuestionPatchDto questionPatchDto){
         questionPatchDto.setQuestionId(questionId);
@@ -58,7 +58,7 @@ public class QuestionController {
 
     }
 
-    @GetMapping("/question") //수정필요(dto추가)
+    @GetMapping("/auth/question") //수정필요(dto추가)
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
                                        @RequestParam(value = "sort", defaultValue = "createAt") String sort){
@@ -68,7 +68,7 @@ public class QuestionController {
         return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),pageQuestions), HttpStatus.OK);
     }
 
-    @GetMapping("/question/{question-id}")
+    @GetMapping("/auth/question/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId,
                                       @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
                                       @Positive @RequestParam(value = "size" , defaultValue = "5") int answerSize,

@@ -1,18 +1,18 @@
 package fuckingrullet.server.question.dto;
 
+import fuckingrullet.server.domain.Question;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
 public class QuestionPatchDto {
+    @Setter
     private Long questionId;
 
-    @NotBlank(message = "제목을 입력해야 합니다.")
     private String title;
 
-    @NotBlank(message = "내용을 입력해야 합니다.")
     private String article;
+
+    private Question.QuestionStatus questionStatus;
 }
