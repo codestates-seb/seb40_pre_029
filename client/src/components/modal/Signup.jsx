@@ -108,7 +108,7 @@ export default function SignupModal({ userMenu }) {
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
         <div className="flex z-50 justify-center items-center" ref={userMenu}>
           <form className="flex flex-col w-[28rem] h-fit bg-white rounded-2xl p-12" onSubmit={createID}>
-            <span className="text-3xl font-bold mb-8 text-center">Sign In</span>
+            <span className="text-3xl font-medium mb-8 text-center">Sign In</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
               <form className="w-full relative">

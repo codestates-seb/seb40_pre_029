@@ -43,7 +43,7 @@ export default function Header() {
   });
 
   return (
-    <>
+    <div className="sticky top-0 z-50 shadow">
       <div className="h-1 bg-emerald-500"></div>
       <div className="bg-slate-100 ">
         <div className="xl:w-[80rem] max-xl:w-full mx-auto px-4 h-16 flex flex-row items-center">
@@ -70,6 +70,6 @@ export default function Header() {
       </div>
       {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
-    </>
+    </div>
   );
 }

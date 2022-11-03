@@ -73,7 +73,7 @@ export default function LoginModal({ setLogin, userMenu }) {
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
         <div className="flex z-50 justify-center items-center" ref={userMenu}>
           <form className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12" onSubmit={loginProcess}>
-            <span className="text-3xl font-bold mb-8 text-center">Login</span>
+            <span className="text-3xl font-medium mb-8 text-center">Login</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
               <form className="w-full relative">
