@@ -7,9 +7,9 @@ const Question = () => {
   return (
     <>
       <Header />
-      <div className="flex">
-        <Navigation />
-        <Details />
+      <div className="flex xl:w-[80rem] max-xl:w-full mx-auto">
+        <Navigation className="" />
+        <Details className="grow" />
       </div>
       <Footer />
     </>

@@ -14,30 +14,30 @@ export default function Details() {
   views;
   const [body, setBody] = useState("");
   return (
-    <div className="mx-auto bg-gray-50 max-w-5xl pl-8">
-      <div className="py-8 border-b border-gray-300">
-        <h3 className="text-3xl mb-4">hi</h3>
+    <div className="w-full pt-10 pb-4 mr-8">
+      <div className="pl-12 pb-6 border-b border-gray-300">
+        <h3 className="text-3xl mb-4 font-medium">hi</h3>
         <div>
           <TitleBottomInfo element="Asked" value="today" />
           <TitleBottomInfo element="Modified" value="today" />
           <TitleBottomInfo element="Viewed" value={views} />
         </div>
       </div>
-      <div className="py-8 flex flex-row">
+      <div className="py-8 pl-12 flex flex-row">
         <UsefulSet />
         <QuestionBody />
       </div>
-      <div className="mt-4">
+      <div className="mt-4 pl-12 ">
         <span className="text-2xl mr-4">1</span>
         <span className="text-2xl">Answer</span>
       </div>
-      <div className="py-8 flex flex-row py-8 border-b border-gray-300">
+      <div className="py-8 pl-12 flex flex-row border-b border-gray-300">
         <UsefulSet />
         <QuestionAnswer />
       </div>
-      <div className="py-8 pr-8">
+      <div className="py-8 pr-8 pl-12">
         <span className="text-2xl">Your Answer</span>
-        <form className="w-full mt-4 rounded">
+        <form className="w-full mt-4 rounded mb-10">
           <textarea
             value={body}
             onChange={e => setBody(e.target.value)}
