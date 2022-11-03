@@ -14,17 +14,25 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private Long questionId;
 
-    @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = true)
-    private Member member;
+//    @OneToOne
+//    @JoinColumn(name = "MEMBER_ID", nullable = false)
+//    private Member member;
 
-    public void addMember(Member member){
-        this.member = member;
-    }
+//    public void addMember(Member member){
+//        this.member = member;
+//    }
 
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+
+    public void addAnswer(Integer answern){
+        this.answern = answern+1;
+    }
+
+//    public void deleteAnswer(Integer answern){
+//        this.answern = answern-1;
+//    }
 
     @Column(nullable = false)
     private String title;
@@ -41,11 +49,28 @@ public class Question {
     @Column(nullable = false)
     private Integer views;
 
-    @OneToOne
-    @JoinColumn(name = "RECOMMEND_ID", nullable = true)
-    private Recommends recommends;
+    @Column
+    private Integer answern;
 
-    @ManyToOne
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "STATUS")
+    private QuestionStatus questionStatus = QuestionStatus.QUESTION_ACTIVE;
+
+    public enum QuestionStatus{
+        QUESTION_ACTIVE("활성화된 질문"),
+        QUESTION_INACTIVE("비활성화된 질문");
+
+        @Getter
+        private String status;
+
+        QuestionStatus(String status){this.status=status;}
+    }
+
+//    @OneToOne
+//    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
+//    private Recommends recommends;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "TAG_ID")
+//    private Tag tag;
 }
