@@ -5,6 +5,7 @@ import fuckingrullet.server.answer.dto.AnswerPatchDto;
 import fuckingrullet.server.answer.repository.AnswerRepository;
 import fuckingrullet.server.domain.Answer;
 import fuckingrullet.server.domain.Question;
+
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,6 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
-
     public Answer updateAnswer(long answerId, AnswerPatchDto answerPatchDto) {
         Answer findAnswer = findVerifiedAnswer(answerId);//요청된 답이 DB에 없으면 에러
 
@@ -48,4 +48,9 @@ public class AnswerService {
                 PageRequest.of(answerPage-1,answerSize, Sort.by(answerSort).descending()),question);
         return findAllAnswer;
     }
+
+//    public void deleteAnswerByQuestion(long answerId){
+//        Answer deleteAnswerByQuestion = findVerifiedAnswer(answerId);
+//        answerRepository.delete(deleteAnswerByQuestion);
+//    }
 }

@@ -25,15 +25,17 @@ public class QuestionService {
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
 
         Optional.ofNullable(question.getModifiedAt())
-                .ifPresent(questionModifiedAt -> findQuestion.setModifiedAt(questionModifiedAt));
+                .ifPresent(findQuestion::setModifiedAt);
         Optional.ofNullable(question.getTitle())
-                .ifPresent(questionTitle -> findQuestion.setTitle(questionTitle));
+                .ifPresent(findQuestion::setTitle);
         Optional.ofNullable(question.getArticle())
-                .ifPresent(questionArticle -> findQuestion.setArticle(questionArticle));
+                .ifPresent(findQuestion::setArticle);
+        Optional.ofNullable(question.getQuestionStatus())
+                .ifPresent(findQuestion::setQuestionStatus);
 
         Question updateQuestion = questionRepository.save(findQuestion);
         return updateQuestion;
-    };
+    }
 
     public Question createQuestion(Question question){
         verifyExistsTitle(question.getTitle());
@@ -48,8 +50,16 @@ public class QuestionService {
         return findQuestion;
     }
 
+    public Question plusAnswer(long questionId){
+        Question plusAnswer = findVerifiedQuestion(questionId);
+        plusAnswer.setAnswern(plusAnswer.getAnswern()+1);
+        questionRepository.save(plusAnswer);
+        return plusAnswer;
+    }
+
     public Page<Question> findQuestions(int page, int size, String sort){
-        Page<Question> findAllQuestion = questionRepository.findAll(PageRequest.of(page,size, Sort.by(sort).descending()));
+        Page<Question> findAllQuestion = questionRepository.findAllByQuestionStatus(PageRequest.of(
+                page,size, Sort.by(sort).descending()),Question.QuestionStatus.QUESTION_ACTIVE);
         VerifiedNoQuestion(findAllQuestion);
         return findAllQuestion;
     }
@@ -67,28 +77,19 @@ public class QuestionService {
         return findQuestion;
     }
 
-    public void deleteQuestion(int questionId) {
-        Question question = questionRepository.findById((long) questionId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        questionRepository.delete(question);
-
-    }
-
-
-    public Page<Question> searchQuestion(String keyWord, int page, int size, String sort) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
-        List<Question> searchResult = questionRepository.searchQuestionsByKeyWord(keyWord);
-        int start = (int)pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
-        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
-        VerifiedNoQuestion(questions);
-
-        return questions;
-    }
-
     private void VerifiedNoQuestion(Page<Question> findAllQuestion) {
         if(findAllQuestion.getTotalElements()==0){
             throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
         }
+    }
+
+    public Page<Question> searchQuestions(String keyWord, int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
+        List<Question> searchResult = questionRepository.searchQuestionByKeyWord(keyWord);
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end),pageRequest, searchResult.size());
+        VerifiedNoQuestion(questions);
+        return questions;
     }
 }
