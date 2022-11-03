@@ -3,6 +3,7 @@ package fuckingrullet.server.question.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,4 +16,7 @@ public class QuestionResponseDto {
     /*private MemberRegisterDto member;*/
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
+
+    @Positive
+    private int answern;
 }

@@ -15,6 +15,7 @@ public interface AnswerMapper {
         Answer answer = new Answer();
         answer.setArticle(answerPostDto.getArticle());
         answer.setQuestion(questionService.findVerifiedQuestion(answerPostDto.getQuestionId()));// 게시글아이디 가져오기
+        answer.setQuestion(questionService.plusAnswer(answerPostDto.getQuestionId()));
 
         return answer;
     }

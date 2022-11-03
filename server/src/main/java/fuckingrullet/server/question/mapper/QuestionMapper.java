@@ -4,11 +4,8 @@ package fuckingrullet.server.question.mapper;
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
 import fuckingrullet.server.domain.Answer;
-import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
-import fuckingrullet.server.member.mapper.MemberMapper;
-import fuckingrullet.server.member.service.MemberService;
 import fuckingrullet.server.question.dto.*;
 import fuckingrullet.server.question.service.QuestionService;
 import org.mapstruct.Mapper;
@@ -18,7 +15,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
-    default Question questionPostDtoToQuestion(MemberService memberService, QuestionPostDto questionPostDto){
+    default Question questionPostDtoToQuestion(QuestionPostDto questionPostDto){
         Question question = new Question();
 
         question.setTitle(questionPostDto.getTitle());
@@ -26,6 +23,7 @@ public interface QuestionMapper {
         question.setViews(0);
         question.getCreateAt();
         question.getModifiedAt();
+        question.setAnswern(0);
         /*question.setMember(memberService.getLoginMember);*/
 
         return question;
@@ -41,7 +39,7 @@ public interface QuestionMapper {
         return question;
     }
 
-    default QuestionResponseDto questionToQuestionResponseDto(MemberMapper memberMapper, Question question){
+    default QuestionResponseDto questionToQuestionResponseDto(Question question){
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
         questionResponseDto.setQuestionId(question.getQuestionId());
         questionResponseDto.setTitle(question.getTitle());
@@ -49,6 +47,7 @@ public interface QuestionMapper {
         questionResponseDto.setViews(question.getViews());
         questionResponseDto.setCreateAt(question.getCreateAt());
         questionResponseDto.setModifiedAt(question.getModifiedAt());
+        questionResponseDto.setAnswern(question.getAnswern());
 
 //        Member member = question.getMember();
         /*questionResponseDto.setMember(memberMapper.memberRegisterDtoToMember(member));*/
@@ -66,6 +65,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setViews(question.getViews());
         questionAndAnswerResponseDto.setCreateAt(question.getCreateAt());
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
+        questionAndAnswerResponseDto.setAnswern(question.getAnswern());
 
         try{
             Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
@@ -74,4 +74,10 @@ public interface QuestionMapper {
         }catch (BusinessLogicException e){}
         return questionAndAnswerResponseDto;
     }
+
+//    default void questionDeleteDto(AnswerService answerService QuestionDeleteDto questionDeleteDto){
+//        Question question = new Question();
+//        question.setQuestionId(questionDeleteDto.getQuestionId());
+//        question.setAnswer(answerService.deleteAnswerByQuestion(q.getAnswerId()));
+//    }
 }

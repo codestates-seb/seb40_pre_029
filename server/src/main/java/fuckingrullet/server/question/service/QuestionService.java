@@ -6,12 +6,10 @@ import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,7 +31,7 @@ public class QuestionService {
 
         Question updateQuestion = questionRepository.save(findQuestion);
         return updateQuestion;
-    };
+    }
 
     public Question createQuestion(Question question){
         verifyExistsTitle(question.getTitle());
@@ -46,6 +44,13 @@ public class QuestionService {
         questionRepository.save(findQuestion);
 
         return findQuestion;
+    }
+
+    public Question plusAnswer(long questionId){
+        Question plusAnswer = findVerifiedQuestion(questionId);
+        plusAnswer.setAnswern(plusAnswer.getAnswern()+1);
+        questionRepository.save(plusAnswer);
+        return plusAnswer;
     }
 
     public Page<Question> findQuestions(int page, int size, String sort){
@@ -67,24 +72,24 @@ public class QuestionService {
         return findQuestion;
     }
 
-    public void deleteQuestion(int questionId) {
-        Question question = questionRepository.findById((long) questionId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        questionRepository.delete(question);
+//    public void deleteQuestion(int questionId) {
+//        Question question = questionRepository.findById((long) questionId).orElseThrow(() ->
+//                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+//        questionRepository.delete(question);
+//
+//    }
 
-    }
 
-
-    public Page<Question> searchQuestion(String keyWord, int page, int size, String sort) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
-        List<Question> searchResult = questionRepository.searchQuestionsByKeyWord(keyWord);
-        int start = (int)pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
-        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
-        VerifiedNoQuestion(questions);
-
-        return questions;
-    }
+//    public Page<Question> searchQuestion(String keyWord, int page, int size, String sort) {
+//        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
+//        List<Question> searchResult = questionRepository.searchQuestionsByKeyWord(keyWord);
+//        int start = (int)pageRequest.getOffset();
+//        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+//        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
+//        VerifiedNoQuestion(questions);
+//
+//        return questions;
+//    }
 
     private void VerifiedNoQuestion(Page<Question> findAllQuestion) {
         if(findAllQuestion.getTotalElements()==0){

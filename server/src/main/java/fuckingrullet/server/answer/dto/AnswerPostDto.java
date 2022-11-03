@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 @Getter
 @NoArgsConstructor
 public class AnswerPostDto {
@@ -16,4 +13,6 @@ public class AnswerPostDto {
     private String article;
 
     private Long questionId; //postdto에 게시글아이디추가
+
+
 }

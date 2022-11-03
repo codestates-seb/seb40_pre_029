@@ -3,8 +3,7 @@ package fuckingrullet.server.question.controller;
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
 import fuckingrullet.server.domain.Question;
-import fuckingrullet.server.member.mapper.MemberMapper;
-import fuckingrullet.server.member.service.MemberService;
+import fuckingrullet.server.question.dto.MultiResponseDto;
 import fuckingrullet.server.question.dto.QuestionPatchDto;
 import fuckingrullet.server.question.dto.QuestionPostDto;
 import fuckingrullet.server.question.dto.SingleResponseDto;
@@ -26,17 +25,17 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
-    private final MemberService memberService;
-    private final MemberMapper memberMapper;
+//    private final MemberService memberService;
+//    private final MemberMapper memberMapper;
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService, MemberMapper memberMapper,
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, /*MemberService memberService, MemberMapper memberMapper,*/
                               AnswerService answerService, AnswerMapper answerMapper){
         this.questionService = questionService;
         this.mapper = mapper;
-        this.memberService = memberService;
-        this.memberMapper = memberMapper;
+//        this.memberService = memberService;
+//        this.memberMapper = memberMapper;
         this.answerService = answerService;
         this.answerMapper = answerMapper;
     }
@@ -44,8 +43,8 @@ public class QuestionController {
     @PostMapping("/question/post") // 맴버 제외
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto){
         Question question = questionService.createQuestion(
-                mapper.questionPostDtoToQuestion(memberService,questionPostDto));
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(memberMapper,question)),HttpStatus.CREATED);
+                mapper.questionPostDtoToQuestion(questionPostDto));
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.CREATED);
     }
 
     @PatchMapping("/question/patch/{question-id}") // 로그인 제외
@@ -66,7 +65,7 @@ public class QuestionController {
         Page<Question> pageQuestions = questionService.findQuestions(page-1,size,sort);
         List<Question> questions = pageQuestions.getContent();
 
-        return new ResponseEntity<>(pageQuestions, HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),pageQuestions), HttpStatus.OK);
     }
 
     @GetMapping("/question/{question-id}")
@@ -79,21 +78,21 @@ public class QuestionController {
                 answerService, answerMapper,/*memberMapper,*/question,answerPage,answerSize,answerSort)),HttpStatus.OK);
     }
 
-    @DeleteMapping("/question/delete/{question-id}") // 로그인 제외
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive int questionId){
-        questionService.deleteQuestion(questionId);
+//    @DeleteMapping("/question/delete/{question-id}") // 로그인 제외
+//    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive int questionId){
+//        questionService.deleteQuestion(questionId);
+//
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/question/search") //검색기능 구현 아직 안됨
-    public ResponseEntity getQuestions(@RequestParam("search") String keyWord,
-                                       @Positive @RequestParam(value = "page", defaultValue = "1") int page,
-                                       @Positive @RequestParam(value = "size", defaultValue = "5") int size,
-                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
-        Page<Question> searchResult = questionService.searchQuestion(keyWord, page-1, size, sort);
-        List<Question> questions = searchResult.getContent();
-
-        return new ResponseEntity<>(searchResult,HttpStatus.OK);
-    }
+//    @GetMapping("/question/search") //검색기능 구현 아직 안됨
+//    public ResponseEntity getQuestions(@RequestParam("search") String keyWord,
+//                                       @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+//                                       @Positive @RequestParam(value = "size", defaultValue = "5") int size,
+//                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
+//        Page<Question> searchResult = questionService.searchQuestion(keyWord, page-1, size, sort);
+//        List<Question> questions = searchResult.getContent();
+//
+//        return new ResponseEntity<>(searchResult,HttpStatus.OK);
+//    }
 }
