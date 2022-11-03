@@ -1,8 +1,6 @@
 package fuckingrullet.server.member.controller;
 
 import fuckingrullet.server.domain.Member;
-import fuckingrullet.server.exception.BusinessLogicException;
-import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.member.dto.MemberGetAllMemberDto;
 import fuckingrullet.server.member.dto.MemberRegisterDto;
 import fuckingrullet.server.member.mapper.MemberMapper;
@@ -10,7 +8,6 @@ import fuckingrullet.server.member.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +19,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Validated
@@ -54,12 +50,6 @@ public class MemberController {
     }
 
     // 회원 내정보 구현
-    @GetMapping("/auth/member")
-    public ResponseEntity findMember(@AuthenticationPrincipal Member member) {
-        Optional<Member> find = Optional.ofNullable(memberService.findMember(member.getEmail())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
-        return new ResponseEntity<>(find, HttpStatus.OK);
-    }
 
     // 전체 회원 목록 구현
     @GetMapping("/auth/members")

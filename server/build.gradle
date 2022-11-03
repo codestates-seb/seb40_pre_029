@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fuckingrullet'
-version = '0.2.9-SNAPSHOT'
+version = '0.3.0-SNAPSHOT' // 백엔드 DB 통합 연결
 sourceCompatibility = '11'
 
 configurations {

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://host.laness.net:3306/fuckingroulette?characterEncoding=UTF-8&serverTimezone=UTC
-    username: roulette
-    password: roulette!
+    url: jdbc:mariadb://${DB_HOST_NAME}/fuckingroulette?characterEncoding=UTF-8&serverTimezone=UTC
+    username: ${DB_AUTH_ID}
+    password: ${DB_AUTH_PASSWORD}
   jpa:
     open-in-view: false
     hibernate:
@@ -24,6 +24,6 @@ mail:
     admin: admin@gmail.com
 
 jwt:
-  secret-key: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY2NzMxMjMwOCwiaWF0IjoxNjY3MzEyMzA4fQ.ki5gEGWfkVOo08QGeYAAPEW4pfScj38Wz_uHsaUFOPI  # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420

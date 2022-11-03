@@ -14,13 +14,13 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private Long questionId;
 
-//    @OneToOne
-//    @JoinColumn(name = "MEMBER_ID", nullable = false)
-//    private Member member;
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID", nullable = true)
+    private Member member;
 
-//    public void addMember(Member member){
-//        this.member = member;
-//    }
+    public void addMember(Member member){
+        this.member = member;
+    }
 
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")
@@ -29,7 +29,7 @@ public class Question {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String article;
 
     @Column(nullable = false)
@@ -41,11 +41,11 @@ public class Question {
     @Column(nullable = false)
     private Integer views;
 
-//    @OneToOne
-//    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
-//    private Recommends recommends;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "TAG_ID")
-//    private Tag tag;
+    @OneToOne
+    @JoinColumn(name = "RECOMMEND_ID", nullable = true)
+    private Recommends recommends;
+
+    @ManyToOne
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
 }

@@ -1,7 +1,6 @@
 package fuckingrullet.server.config;
 
 
-import fuckingrullet.server.member.service.MemberDetailsService;
 import fuckingrullet.server.security.handler.MemberAccessDeniedHandler;
 import fuckingrullet.server.security.handler.MemberAuthenticationEntryPoint;
 import fuckingrullet.server.security.handler.MemberAuthenticationFailureHandler;
@@ -18,8 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
