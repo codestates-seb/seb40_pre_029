@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LoginModal(setLogin) {
+export default function LoginModal({ setLogin, userMenu }) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -68,24 +68,76 @@ export default function LoginModal(setLogin) {
     }
   };
 
-  //prettier-ignore
   return (
     <>
-      <div className="flex fixed inset-0 bg-gray-600 bg-opacity-80 h-full w-full z-50 justify-center items-center">
-        <div className="flex h-full justify-center items-center absolute inset-0">
-            <form className="flex w-96 h-1/2 z-0 flex flex-col space-y-4 border-4 bg-white p-2" onSubmit={loginProcess}>
-              <span className="text-sm">Email</span>
-              <input className="border p-2" name="email" onChange={onChange} value={inputs.email} type='text'></input>
-              {isValid.email? null:<span className={inputs.email.length === 0?"text-black-500 text-sm":"text-red-500 text-sm"}>닉네임 형식에 맞춰 입력 가능합니다.</span>}
-              <span className="text-sm">Password</span>
-              <input className="border p-2" name="pw" onChange={onChange} value={inputs.pw} type='password'></input>
-              {isValid.pw? <span className="text-white text-sm">임시방편</span>:<span className={inputs.pw.length === 0?"text-black-500 text-sm":"text-red-500 text-sm"}>비밀번호에는 영문,숫자,특수문자만 입력 가능합니다.</span>}
-              <div className="flex justify-center items-end">
-              <button className="flex justify-center items-center rounded h-10 w-24 bg-sky-500 hover:bg-blue-500 shadow-blue-500/50 min-w-min shadow text-white text-xs" type="submit">Log in</button>
+      <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
+        <div className="flex z-50 justify-center items-center" ref={userMenu}>
+          <form className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12" onSubmit={loginProcess}>
+            <span className="text-3xl font-medium mb-8 text-center">Login</span>
+            <div className="flex flex-col mb-6">
+              <span>Email</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="email"
+                  onChange={onChange}
+                  value={inputs.email}
+                  type="text"
+                  placeholder="Type your email"></input>
+              </form>
+              {isValid.email ? (
+                <span className="h-5 w-80 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    inputs.email.length === 0 ? "text-green-600 text-sm w-80 mt-1" : "text-red-500 text-sm w-80 mt-1"
+                  }>
+                  닉네임 형식에 맞춰 입력 가능합니다.
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col mb-6">
+              <span>Password</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="pw"
+                  onChange={onChange}
+                  value={inputs.pw}
+                  type="password"
+                  placeholder="Type your password"></input>
+              </form>
+              {isValid.pw ? (
+                <span className="h-5 w-80 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    inputs.pw.length === 0 ? "text-green-600 text-sm w-80 mt-1" : "text-red-500 text-sm w-80 mt-1"
+                  }>
+                  비밀번호에는 영문,숫자,특수문자만 입력 가능합니다.
+                </span>
+              )}
+            </div>
+            <div className="flex justify-center items-end pt-5">
+              <button
+                className="shadow-sky-400 shadow-tline border border-sky-500 hover:bg-sky-500 h-12 w-full min-w-36 bg-blue-500 rounded text-white"
+                type="submit">
+                Login
+              </button>
+            </div>
+            <div className="text-center mt-8">
+              <span className="text-sm text-gray-400">Or Sign Up Using</span>
+              <div className="flex justify-center mt-4 rounded-sm">
+                <img src={require("../images/naver login.png")} alt="" className="w-14 h-14 my-4 mx-6"></img>
+                <img src={require("../images/kakao login.png")} alt="" className="w-14 h-14 my-4 mx-6"></img>
+                <img src={require("../images/google login.png")} alt="" className="w-14 h-14 my-4 mx-6"></img>
               </div>
-            </form>
+            </div>
+          </form>
         </div>
-      </div>  
+      </div>
     </>
   );
 }
