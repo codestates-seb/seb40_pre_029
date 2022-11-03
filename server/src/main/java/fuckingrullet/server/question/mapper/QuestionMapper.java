@@ -77,10 +77,4 @@ public interface QuestionMapper {
         }catch (BusinessLogicException e){}
         return questionAndAnswerResponseDto;
     }
-
-//    default void questionDeleteDto(AnswerService answerService QuestionDeleteDto questionDeleteDto){
-//        Question question = new Question();
-//        question.setQuestionId(questionDeleteDto.getQuestionId());
-//        question.setAnswer(answerService.deleteAnswerByQuestion(q.getAnswerId()));
-//    }
 }

@@ -78,21 +78,14 @@ public class QuestionController {
                 answerService, answerMapper,/*memberMapper,*/question,answerPage,answerSize,answerSort)),HttpStatus.OK);
     }
 
-//    @DeleteMapping("/question/delete/{question-id}") // 로그인 제외
-//    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive int questionId){
-//        questionService.deleteQuestion(questionId);
-//
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+    @GetMapping("/auth/question/search")
+    public ResponseEntity getQuestions(@RequestParam("search") String keyWord, @Positive @RequestParam(value = "page",
+            defaultValue = "1") int page, @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                       @RequestParam(value = "sort",defaultValue = "createAt") String sort) {
+        Page<Question> searchResult = questionService.searchQuestions(keyWord,page-1,size,sort);
+        List<Question> questions = searchResult.getContent();
 
-//    @GetMapping("/question/search") //검색기능 구현 아직 안됨
-//    public ResponseEntity getQuestions(@RequestParam("search") String keyWord,
-//                                       @Positive @RequestParam(value = "page", defaultValue = "1") int page,
-//                                       @Positive @RequestParam(value = "size", defaultValue = "5") int size,
-//                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
-//        Page<Question> searchResult = questionService.searchQuestion(keyWord, page-1, size, sort);
-//        List<Question> questions = searchResult.getContent();
-//
-//        return new ResponseEntity<>(searchResult,HttpStatus.OK);
-//    }
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),
+                searchResult),HttpStatus.OK);
+    }
 }
