@@ -15,19 +15,7 @@ export default function QuestionList() {
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
   const [content, setContent] = useState([]);
-  // const hi = async data => {
-  //   console.log(data);
-  //   await fetch(`/question`, {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setContent(data);
-  //     });
-  // };
-  // hi();
-  console.log(content);
+
   useEffect(() => {
     async function getData() {
       await fetch("/question", {
@@ -50,7 +38,6 @@ export default function QuestionList() {
   ];
   //if this is on, have to [GET] for its relating data
   const onTitleClick = e => {
-    console.log(e.target.value);
     navigate(`/questions/${e.target.value}`);
   };
   const filterOnClick = idx => {
@@ -59,10 +46,6 @@ export default function QuestionList() {
     if (filterClicked) {
       setFilterClicked(true);
     }
-    // if (Number(e.target.value) === filterMap.length - 1) {
-    //   setIsLast(true);
-    //   console.log(isLast);
-    // }
   };
 
   //question을 누르면 해당 id의 질문 디테일 페이지로 넘어감
@@ -77,7 +60,6 @@ export default function QuestionList() {
       <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
       <ul className="questions-container relative">
         {content.map((article, idx) => {
-          console.log(article);
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-36 flex-none">
