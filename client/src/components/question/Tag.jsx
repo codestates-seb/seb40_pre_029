@@ -6,6 +6,7 @@ const Tag = props => {
   const [tagAmount, setTagAmout] = useState(0);
 
   const onKeyPress = e => {
+    // enter 키가 눌리고 중복되는 값이 없을 때
     if (e.target.value !== "" && e.key === "Enter" && tagList.indexOf(e.target.value) === -1) {
       submitTagItem();
     }
@@ -16,7 +17,6 @@ const Tag = props => {
       tagList.pop();
       setTagList(tagList);
       setTagAmout(tagAmount - 1);
-      console.log(tagList);
     }
   };
 
@@ -25,10 +25,9 @@ const Tag = props => {
       let updatedTagList = [...tagList];
       updatedTagList.push(tagItem);
       setTagList(updatedTagList);
+      props.setTagList(updatedTagList);
       setTagItem("");
       setTagAmout(tagAmount + 1);
-      props.setTagList(tagList);
-      console.log(tagList);
     } else {
       window.alert("maximum 5 tags");
     }
@@ -38,8 +37,10 @@ const Tag = props => {
     const deleteTagItem = e.target.parentElement.firstChild.innerText;
     const filteredTagList = tagList.filter(tagItem => tagItem !== deleteTagItem);
     setTagList(filteredTagList);
+    props.setTagList(() => filteredTagList);
     setTagAmout(tagAmount - 1);
   };
+
   return (
     <div className="question-tag-container border-2 border-#E3E6E8 mb-12 rounded max-w-screen-sm">
       <div className="question-tag p-4 bg-#FFFFFF ">

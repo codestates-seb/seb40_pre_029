@@ -20,19 +20,6 @@ export default function QuestionList() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
 
-  // const hi = async data => {
-  //   console.log(data);
-  //   await fetch(`/question`, {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setContent(data);
-  //     });
-  // };
-  // hi();
-
   useEffect(() => {
     async function getData() {
       await fetch(`/question?page=${page}`, {
@@ -67,7 +54,6 @@ export default function QuestionList() {
   ];
   //if this is on, have to [GET] for its relating data
   const onTitleClick = e => {
-    // console.log(e.target.value);
     navigate(`/questions/${e.target.value}`);
   };
   const filterOnClick = idx => {
@@ -76,10 +62,6 @@ export default function QuestionList() {
     if (filterClicked) {
       setFilterClicked(true);
     }
-    // if (Number(e.target.value) === filterMap.length - 1) {
-    //   setIsLast(true);
-    //   console.log(isLast);
-    // }
   };
   if (content.length === 0) {
     return (
@@ -103,7 +85,6 @@ export default function QuestionList() {
       </div>
       <ul className="questions-container relative">
         {content.map((article, idx) => {
-          // console.log(article);
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-32 flex-none mt-0.5">
