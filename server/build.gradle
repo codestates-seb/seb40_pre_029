@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fuckingrullet'
-version = '0.2.2-SNAPSHOT'
+version = '0.2.9-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	implementation 'com.google.code.gson:gson:2.10'
-	compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
