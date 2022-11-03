@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar.jsx";
 import ThemeButton from "../buttons/ThemeButton.jsx";
 import LoginModal from "../modal/Login.jsx";
 import SignupModal from "../modal/Signup.jsx";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Header() {
   const [logIn, setLogin] = useState(false);
@@ -22,6 +22,19 @@ export default function Header() {
       setLogin(false);
     }
   };
+
+  const userMenu = useRef();
+
+  const modalCloseHandler = ({ target }) => {
+    if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousedown", modalCloseHandler);
+    return () => {
+      window.removeEventListener("mousedown", modalCloseHandler);
+    };
+  });
 
   return (
     <>
@@ -49,8 +62,8 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal /> : null}
-      {modalOpen.signup ? <SignupModal /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
+      {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </>
   );
 }
