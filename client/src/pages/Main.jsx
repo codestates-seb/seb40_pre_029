@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <>
       <Header />
-      <div className="flex lg:w-[80rem] max-lg:w-full mx-auto ">
+      <div className="flex xl:w-[80rem] max-xl:w-full mx-auto ">
         <Navigation className="" />
         <QuestionList className="grow" />
       </div>
