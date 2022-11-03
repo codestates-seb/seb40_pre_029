@@ -16,25 +16,9 @@ export default function QuestionList() {
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
   const [content, setContent] = useState([]);
-<<<<<<< HEAD
-=======
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-
-  // const hi = async data => {
-  //   console.log(data);
-  //   await fetch(`/question`, {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setContent(data);
-  //     });
-  // };
-  // hi();
->>>>>>> da0c7411379a6cb19865dcc7b01c36839b3bee21
 
   useEffect(() => {
     async function getData() {
@@ -70,10 +54,6 @@ export default function QuestionList() {
   ];
   //if this is on, have to [GET] for its relating data
   const onTitleClick = e => {
-<<<<<<< HEAD
-=======
-    // console.log(e.target.value);
->>>>>>> da0c7411379a6cb19865dcc7b01c36839b3bee21
     navigate(`/questions/${e.target.value}`);
   };
   const filterOnClick = idx => {
@@ -105,10 +85,6 @@ export default function QuestionList() {
       </div>
       <ul className="questions-container relative">
         {content.map((article, idx) => {
-<<<<<<< HEAD
-=======
-          // console.log(article);
->>>>>>> da0c7411379a6cb19865dcc7b01c36839b3bee21
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-32 flex-none mt-0.5">
