@@ -3,20 +3,30 @@ import QuestionBody from "./QuestionBody.jsx";
 import QuestionAnswer from "./QuestionAnswer.jsx";
 import UsefulSet from "./UsefulSet.jsx";
 import DefaultButton from "../buttons/DefaultButton.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../util/useFetch.jsx";
 
 export default function Details() {
   const params = useParams();
   const [comment, setComment] = useState("");
-  const [data, isPending, error] = useFetch(`/question/${params}`);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/auth/question/${params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.data);
+        setData(data.data);
+      });
+    return () => {
+      return;
+    };
+  }, []);
 
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");
   };
 
-  console.log([data, isPending, error]);
   return (
     <div className="w-full pt-10 pb-4 mr-8">
       <div className="pl-12 pb-6 border-b border-gray-300">

@@ -31,8 +31,10 @@ export default function QuestionList() {
       })
         .then(res => res.json())
         .then(data => {
-          setTotalPage(() => makeButton(data.totalPages));
-          setContent(data.content);
+          // console.log(data);
+          // console.log(data.pageInfo.totalPages);
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
           setData(data);
         });
     }
@@ -73,7 +75,7 @@ export default function QuestionList() {
       </div>
       <div className="flex flex-row justify-between items-center pl-10 mb-4">
         <div className="text-2xl flex items-center">
-          <div className="mr-1 font-medium inline-block pt-0.5">{data.totalElements}</div>
+          <div className="mr-1 font-medium inline-block pt-0.5">{data.pageInfo.totalElements}</div>
           <span className="text-gray-700 font-normal text-xl">questions</span>
         </div>
         <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
@@ -83,9 +85,9 @@ export default function QuestionList() {
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
               <div className="flex flex-col items-end w-32 flex-none mt-0.5">
-                {article.answers ? (
+                {article.answern ? (
                   <div className="text-sky-700 pt-0.5 pb-1 rounded font-semibold mb-1.5">
-                    {article.commentsAmount} <span className="font-normal text-sky-800">answers</span>
+                    {article.answern} <span className="font-normal text-sky-800">answers</span>
                   </div>
                 ) : (
                   <div className="text-sky-700 pt-0.5 pb-1 rounded font-semibold mb-1.5">
