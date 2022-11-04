@@ -36,14 +36,6 @@ const MyProfile = () => {
     } else {
       await res.json().then(data => console.log(data));
       alert("로그인이 완료되었습니다");
-      setInputs({
-        email: "",
-        pw: "",
-      });
-      setIsValid({
-        email: false,
-        pw: false,
-      });
       console.log(res.headers.get("refresh"));
       console.log(response.headers.get("authorization"));
       console.log("이렇게하면" + res.headers.refresh);

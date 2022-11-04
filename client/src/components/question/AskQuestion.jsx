@@ -1,30 +1,53 @@
 //질문하기 버튼을 누르면 보이는 창이다.
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 import Tag from "./Tag.jsx";
+import { useParams } from "react-router-dom";
 
-const AskQuestion = () => {
-  const navigate = useNavigate();
+const AskQuestion = ({ onEditMode, editData }) => {
+  // const navigate = useNavigate();
+
+  const params = useParams();
   const [question, setQuestion] = useState({ title: "", article: "", tagList: [] });
   const [title, setTitle] = useState("");
   const [article, setArticle] = useState("");
   const [tagList, setTagList] = useState([]);
 
+  useEffect(() => {
+    if (onEditMode) {
+      setTitle(editData.title);
+      setArticle(editData.article);
+    }
+  }, [editData]);
+
   const postData = async question => {
-    await fetch("/question/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
-      body: JSON.stringify(question),
-    }).then(res => console.log(res));
+    //만약 edit 버튼을 통해 컴포넌트에 접근을 하지 않았다면 (ask question 버튼을 눌렀다면)
+    if (!onEditMode) {
+      await fetch("../question/post", {
+        withCredentials: true,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(question),
+      }).then(res => console.log(res));
+    } else {
+      //만약 edit 버튼을 통해 컴포넌트에 접근했다면
+      await fetch(`/auth/question/patch/${params.id}`, {
+        withCredentials: true,
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(question),
+      }).then(res => console.log(res));
+    }
   };
 
   const onPostClick = () => {
     setQuestion({ title, article, tagList });
     postData(question);
     console.log(question);
-    navigate("/");
+    // navigate("/");
+    // window.location.reload();
   };
 
   const handleOnChange = e => {
@@ -68,7 +91,7 @@ const AskQuestion = () => {
         <button
           className="question-post p-2 mb-4 rounded border-none text-slate-50 bg-sky-500 shadow-blue-500/50 shadow w-36 h-12 text-sm"
           onClick={onPostClick}>
-          Post your question
+          {onEditMode ? "Edit your question" : "Post your question"}
         </button>
       </section>
     </div>
