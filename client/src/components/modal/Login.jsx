@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LoginModal({ setLogin, userMenu }) {
+export default function LoginModal({ userMenu }) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -46,15 +46,17 @@ export default function LoginModal({ setLogin, userMenu }) {
       password: data.target[1].value,
     };
 
-    const response = await fetch("/login", {
+    //prettier-ignore
+    const response = await fetch("/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
-    });
-
-    if (!response.ok) {
-      await response.json().then(data => alert(data.message));
+      })
+    let res = response;
+    if (!res.ok) {
+      await res.json().then(data => alert(data));
     } else {
+      await res.json().then(data => console.log(data));
       alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
@@ -64,7 +66,12 @@ export default function LoginModal({ setLogin, userMenu }) {
         email: false,
         pw: false,
       });
-      setLogin(true);
+      console.log(res.headers.get("refresh"));
+      console.log(response.headers.get("authorization"));
+      console.log("이렇게하면" + res.headers.refresh);
+
+      // setLogin(true);
+      // return location.reload();
     }
   };
 

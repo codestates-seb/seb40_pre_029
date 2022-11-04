@@ -24,7 +24,7 @@ export default function SignupModal({ userMenu }) {
     const pwpattern=new RegExp("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$");
     const nicknamepattern=new RegExp("^[a-zA-Z0-9가-힣]+$");
     
-
+    
     setSignupInputs({
       ...signupinputs,
       [name]: value,
@@ -70,7 +70,7 @@ export default function SignupModal({ userMenu }) {
       displayName: data.target[1].value,
     };
 
-    const response = await fetch("/register", {
+    const response = await fetch("/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(info),
