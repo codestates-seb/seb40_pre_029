@@ -27,9 +27,6 @@ export default function Header() {
     }
   };
 
-<<<<<<< HEAD
-  useEffect(() => {}, [logIn]);
-=======
   const userMenu = useRef(null);
   // console.log(userMenu);
 
@@ -48,7 +45,6 @@ export default function Header() {
       window.removeEventListener("mousedown", modalCloseHandler);
     };
   });
->>>>>>> b5f46b2d4ad82a664712c13144c8de623feb4297
 
   return (
     <div className="sticky top-0 z-50 shadow">
