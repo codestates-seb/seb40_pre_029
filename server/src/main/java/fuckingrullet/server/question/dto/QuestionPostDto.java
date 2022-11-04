@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class QuestionPostDto {
 
-    private Integer questionId;
+    private Long questionId;
 
     @NotBlank(message = "제목을 입력해야 합니다.")
     private String title;

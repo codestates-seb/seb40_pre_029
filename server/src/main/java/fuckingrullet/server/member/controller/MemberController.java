@@ -8,11 +8,16 @@ import fuckingrullet.server.member.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,7 +32,7 @@ public class MemberController {
         this.mapper = mapper;
     }
 
-    // 회원 가입
+    // 회원 가입 구현
     @PostMapping("/auth/register")
     public ResponseEntity<Member> registerMember(@Valid @RequestBody MemberRegisterDto memberRegisterDto) {
         Member member = mapper.memberRegisterDtoToMember(memberRegisterDto);
@@ -35,13 +40,22 @@ public class MemberController {
         return new ResponseEntity<>(registerMember, HttpStatus.CREATED);
     }
 
-    // 로그인 구현 -> 시큐리티 사용으로 인해 AppSecurityConfig 에서 구현 되었음.
+    // 회원 로그인 구현 -> 시큐리티 사용으로 인해 AppSecurityConfig 에서 구현 되었음.
 
-    // 회원 목록
+    // 회원 로그아웃 구현 -> 작동 유무 체크
+    @GetMapping("/auth/logout")
+    public void logoutMember(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        response.sendRedirect("/");
+    }
+
+    // 회원 내정보 구현
+
+    // 전체 회원 목록 구현
     @GetMapping("/auth/members")
-    public ResponseEntity findMembers(@Positive @RequestParam int page,
+    public ResponseEntity findAllMembers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
-        Page<Member> pageMembers = memberService.findAllMember(page - 1, size);
+        Page<Member> pageMembers = memberService.findAllMembers(page - 1, size);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity<>(
                 new MemberGetAllMemberDto<>(mapper.membersToMemberResponses(members),

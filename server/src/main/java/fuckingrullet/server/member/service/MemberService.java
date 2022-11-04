@@ -48,7 +48,7 @@ public class MemberService {
         return savedMember;
     }
 
-    public Page<Member> findAllMember(int page, int size) {
+    public Page<Member> findAllMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
     }

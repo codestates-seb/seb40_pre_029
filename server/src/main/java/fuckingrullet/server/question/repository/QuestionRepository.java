@@ -10,14 +10,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Optional<Question> findByTitle(String title);
 
     Page<Question> findAll(Pageable pageable);
 
-    @Query(value = "select * from (select * from questions a\n" +
-            "         where upper(a.article) like upper(concat('%',:keyWord,'%')) or upper(a.title) like upper(concat('%',:keyWord,'%')))",
+    @Query(value = "select * from questions where upper(article) like upper(concat('%',keyWord,'%')) or upper(title) like upper(concat('%',keyWord,'%'))",
             nativeQuery = true)
     List<Question> searchQuestionsByKeyWord(@Param("keyWord") String keyWord);
 }

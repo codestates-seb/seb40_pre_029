@@ -2,7 +2,6 @@ package fuckingrullet.server.member.mapper;
 
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.member.dto.MemberDto;
-import fuckingrullet.server.member.dto.MemberMyPageDto;
 import fuckingrullet.server.member.dto.MemberRegisterDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-11-02T17:05:10+0900",
+    date = "2022-11-03T21:54:58+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16.1 (Azul Systems, Inc.)"
 )
 @Component
@@ -44,22 +43,6 @@ public class MemberMapperImpl implements MemberMapper {
         }
 
         return list;
-    }
-
-    @Override
-    public Member memberMyPageDtoToMember(MemberMyPageDto memberMyPageDto) {
-        if ( memberMyPageDto == null ) {
-            return null;
-        }
-
-        Member member = new Member();
-
-        member.setEmail( memberMyPageDto.getEmail() );
-        member.setDisplayName( memberMyPageDto.getDisplayName() );
-        member.setPassword( memberMyPageDto.getPassword() );
-        member.setImage( memberMyPageDto.getImage() );
-
-        return member;
     }
 
     protected MemberDto.Response memberToResponse(Member member) {

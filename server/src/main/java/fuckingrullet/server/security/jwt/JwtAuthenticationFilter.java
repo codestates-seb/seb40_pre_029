@@ -3,7 +3,6 @@ package fuckingrullet.server.security.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.member.dto.MemberLoginDto;
-import fuckingrullet.server.member.repository.MemberRepository;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
