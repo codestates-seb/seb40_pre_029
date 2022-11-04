@@ -1,16 +1,26 @@
 import ProfileCard from "./ProfileCard.jsx";
 import PropTypes from "prop-types";
+import { useNavigate, useParams } from "react-router-dom";
+
 export default function ArticleBottomSet({ date, nickname }) {
   ArticleBottomSet.propTypes = {
     date: PropTypes.string,
     nickname: PropTypes.string,
+  };
+  const params = useParams();
+  const navigate = useNavigate();
+  const onEditClick = e => {
+    navigate(`/auth/question/patch/${params.id}`);
+    console.log(e);
   };
   return (
     <>
       <div className="my-4 flex justify-between">
         <div>
           <span className="text-slate-500 mr-2">Share</span>
-          <span className="text-slate-500 mr-2">Edit</span>
+          <button onClick={onEditClick} className="text-slate-500 mr-2">
+            Edit
+          </button>
           <span className="text-slate-500 mr-2">Follow</span>
         </div>
         <ProfileCard date={date} nickname={nickname} />

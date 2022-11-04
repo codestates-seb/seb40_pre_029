@@ -2,8 +2,9 @@ import QuestionList from "../components/question/QuestionList.jsx";
 import Header from "../components/header/Header.jsx";
 import Navigation from "../components/navigation/Navigation.jsx";
 import Footer from "../components/footer/Footer.jsx";
-import MyProfile from "./MyProfile.jsx";
-import AskQuestion from "../components/question/AskQuestion.jsx";
+import ScrollTop from "../components/buttons/ScrollTop.jsx";
+// import MyProfile from "./MyProfile.jsx";
+// import AskQuestion from "../components/question/AskQuestion.jsx";
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
         <QuestionList className="grow" />
       </div>
       <Footer />
+      <ScrollTop />
     </>
   );
 };

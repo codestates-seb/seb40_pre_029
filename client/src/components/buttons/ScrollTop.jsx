@@ -1,15 +1,37 @@
+import { useEffect, useState } from "react";
+
 //advanced
 export default function ScrollTop() {
+  const [showButton, setShowButton] = useState(false);
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+  useEffect(() => {
+    const ShowButtonClick = () => {
+      if (window.scrollY > 100) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", ShowButtonClick);
+    return () => {
+      window.removeEventListener("scroll", ShowButtonClick);
+    };
+  }, []);
 
   return (
-    <button className="flex w-8 h-8" onClick={scrollToTop}>
-      <img src={require("../images/arrow-button.png")} alt="" />
-    </button>
+    <>
+      {showButton && (
+        <button
+          className="group/button hover:bg-emerald-500 fixed bottom-6 right-12 w-16 h-16 bg-gray-100 flex flex-row justify-center items-center rounded-2xl shadow-xl"
+          onClick={scrollToTop}>
+          <span className="material-icons text-3xl text-slate-400 group-hover/button:text-white">arrow_upward</span>
+        </button>
+      )}
+    </>
   );
 }
