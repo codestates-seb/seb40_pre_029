@@ -3,33 +3,33 @@ import QuestionBody from "./QuestionBody.jsx";
 import QuestionAnswer from "./QuestionAnswer.jsx";
 import UsefulSet from "./UsefulSet.jsx";
 import DefaultButton from "../buttons/DefaultButton.jsx";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import useFetch from "../../util/useFetch.jsx";
 
 export default function Details() {
   const params = useParams();
-  const [data, setData] = useState("");
   const [comment, setComment] = useState("");
-
-  useEffect(() => {
-    axios.get(`http://localhost:8080/question/${params.id}`).then(res => setData(res.data.data));
-  }, []);
-
-  console.log(data);
+  const [data, isPending, error] = useFetch(`/question/${params}`);
 
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");
   };
 
+  console.log([data, isPending, error]);
   return (
     <div className="w-full pt-10 pb-4 mr-8">
       <div className="pl-12 pb-6 border-b border-gray-300">
-        <h3 className="text-3xl mb-4 font-medium">hi</h3>
+        <h3 className="text-3xl mb-4 font-medium">{data.title}</h3>
         <div>
           <TitleBottomInfo element="Asked" value={getParsedDate(data.createAt)} />
-          <TitleBottomInfo element="Modified" value="today" />
-          <TitleBottomInfo element="Viewed" value="views" />
+          <TitleBottomInfo
+            element="Modified"
+            value={
+              getParsedDate(data.createAt) === getParsedDate(data.modifiedAt) ? "Today" : getParsedDate(data.modifiedAt)
+            }
+          />
+          <TitleBottomInfo element="Viewed" value={data.views} />
         </div>
       </div>
       <div className="py-8 pl-12 flex flex-row">

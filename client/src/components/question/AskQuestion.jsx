@@ -2,20 +2,21 @@
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Tag from "./Tag.jsx";
 
 const AskQuestion = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [question, setQuestion] = useState({ title: "", article: "", tagList: [] });
   const [title, setTitle] = useState("");
   const [article, setArticle] = useState("");
   const [tagList, setTagList] = useState([]);
 
   const postData = async question => {
-    await fetch("/question/post", {
+    await fetch("../question/post", {
+      withCredentials: true,
       method: "POST",
-      headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "skip" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(question),
     }).then(res => console.log(res));
   };
@@ -24,7 +25,8 @@ const AskQuestion = () => {
     setQuestion({ title, article, tagList });
     postData(question);
     console.log(question);
-    navigate("/");
+    // navigate("/");
+    // window.location.reload();
   };
 
   const handleOnChange = e => {
