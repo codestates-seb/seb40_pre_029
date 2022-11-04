@@ -66,9 +66,10 @@ export default function SignupModal({ userMenu }) {
     data.preventDefault();
     let info = {
       email: data.target[0].value,
-      password: data.target[2].value,
       displayName: data.target[1].value,
+      password: data.target[2].value,
     };
+    console.log(info);
 
     const response = await fetch("/register", {
       method: "POST",
@@ -111,14 +112,14 @@ export default function SignupModal({ userMenu }) {
             <span className="text-3xl font-medium mb-8 text-center">Sign In</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
                   name="email"
                   value={signupinputs.email}
                   onChange={onChange}></input>
-              </form>
+              </div>
               {isValid.email ? (
                 <span className="h-5 w-80 mb-1"></span>
               ) : (
@@ -134,14 +135,14 @@ export default function SignupModal({ userMenu }) {
             </div>
             <div className="flex flex-col mb-6">
               <span>Nickname</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">person</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
                   name="nickname"
                   onChange={onChange}
                   value={signupinputs.nickname}></input>
-              </form>
+              </div>
               {isValid.nickname ? (
                 <span className="h-5 w-96 mb-1"></span>
               ) : (
@@ -157,7 +158,7 @@ export default function SignupModal({ userMenu }) {
             </div>
             <div className="flex flex-col mb-6">
               <span>Password</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
@@ -165,7 +166,7 @@ export default function SignupModal({ userMenu }) {
                   onChange={onChange}
                   value={signupinputs.pw}
                   type={isChecked ? "text" : "password"}></input>
-              </form>
+              </div>
               {isValid.pw ? (
                 <span className="h-5 w-96 mb-1"></span>
               ) : (
@@ -181,7 +182,7 @@ export default function SignupModal({ userMenu }) {
             </div>
             <div className="flex flex-col mb-4">
               <span>Password Check</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">checked</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
@@ -189,7 +190,7 @@ export default function SignupModal({ userMenu }) {
                   onChange={onChange}
                   value={signupinputs.pwc}
                   type={isChecked ? "text" : "password"}></input>
-              </form>
+              </div>
               {isValid.pwc ? (
                 <span className="h-5 w-96 mb-1"></span>
               ) : (
