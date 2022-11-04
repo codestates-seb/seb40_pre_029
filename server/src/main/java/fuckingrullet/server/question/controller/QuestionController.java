@@ -71,7 +71,7 @@ public class QuestionController {
     @GetMapping("/auth/question/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId,
                                       @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
-                                      @Positive @RequestParam(value = "size" , defaultValue = "5") int answerSize,
+                                      @Positive @RequestParam(value = "size" , defaultValue = "50") int answerSize,
                                       @RequestParam(value = "sort", defaultValue = "createAt") String answerSort){
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionAndAnswerResponseDto(

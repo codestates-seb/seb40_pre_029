@@ -49,8 +49,4 @@ public class AnswerService {
         return findAllAnswer;
     }
 
-//    public void deleteAnswerByQuestion(long answerId){
-//        Answer deleteAnswerByQuestion = findVerifiedAnswer(answerId);
-//        answerRepository.delete(deleteAnswerByQuestion);
-//    }
 }
