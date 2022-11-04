@@ -1,6 +1,6 @@
 export default function TabDefault({ target, func, state }) {
   return (
-    <div className="flex justify-end mb-4">
+    <div className="flex justify-end mr-1">
       <div className="rounded text-gray-500 text-sm font-medium">
         {target.map((el, idx) => {
           return (

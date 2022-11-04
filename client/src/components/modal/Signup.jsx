@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function SignupModal() {
+export default function SignupModal({ userMenu }) {
   const [signupinputs, setSignupInputs] = useState({
     email: "",
     nickname: "",
@@ -103,34 +103,136 @@ export default function SignupModal() {
     return setIsValid({ ...isValid, samepassword: true });
   }, [signupinputs]);
 
-  //prettier-ignore
   return (
     <>
-     <div className="flex fixed inset-0 bg-gray-600 bg-opacity-80 h-full w-full z-50 justify-center items-center" >
-      <div className="flex h-full justify-center items-center absolute inset-0">
-          <form className="flex flex-col lg:w-[30rem] lg:h-[40rem] z-0 space-y-4 border-4 bg-white p-2 justify-around items-center rounded-md" onSubmit={createID}>
-            <div className="flex flex-col">
-            <span className="text-3xl text-center font-bold p-4 mb-4">Sign In</span>
-            <span className="h-5 mb-1">Email</span>
-            <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="email" value={signupinputs.email} onChange={onChange} ></input>
-            {isValid.email? <span className="h-5 w-96 mb-1"></span>:<span className={signupinputs.email.length === 0?"text-black-500 text-sm h-5 w-96 mb-1":"text-red-500 h-5 text-sm w-96 mb-1"}>이메일 형식으로만 입력 가능합니다.</span>}
-            <span className="h-5 mb-1">Nickname</span>
-            <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="nickname" onChange={onChange} value={signupinputs.nickname} ></input>
-            {isValid.nickname? <span className="h-5 w-96 mb-1"></span>:<span className={signupinputs.nickname.length === 0?"text-black-500 text-sm h-5 w-96 mb-1":"text-red-500 h-5 text-sm w-96 mb-1"}>닉네임에는 영문 및 숫자만 입력 가능합니다.</span>}
-            <span className="h-5 mb-1">Password</span>
-            <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="pw" onChange={onChange} value={signupinputs.pw}  type={isChecked?'text':'password'}></input>
-            {isValid.pw? <span className="h-5 w-96 mb-1"></span>:<span className={signupinputs.pw.length === 0?"text-black-500 text-sm h-5 w-96 mb-1":"text-red-500 h-5 text-sm w-96 mb-1"}>비밀번호에는 영문, 숫자, 특수문자가 모두 포함되어야 합니다.</span>}
-            <span className="h-5 mb-1">Password Check</span>
-            <input className="border-b-2 p-2 mb-1 placeholder:text-sm sm:text-sm" name="pwc" onChange={onChange} value={signupinputs.pwc}  type={isChecked?'text':'password'}></input>
-            {isValid.pwc? <span className="h-5 w-96 mb-1"></span>:<span className={signupinputs.pwc.length === 0?"text-black-500 text-sm h-5 w-96 mb-1":"text-red-500 h-5 text-sm w-96 mb-1"}>비밀번호를 다시 한 번 입력해주십시오.</span>}
-            {isValid.samepassword? <span className="h-5 w-96 mb-1"></span>:<span className={signupinputs.pwc.length === 0?"text-black-500 text-sm h-5 w-96 mb-1":"text-red-500 h-5 text-sm w-96 mb-1"}>위의 비밀번호와 동일하여야 합니다.</span>}
-            <div>
-              <input className="w-5" id="pwview" type="checkbox" checked={isChecked} onChange={e=>setIsChecked(e.target.checked)}></input>
-              <label htmlFor ="pwview" className="text-sm">비밀번호를 표시합니다.</label>
+      <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
+        <div className="flex z-50 justify-center items-center" ref={userMenu}>
+          <form className="flex flex-col w-[28rem] h-fit bg-white rounded-2xl p-12" onSubmit={createID}>
+            <span className="text-3xl font-medium mb-8 text-center">Sign In</span>
+            <div className="flex flex-col mb-6">
+              <span>Email</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="email"
+                  value={signupinputs.email}
+                  onChange={onChange}></input>
+              </form>
+              {isValid.email ? (
+                <span className="h-5 w-80 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    signupinputs.email.length === 0
+                      ? "text-green-600 text-sm w-80 mt-0.5"
+                      : "text-red-500 text-sm w-80 mt-0.5"
+                  }>
+                  이메일 형식으로만 입력 가능합니다.
+                </span>
+              )}
             </div>
+            <div className="flex flex-col mb-6">
+              <span>Nickname</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">person</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="nickname"
+                  onChange={onChange}
+                  value={signupinputs.nickname}></input>
+              </form>
+              {isValid.nickname ? (
+                <span className="h-5 w-96 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    signupinputs.nickname.length === 0
+                      ? "text-green-600 text-sm w-80 mt-0.5"
+                      : "text-red-500 text-sm w-80 mt-0.5"
+                  }>
+                  닉네임에는 영문 및 숫자만 입력 가능합니다.
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col mb-6">
+              <span>Password</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="pw"
+                  onChange={onChange}
+                  value={signupinputs.pw}
+                  type={isChecked ? "text" : "password"}></input>
+              </form>
+              {isValid.pw ? (
+                <span className="h-5 w-96 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    signupinputs.pw.length === 0
+                      ? "text-green-600 text-sm w-80 mt-0.5"
+                      : "text-red-500 text-sm w-80 mt-0.5"
+                  }>
+                  영문, 숫자, 특수문자가 모두 포함되어야 합니다.
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col mb-4">
+              <span>Password Check</span>
+              <form className="w-full relative">
+                <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">checked</span>
+                <input
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  name="pwc"
+                  onChange={onChange}
+                  value={signupinputs.pwc}
+                  type={isChecked ? "text" : "password"}></input>
+              </form>
+              {isValid.pwc ? (
+                <span className="h-5 w-96 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    signupinputs.pwc.length === 0
+                      ? "text-green-600 text-sm w-80 mt-0.5"
+                      : "text-red-500 text-sm w-80 mt-0.5"
+                  }>
+                  비밀번호를 다시 한 번 입력해주십시오.
+                </span>
+              )}
+              {isValid.samepassword ? (
+                <span className="h-5 w-96 mb-1"></span>
+              ) : (
+                <span
+                  className={
+                    signupinputs.pwc.length === 0
+                      ? "text-black-500 text-sm h-5 w-96 mb-1"
+                      : "text-red-500 h-5 text-sm w-96 mb-1"
+                  }>
+                  위의 비밀번호와 동일하여야 합니다.
+                </span>
+              )}
+            </div>
+            <div className="flex items-center mb-6">
+              <input
+                className="w-5 h-5 mr-1.5"
+                id="pwview"
+                type="checkbox"
+                checked={isChecked}
+                onChange={e => setIsChecked(e.target.checked)}></input>
+              <label htmlFor="pwview" className="text-sm text-gray-500">
+                비밀번호를 표시합니다.
+              </label>
             </div>
             <div className="flex justify-center items-end">
-              <button className="px-6 pb-1 shadow-sky-300 shadow-tline border border-sky-500 hover:bg-sky-500 h-12 w-40 min-w-36 bg-blue-500 rounded text-white" type="submit" disabled={Object.values(isValid).filter(el => el === false).length === 0? false:true}>Sign up</button>
+              <button
+                className="px-6 pb-1 shadow-sky-300 shadow-tline border border-sky-500 hover:bg-sky-500 h-12 w-full min-w-36 bg-blue-500 rounded text-white"
+                type="submit"
+                disabled={Object.values(isValid).filter(el => el === false).length === 0 ? false : true}>
+                Sign up
+              </button>
             </div>
           </form>
         </div>

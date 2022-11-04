@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 
 export default function Member({ devRole, name, github }) {
   Member.propTypes = {
-    devRole: PropTypes.object,
-    name: PropTypes.object,
-    github: PropTypes.object,
+    devRole: PropTypes.string, // PropTypes.object 에서 에러나서 일단 바꿈!
+    name: PropTypes.string,
+    github: PropTypes.string,
   };
   return (
     <div className="text-center mx-4 w-24 inline-block">
