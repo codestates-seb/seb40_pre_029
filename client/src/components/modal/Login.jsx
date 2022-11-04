@@ -14,8 +14,8 @@ export default function LoginModal({ setLogin, userMenu }) {
     pw: "",
   });
   const [isValid, setIsValid] = useState({
-    email: true,
-    pw: true,
+    email: false,
+    pw: false,
   });
 
   const onChange = ele => {
@@ -55,7 +55,7 @@ export default function LoginModal({ setLogin, userMenu }) {
     };
 
     //prettier-ignore
-    const response = await fetch("/login", {
+    const response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
@@ -75,7 +75,9 @@ export default function LoginModal({ setLogin, userMenu }) {
         pw: false,
       });
       console.log(res.headers.get("refresh"));
+      console.log(response.headers.get("authorization"));
       console.log("이렇게하면" + res.headers.refresh);
+
       // setLogin(true);
       // return location.reload();
     }
