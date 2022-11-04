@@ -74,7 +74,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} setModalOpen={setModalOpen} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function LoginModal({ userMenu }) {
   const [inputs, setInputs] = useState({
@@ -9,12 +10,13 @@ export default function LoginModal({ userMenu }) {
     email: false,
     pw: false,
   });
+  const idpattern = new RegExp("^[a-zA-Z0-9@.]+$");
+  const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
+  const navigate = useNavigate();
+  console.log(navigate);
 
   const onChange = ele => {
     const { value, name } = ele.target;
-
-    const idpattern = new RegExp("^[a-zA-Z0-9@.]+$");
-    const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
 
     if (name === "email") {
       if (value.length > 0 && !idpattern.test(value)) {
@@ -41,20 +43,21 @@ export default function LoginModal({ userMenu }) {
 
   const loginProcess = async data => {
     data.preventDefault();
+    console.log(data);
     let info = {
       email: data.target[0].value,
       password: data.target[1].value,
     };
 
     //prettier-ignore
-    const response = await fetch("/auth/login", {
+    const response = await fetch("/login", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
       })
     let res = response;
     if (!res.ok) {
-      await res.json().then(data => alert(data));
+      await res.json().then(data => alert(data.message));
     } else {
       await res.json().then(data => console.log(data));
       alert("로그인이 완료되었습니다");
@@ -66,9 +69,14 @@ export default function LoginModal({ userMenu }) {
         email: false,
         pw: false,
       });
-      console.log(res.headers.get("refresh"));
-      console.log(response.headers.get("authorization"));
-      console.log("이렇게하면" + res.headers.refresh);
+      // localStorage에 토큰넣기
+      localStorage.clear();
+      localStorage.setItem("refresh", res.headers.get("refresh"));
+      localStorage.setItem("authorization", response.headers.get("authorization"));
+
+      //여기 navigate("/"); 으로 구현하려고했으나 실패
+      return location.reload();
+      // return navigate("/");
 
       // setLogin(true);
       // return location.reload();
@@ -83,7 +91,7 @@ export default function LoginModal({ userMenu }) {
             <span className="text-3xl font-medium mb-8 text-center">Login</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
@@ -92,7 +100,7 @@ export default function LoginModal({ userMenu }) {
                   value={inputs.email}
                   type="text"
                   placeholder="Type your email"></input>
-              </form>
+              </div>
               {isValid.email ? (
                 <span className="h-5 w-80 mb-1"></span>
               ) : (
@@ -106,7 +114,7 @@ export default function LoginModal({ userMenu }) {
             </div>
             <div className="flex flex-col mb-6">
               <span>Password</span>
-              <form className="w-full relative">
+              <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
                 <input
                   className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
@@ -115,7 +123,7 @@ export default function LoginModal({ userMenu }) {
                   value={inputs.pw}
                   type="password"
                   placeholder="Type your password"></input>
-              </form>
+              </div>
               {isValid.pw ? (
                 <span className="h-5 w-80 mb-1"></span>
               ) : (
