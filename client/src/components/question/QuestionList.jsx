@@ -32,9 +32,9 @@ export default function QuestionList() {
         .then(res => res.json())
         .then(data => {
           // console.log(data);
-          // console.log(data.content);
-          setTotalPage(() => makeButton(data.totalPages));
-          setContent(data.content);
+          // console.log(data.pageInfo.totalPages);
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
           setData(data);
         });
     }
