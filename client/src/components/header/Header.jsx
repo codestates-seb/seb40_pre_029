@@ -44,7 +44,13 @@ export default function Header() {
           </div>
           <div className="flex h-full text-sm w-20">
             {!logIn ? (
-              <HeaderButton name="회원가입" id="signup" openModalHandler={openModalHandler} />
+              <HeaderButton
+                name="회원가입"
+                id="signup"
+                openModalHandler={openModalHandler}
+                modalOpen={modalOpen}
+                onChange={value => setModalOpen({ ...modalOpen, ...value })}
+              />
             ) : (
               <HeaderButton openModalHandler={openModalHandler} name="로그아웃" id="logout" />
             )}

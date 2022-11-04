@@ -10,8 +10,8 @@ export default function LoginModal() {
     pw: "",
   });
   const [isValid, setIsValid] = useState({
-    email: false,
-    pw: false,
+    email: true,
+    pw: true,
   });
 
   const onChange = ele => {
@@ -50,18 +50,17 @@ export default function LoginModal() {
       password: data.target[1].value,
     };
 
+    //prettier-ignore
     const response = await fetch("/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
-    });
-
-    if (!response.ok) {
-      await response.json().then(data => alert(data.message));
-
-      // .then(data => alert(data.message));
+      })
+    let res = response;
+    if (!res.ok) {
+      await res.json().then(data => alert(data));
     } else {
-      await response;
+      await res.json().then(data => console.log(data));
       alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
@@ -71,8 +70,10 @@ export default function LoginModal() {
         email: false,
         pw: false,
       });
+      console.log(res.headers.get("refresh"));
+      console.log("이렇게하면" + res.headers.refresh);
       // setLogin(true);
-      return location.reload();
+      // return location.reload();
     }
   };
 
