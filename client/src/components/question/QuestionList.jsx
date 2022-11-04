@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import DefaultButton from "../buttons/DefaultButton.jsx";
 import TabDefault from "../tabs/TabDefault.jsx";
 import { useNavigate } from "react-router-dom";
+import "../../App.css";
+import Spinner from "../spinner/Spinner.jsx";
+
 // import Pagination from "../pagination/Pagination.jsx";
 
 export default function QuestionList() {
@@ -63,13 +66,7 @@ export default function QuestionList() {
       setFilterClicked(true);
     }
   };
-  if (content.length === 0) {
-    return (
-      <div className="py-8 w-full mr-8">
-        <span className="pl-10">Loading...</span>
-      </div>
-    );
-  }
+  if (content.length === 0) return <Spinner />;
   return (
     <section className="py-8 w-full mr-8">
       <div className="flex justify-between pl-10 mb-4">
