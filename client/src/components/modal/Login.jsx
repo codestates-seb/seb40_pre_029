@@ -1,14 +1,6 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 
-<<<<<<< HEAD
-export default function LoginModal() {
-  LoginModal.propTypes = {
-    setLogin: PropTypes.func,
-  };
-=======
-export default function LoginModal({ setLogin, userMenu }) {
->>>>>>> b5f46b2d4ad82a664712c13144c8de623feb4297
+export default function LoginModal({ userMenu }) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",

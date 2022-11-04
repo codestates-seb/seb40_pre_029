@@ -2,7 +2,7 @@ import QuestionList from "../components/question/QuestionList.jsx";
 import Header from "../components/header/Header.jsx";
 import Navigation from "../components/navigation/Navigation.jsx";
 import Footer from "../components/footer/Footer.jsx";
-import MyProfile from "./MyProfile.jsx";
+// import MyProfile from "./MyProfile.jsx";
 
 const Main = () => {
   return (
