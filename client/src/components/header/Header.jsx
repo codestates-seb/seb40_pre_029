@@ -3,11 +3,7 @@ import SearchBar from "./SearchBar.jsx";
 import ThemeButton from "../buttons/ThemeButton.jsx";
 import LoginModal from "../modal/Login.jsx";
 import SignupModal from "../modal/Signup.jsx";
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-=======
 import { useState, useRef, useEffect } from "react";
->>>>>>> b5f46b2d4ad82a664712c13144c8de623feb4297
 
 export default function Header() {
   const [logIn, setLogin] = useState(false);
@@ -78,14 +74,8 @@ export default function Header() {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-      {modalOpen.login ? <LoginModal logIn={logIn} /> : null}
-      {modalOpen.signup ? <SignupModal /> : null}
-    </>
-=======
       {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </div>
->>>>>>> b5f46b2d4ad82a664712c13144c8de623feb4297
   );
 }
