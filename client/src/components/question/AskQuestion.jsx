@@ -21,14 +21,15 @@ const AskQuestion = () => {
   };
 
   const onPostClick = () => {
+    setQuestion({ title, article, tagList });
     postData(question);
-    navigate("/");
     console.log(question);
+    navigate("/");
   };
 
   const handleOnChange = e => {
     setArticle(e.target.value);
-    setQuestion({ title, article: e.target.value, tagList });
+    setQuestion({ title, article: e.target.value });
   };
 
   return (
@@ -63,7 +64,7 @@ const AskQuestion = () => {
               className="question-body w-full p-2 bg-#F1F2F3 rounded border border-gray-400 resize-y border rounded border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 "></textarea>
           </div>
         </form>
-        <Tag setTagList={setTagList} />
+        <Tag setTagList={setTagList} tagList={tagList} />
         <button
           className="question-post p-2 mb-4 rounded border-none text-slate-50 bg-sky-500 shadow-blue-500/50 shadow w-36 h-12 text-sm"
           onClick={onPostClick}>

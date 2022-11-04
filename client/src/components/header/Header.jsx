@@ -18,7 +18,7 @@ export default function Header() {
     let change = !modalOpen[temp];
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
-    } else if (logIn) {
+    } else if (logIn && temp === "logout") {
       setLogin(false);
     }
   };
@@ -61,9 +61,15 @@ export default function Header() {
           </div>
           <div className="flex h-full text-sm w-20">
             {!logIn ? (
-              <HeaderButton name="회원가입" id="signup" openModalHandler={openModalHandler} />
+              <HeaderButton
+                name="회원가입"
+                id="signup"
+                openModalHandler={openModalHandler}
+                modalOpen={modalOpen}
+                onChange={value => setModalOpen({ ...modalOpen, ...value })}
+              />
             ) : (
-              <HeaderButton openModalHandler={openModalHandler} name="로그아웃" />
+              <HeaderButton openModalHandler={openModalHandler} name="로그아웃" id="logout" />
             )}
           </div>
         </div>
