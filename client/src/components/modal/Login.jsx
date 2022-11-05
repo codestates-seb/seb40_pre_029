@@ -88,14 +88,16 @@ export default function LoginModal(props) {
     <>
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
         <div className="flex z-50 justify-center items-center" ref={props.userMenu}>
-          <form className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12" onSubmit={loginProcess}>
+          <form
+            className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12 dark:bg-slate-800 dark:text-gray-400"
+            onSubmit={loginProcess}>
             <span className="text-3xl font-medium mb-8 text-center">Login</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="email"
                   onChange={onChange}
                   value={inputs.email}
@@ -103,7 +105,7 @@ export default function LoginModal(props) {
                   placeholder="Type your email"></input>
               </div>
               {isValid.email ? (
-                <span className="h-5 w-80 mb-1"></span>
+                <span className="h-5 w-80 mt-1"></span>
               ) : (
                 <span
                   className={
@@ -118,7 +120,7 @@ export default function LoginModal(props) {
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="pw"
                   onChange={onChange}
                   value={inputs.pw}
@@ -126,7 +128,7 @@ export default function LoginModal(props) {
                   placeholder="Type your password"></input>
               </div>
               {isValid.pw ? (
-                <span className="h-5 w-80 mb-1"></span>
+                <span className="h-5 w-80 mt-1"></span>
               ) : (
                 <span
                   className={

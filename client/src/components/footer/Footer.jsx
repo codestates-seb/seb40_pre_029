@@ -60,7 +60,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="bg-black px-10 pt-10 pb-32">
+    <div className="bg-slate-900 dark:bg-black px-10 pt-10 pb-32">
       <Banner />
       {/* <div className="text-center text-white">https://github.com/codestates-seb/seb40_pre_029</div> */}
       <div className="text-center">

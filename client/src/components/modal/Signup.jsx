@@ -108,20 +108,22 @@ export default function SignupModal({ userMenu }) {
     <>
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
         <div className="flex z-50 justify-center items-center" ref={userMenu}>
-          <form className="flex flex-col w-[28rem] h-fit bg-white rounded-2xl p-12" onSubmit={createID}>
+          <form
+            className="flex flex-col w-[28rem] h-fit bg-white rounded-2xl p-12 dark:bg-slate-800 dark:text-gray-400"
+            onSubmit={createID}>
             <span className="text-3xl font-medium mb-8 text-center">Sign In</span>
             <div className="flex flex-col mb-6">
               <span>Email</span>
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">email</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="email"
                   value={signupinputs.email}
                   onChange={onChange}></input>
               </div>
               {isValid.email ? (
-                <span className="h-5 w-80 mb-1"></span>
+                <span className="h-5 w-80 mt-0.5"></span>
               ) : (
                 <span
                   className={
@@ -138,19 +140,19 @@ export default function SignupModal({ userMenu }) {
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">person</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="nickname"
                   onChange={onChange}
                   value={signupinputs.nickname}></input>
               </div>
               {isValid.nickname ? (
-                <span className="h-5 w-96 mb-1"></span>
+                <span className="h-5 w-96 mt-0.5"></span>
               ) : (
                 <span
                   className={
                     signupinputs.nickname.length === 0
-                      ? "text-green-600 text-sm w-80 mt-0.5"
-                      : "text-red-500 text-sm w-80 mt-0.5"
+                      ? "text-green-600 text-sm w-80 mt-0.5 h-5"
+                      : "text-red-500 text-sm w-80 mt-0.5 h-5"
                   }>
                   닉네임에는 영문 및 숫자만 입력 가능합니다.
                 </span>
@@ -161,20 +163,20 @@ export default function SignupModal({ userMenu }) {
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">lock</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="pw"
                   onChange={onChange}
                   value={signupinputs.pw}
                   type={isChecked ? "text" : "password"}></input>
               </div>
               {isValid.pw ? (
-                <span className="h-5 w-96 mb-1"></span>
+                <span className="h-5 w-96 mt-0.5"></span>
               ) : (
                 <span
                   className={
                     signupinputs.pw.length === 0
-                      ? "text-green-600 text-sm w-80 mt-0.5"
-                      : "text-red-500 text-sm w-80 mt-0.5"
+                      ? "text-green-600 text-sm w-80 mt-0.5 h-5"
+                      : "text-red-500 text-sm w-80 mt-0.5 h-5"
                   }>
                   영문, 숫자, 특수문자가 모두 포함되어야 합니다.
                 </span>
@@ -185,20 +187,20 @@ export default function SignupModal({ userMenu }) {
               <div className="w-full relative">
                 <span className="material-icons absolute h-12 mt-2 text-slate-300 text-3xl">checked</span>
                 <input
-                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500"
+                  className="flex w-full h-12 pr-4 pl-10 border-b border-gray-300 focus:text-black focus:outline-none text-gray-500 dark:bg-slate-800 dark:text-gray-400"
                   name="pwc"
                   onChange={onChange}
                   value={signupinputs.pwc}
                   type={isChecked ? "text" : "password"}></input>
               </div>
               {isValid.pwc ? (
-                <span className="h-5 w-96 mb-1"></span>
+                <span className="h-5 w-96 mt-0.5"></span>
               ) : (
                 <span
                   className={
                     signupinputs.pwc.length === 0
-                      ? "text-green-600 text-sm w-80 mt-0.5"
-                      : "text-red-500 text-sm w-80 mt-0.5"
+                      ? "text-green-600 text-sm w-80 mt-0.5 h-5"
+                      : "text-red-500 text-sm w-80 mt-0.5 h-5"
                   }>
                   비밀번호를 다시 한 번 입력해주십시오.
                 </span>

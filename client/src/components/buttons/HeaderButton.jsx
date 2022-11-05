@@ -8,7 +8,10 @@ export default function HeaderButton({ name, id, openModalHandler }) {
   };
   return (
     <>
-      <button className="h-full hover:bg-slate-200 w-40 font-medium" onClick={openModalHandler} id={id}>
+      <button
+        className="h-full dark:bg-slate-900 dark:text-gray-400 w-40 font-medium "
+        onClick={openModalHandler}
+        id={id}>
         {name}
       </button>
     </>

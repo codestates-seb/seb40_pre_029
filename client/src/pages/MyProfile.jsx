@@ -47,7 +47,7 @@ const MyProfile = () => {
 
   return (
     <>
-      <div className="w-4/5 flex" id="profileheader">
+      <div className="w-4/5 flex bg-slate-300 dark:bg-slate-900 dark:text-gray-400" id="profileheader">
         <section className="py-8 w-full mr-8">
           <div className="flex justify-between h-16 pl-10 mb-4">
             {editcheck ? (
