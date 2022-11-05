@@ -7,6 +7,7 @@ import TabDefault from "../tabs/TabDefault.jsx";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import Spinner from "../spinner/Spinner.jsx";
+// import { useSelector, useDispatch } from "react-redux";
 
 // import Pagination from "../pagination/Pagination.jsx";
 
@@ -22,6 +23,27 @@ export default function QuestionList() {
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  // const logIn = useSelector(state => state.isLogin);
+  // const dispatch = useDispatch();
+
+  //http://localhost:8080/auth/question?page=1
+  // const getData = async () => {
+  //   await fetch(`/auth/question?page=${page}`, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       setTotalPage(() => makeButton(data.pageInfo.totalPages));
+  //       setContent(data.data);
+  //       setData(data);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, [page]);
 
   async function getData() {
     await fetch(`/auth/question?page=${page}`, {
