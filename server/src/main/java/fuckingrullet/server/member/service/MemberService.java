@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,8 +84,8 @@ public class MemberService {
                 Sort.by("memberId").descending()));
     }
 
-    public Member deleteMember(String email, String password) {
-        return null;
+    public void deleteMember(String email) {
+        memberRepository.deleteById(findId(email));
     }
 
     private void verifyExistsEmail(String email) {

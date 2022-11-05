@@ -90,9 +90,11 @@ public class MemberController {
     }
 
     // 회원 탈퇴 구현
-//    @DeleteMapping("/withdraw")
-//    public ResponseEntity deleteMember(@AuthenticationPrincipal String email) {
-//        memberService.deleteMember(email);
-//    }
+    @DeleteMapping("/withdraw")
+    public ResponseEntity deleteMember(@AuthenticationPrincipal String email,
+                                       @Valid @RequestBody Member member) {
+        memberService.deleteMember(email);
+        return null;
+    }
 
 }
