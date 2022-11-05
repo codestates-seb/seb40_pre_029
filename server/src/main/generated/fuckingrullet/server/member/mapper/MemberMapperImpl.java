@@ -10,25 +10,61 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-11-03T21:54:58+0900",
+    date = "2022-11-05T22:46:19+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16.1 (Azul Systems, Inc.)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
 
     @Override
-    public Member memberRegisterDtoToMember(MemberRegisterDto memberRegisterDto) {
-        if ( memberRegisterDto == null ) {
+    public Member memberRegisterToMember(MemberRegisterDto register) {
+        if ( register == null ) {
             return null;
         }
 
         Member member = new Member();
 
-        member.setEmail( memberRegisterDto.getEmail() );
-        member.setDisplayName( memberRegisterDto.getDisplayName() );
-        member.setPassword( memberRegisterDto.getPassword() );
+        member.setEmail( register.getEmail() );
+        member.setDisplayName( register.getDisplayName() );
+        member.setPassword( register.getPassword() );
 
         return member;
+    }
+
+    @Override
+    public Member memberPatchToMember(MemberDto.Patch memberDto) {
+        if ( memberDto == null ) {
+            return null;
+        }
+
+        Member member = new Member();
+
+        member.setMemberId( memberDto.getMemberId() );
+        member.setEmail( memberDto.getEmail() );
+        member.setDisplayName( memberDto.getDisplayName() );
+        member.setPassword( memberDto.getPassword() );
+        member.setImage( memberDto.getImage() );
+
+        return member;
+    }
+
+    @Override
+    public MemberDto.Response memberToMemberResponse(Member member) {
+        if ( member == null ) {
+            return null;
+        }
+
+        MemberDto.Response response = new MemberDto.Response();
+
+        response.setEmail( member.getEmail() );
+        response.setDisplayName( member.getDisplayName() );
+        response.setImage( member.getImage() );
+        List<String> list = member.getRoles();
+        if ( list != null ) {
+            response.setRoles( new ArrayList<String>( list ) );
+        }
+
+        return response;
     }
 
     @Override
@@ -39,34 +75,9 @@ public class MemberMapperImpl implements MemberMapper {
 
         List<MemberDto.Response> list = new ArrayList<MemberDto.Response>( members.size() );
         for ( Member member : members ) {
-            list.add( memberToResponse( member ) );
+            list.add( memberToMemberResponse( member ) );
         }
 
         return list;
-    }
-
-    protected MemberDto.Response memberToResponse(Member member) {
-        if ( member == null ) {
-            return null;
-        }
-
-        List<String> roles = null;
-        Long memberId = null;
-        String email = null;
-        String displayName = null;
-        String image = null;
-
-        List<String> list = member.getRoles();
-        if ( list != null ) {
-            roles = new ArrayList<String>( list );
-        }
-        memberId = member.getMemberId();
-        email = member.getEmail();
-        displayName = member.getDisplayName();
-        image = member.getImage();
-
-        MemberDto.Response response = new MemberDto.Response( memberId, email, displayName, image, roles );
-
-        return response;
     }
 }

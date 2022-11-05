@@ -1,9 +1,10 @@
-package fuckingrullet.server.member.service;
+package fuckingrullet.server.auth;
 
+import fuckingrullet.server.auth.utils.CustomAuthorityUtils;
 import fuckingrullet.server.domain.Member;
+import fuckingrullet.server.exception.BusinessLogicException;
+import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.member.repository.MemberRepository;
-import fuckingrullet.server.security.util.CustomAuthorityUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Slf4j
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtils authorityUtils;
@@ -25,13 +25,15 @@ public class MemberDetailsService implements UserDetailsService {
     }
 
     @Override
-    public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
-        Member findMember = optionalMember.orElseThrow(() -> new UsernameNotFoundException("사용자가 존재하지 않습니다."));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
         return new MemberDetails(findMember);
     }
 
     private final class MemberDetails extends Member implements UserDetails {
+        // (1)
         MemberDetails(Member member) {
             setMemberId(member.getMemberId());
             setEmail(member.getEmail());

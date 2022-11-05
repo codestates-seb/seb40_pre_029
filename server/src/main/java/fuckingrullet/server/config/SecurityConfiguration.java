@@ -1,17 +1,15 @@
 package fuckingrullet.server.config;
 
-
-import fuckingrullet.server.security.handler.MemberAccessDeniedHandler;
-import fuckingrullet.server.security.handler.MemberAuthenticationEntryPoint;
-import fuckingrullet.server.security.handler.MemberAuthenticationFailureHandler;
-import fuckingrullet.server.security.handler.MemberAuthenticationSuccessHandler;
-import fuckingrullet.server.security.jwt.JwtAuthenticationFilter;
-import fuckingrullet.server.security.jwt.JwtTokenizer;
-import fuckingrullet.server.security.jwt.JwtVerificationFilter;
-import fuckingrullet.server.security.util.CustomAuthorityUtils;
+import fuckingrullet.server.auth.filter.JwtAuthenticationFilter;
+import fuckingrullet.server.auth.filter.JwtVerificationFilter;
+import fuckingrullet.server.auth.handler.MemberAccessDeniedHandler;
+import fuckingrullet.server.auth.handler.MemberAuthenticationEntryPoint;
+import fuckingrullet.server.auth.handler.MemberAuthenticationFailureHandler;
+import fuckingrullet.server.auth.handler.MemberAuthenticationSuccessHandler;
+import fuckingrullet.server.auth.jwt.JwtTokenizer;
+import fuckingrullet.server.auth.utils.CustomAuthorityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,17 +22,18 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
 import static org.springframework.security.config.Customizer.withDefaults;
 
+/**
+ * authenticationEntryPoint와 accessDeniedHandler 추가
+ */
 @Configuration
 @EnableWebSecurity
-public class AppSecurityConfig {
+public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    public AppSecurityConfig(JwtTokenizer jwtTokenizer,
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                    CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
@@ -58,8 +57,6 @@ public class AppSecurityConfig {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .antMatchers(HttpMethod.GET, "/auth/**").hasRole("USER")
                         .anyRequest().permitAll()
                 );
         return http.build();
@@ -73,11 +70,14 @@ public class AppSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
+
+        configuration.addAllowedOrigin("http://localhost:3000"); // 프론트 접근 주소
+        configuration.addAllowedHeader("*"); // 허용 HTTP 헤더
+        configuration.addAllowedMethod("*"); // 허용 HTTP 메서드
         configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
 
@@ -88,7 +88,7 @@ public class AppSecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/api/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
