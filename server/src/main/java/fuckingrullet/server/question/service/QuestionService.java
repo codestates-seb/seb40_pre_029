@@ -75,6 +75,13 @@ public class QuestionService {
         return findAllQuestion;
     }
 
+//    public Page<Question> findTagQuestions(int page, int size, String sort){
+//        Page<Question> findAllQuestion = questionRepository.findAllByQuestionStatus(PageRequest.of(
+//                page,size, Sort.by(sort).descending()),Question.QuestionStatus.QUESTION_ACTIVE);
+//        VerifiedNoQuestion(findAllQuestion);
+//        return findAllQuestion;
+//    }
+
     private void verifyExistsTitle(String title){
         Optional<Question> question = questionRepository.findByTitle(title);
         if(question.isPresent()){

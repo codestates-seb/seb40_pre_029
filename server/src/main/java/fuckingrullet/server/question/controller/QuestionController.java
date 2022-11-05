@@ -63,7 +63,6 @@ public class QuestionController {
     }
 
     @GetMapping("/auth/question") //수정필요(dto추가)
-    @Transactional(readOnly = true)
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
                                        @RequestParam(value = "sort", defaultValue = "createAt") String sort){
@@ -74,8 +73,19 @@ public class QuestionController {
         return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),pageQuestions), HttpStatus.OK);
     }
 
+//    @GetMapping("/auth/tag")
+//    @Transactional(readOnly = true)
+//    public ResponseEntity getTagQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
+//                                       @Positive @RequestParam(value = "size", defaultValue = "5") int size,
+//                                       @RequestParam(value = "sort", defaultValue = "createAt") String sort){
+//        Page<Question> pageTagQuestions = questionService.findTagQuestions(page-1,size,sort);
+//        List<Question> tagQuestions = pageTagQuestions.getContent();
+//        tagQuestions.stream().forEach(question -> question.setTags(tagService.findVerifiedTags(question)));
+//
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(tagQuestions),pageTagQuestions), HttpStatus.OK);
+//    }
+
     @GetMapping("/auth/question/{question-id}")
-    @Transactional(readOnly = true)
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId,
                                       @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
                                       @Positive @RequestParam(value = "size" , defaultValue = "50") int answerSize,
@@ -86,7 +96,6 @@ public class QuestionController {
     }
 
     @GetMapping("/auth/question/search")
-    @Transactional(readOnly = true)
     public ResponseEntity getQuestions(@RequestParam("search") String keyWord, @Positive @RequestParam(value = "page",
             defaultValue = "1") int page, @Positive @RequestParam(value = "size",defaultValue = "5") int size,
                                        @RequestParam(value = "sort",defaultValue = "createAt") String sort) {

@@ -58,8 +58,6 @@ public class AppSecurityConfig {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .antMatchers(HttpMethod.GET, "/auth/**").hasRole("USER")
                         .anyRequest().permitAll()
                 );
         return http.build();
