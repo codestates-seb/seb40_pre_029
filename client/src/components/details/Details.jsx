@@ -3,6 +3,7 @@ import QuestionBody from "./QuestionBody.jsx";
 import QuestionAnswer from "./QuestionAnswer.jsx";
 import UsefulSet from "./UsefulSet.jsx";
 import DefaultButton from "../buttons/DefaultButton.jsx";
+import Spinner from "../spinner/Spinner.jsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,23 +11,25 @@ export default function Details() {
   const params = useParams();
   const [comment, setComment] = useState("");
   const [data, setData] = useState([]);
-
+  //질문 detail fetching
   useEffect(() => {
-    fetch(`/question/${params.id}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.data);
-        setData(data.data);
-      });
+    setTimeout(() => {
+      fetch(`/auth/question/${params.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setData(data.data);
+        });
+    }, 500);
     return () => {
       return;
     };
   }, []);
-
+  //createAt 조정
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");
   };
 
+  if (data.length === 0) return <Spinner />;
   return (
     <div className="w-full pt-10 pb-4 mr-8">
       <div className="pl-12 pb-6 border-b border-gray-300">
@@ -47,11 +50,10 @@ export default function Details() {
         <QuestionBody data={data} />
       </div>
       <div className="mt-4 pl-12 ">
-        <span className="text-2xl mr-4">1</span>
-        <span className="text-2xl">Answer</span>
+        <span className="text-2xl mr-4">{data.answers.data.length}</span>
+        <span className="text-2xl">{data.answers.data.length <= 1 ? "Answer" : "Answers"}</span>
       </div>
-      <div className="py-8 pl-12 flex flex-row border-b border-gray-300">
-        <UsefulSet />
+      <div className="py-8 pl-12 flex flex-col border-b border-gray-300">
         <QuestionAnswer data={data} />
       </div>
       <div className="py-8 pr-8 pl-12">
@@ -63,7 +65,7 @@ export default function Details() {
             rows={12}
             className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500"></textarea>
         </form>
-        <DefaultButton name="Post Your Answer" />
+        <DefaultButton name="Post Your Answer" data={comment} />
       </div>
     </div>
   );

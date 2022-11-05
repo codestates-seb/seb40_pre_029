@@ -14,7 +14,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
   const [article, setArticle] = useState("");
   const [tagList, setTagList] = useState([]);
   //처음 fetch data 상태화
-  console.log(editData);
+
   useEffect(() => {
     if (onEditMode) {
       setTitle(editData.title);
@@ -42,14 +42,14 @@ const AskQuestion = ({ onEditMode, editData }) => {
   const postData = async question => {
     //만약 edit 버튼을 통해 컴포넌트에 접근을 하지 않았다면 (ask question 버튼을 눌렀다면)
     if (!onEditMode) {
-      await fetch("/question/post", {
+      await fetch("/auth/question/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(question),
       }).then(res => console.log(res));
     } else {
       //만약 edit 버튼을 통해 컴포넌트에 접근했다면
-      await fetch(`/question/patch/${params.id}`, {
+      await fetch(`/auth/question/patch/${params.id}`, {
         withCredentials: true,
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +58,6 @@ const AskQuestion = ({ onEditMode, editData }) => {
     }
   };
 
-  console.log(question);
   return (
     <div className="flex xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center">
       <section>

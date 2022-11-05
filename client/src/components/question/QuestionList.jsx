@@ -23,21 +23,20 @@ export default function QuestionList() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
 
+  async function getData() {
+    await fetch(`/auth/question?page=${page}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setTotalPage(() => makeButton(data.pageInfo.totalPages));
+        setContent(data.data);
+        setData(data);
+      });
+  }
+
   useEffect(() => {
-    async function getData() {
-      await fetch(`/question?page=${page}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(res => res.json())
-        .then(data => {
-          // console.log(data);
-          // console.log(data.pageInfo.totalPages);
-          setTotalPage(() => makeButton(data.pageInfo.totalPages));
-          setContent(data.data);
-          setData(data);
-        });
-    }
     getData();
   }, [page]);
 
@@ -136,7 +135,6 @@ export default function QuestionList() {
           처음으로
         </button>
         <div>
-          {/* {console.log(totalPage)} */}
           {totalPage.map((button, idx) => {
             return (
               <button
