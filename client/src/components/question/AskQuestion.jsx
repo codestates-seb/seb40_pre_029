@@ -2,9 +2,9 @@
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-import Tag from "./Tag.jsx";
 import { useParams } from "react-router-dom";
+
+import Tag from "./Tag.jsx";
 
 const AskQuestion = ({ onEditMode, editData }) => {
   // const navigate = useNavigate();
@@ -21,33 +21,34 @@ const AskQuestion = ({ onEditMode, editData }) => {
       setArticle(editData.article);
     }
   }, [editData]);
-
+  //prettier-ignore
   const postData = async question => {
     //만약 edit 버튼을 통해 컴포넌트에 접근을 하지 않았다면 (ask question 버튼을 눌렀다면)
     if (!onEditMode) {
-      await fetch("../question/post", {
-        withCredentials: true,
+      await fetch("/question/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(question),
       }).then(res => console.log(res));
     } else {
       //만약 edit 버튼을 통해 컴포넌트에 접근했다면
-      await fetch(`/auth/question/patch/${params.id}`, {
+      await fetch(`/question/patch/${params.id}`, {
         withCredentials: true,
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(question),
-      }).then(res => console.log(res));
+      });
     }
   };
 
   const onPostClick = () => {
     setQuestion({ title, article, tagList });
     postData(question);
-    console.log(question);
-    // navigate("/");
+    // if (!onEditMode) {
+    //   navigate("/");
+    // } else navigate(`/question/${params.id}`);
     // window.location.reload();
+    console.log(question);
   };
 
   const handleOnChange = e => {
