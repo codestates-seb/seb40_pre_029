@@ -53,25 +53,23 @@ public class MemberController {
 
     // 회원 내 정보 구현 -> 보안인증[O]
     @GetMapping("/member")
-    public ResponseEntity getMember(@AuthenticationPrincipal String email) {
+    public ResponseEntity<MemberDto.Response> getMember(@AuthenticationPrincipal String email) {
         Member member = memberService.findMember(email);
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
 
     // 회원 내 정보 수정 -> 보안인증[O]
     @PatchMapping("/member")
-    public ResponseEntity patchMember(@AuthenticationPrincipal String email,
-                                      @Valid @RequestBody MemberDto.Patch patch) {
+    public ResponseEntity<MemberDto.Response> patchMember(@AuthenticationPrincipal String email,
+                                                          @Valid @RequestBody MemberDto.Patch patch) {
         Member member = memberService.updateMember(email ,mapper.memberPatchToMember(patch));
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
 
     // 패스워드 검증 구현 -> 보안인증 [O]
     @GetMapping("/verify")
-    public ResponseEntity getPassword(@AuthenticationPrincipal String email,
-                                      @Valid @RequestBody Member member) {
-        log.info("email = {}", email);
-        log.info("password = {}", member.getPassword());
+    public ResponseEntity<ResponseEntity.BodyBuilder> getPassword(@AuthenticationPrincipal String email,
+                                                                  @Valid @RequestBody Member member) {
         Member findMember = memberService.findPassword(email);
 
         if (passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
@@ -83,7 +81,7 @@ public class MemberController {
 
     // 전체 회원 목록 구현 -> 보안인증[x] 필요하지 않음
     @GetMapping("/members")
-    public ResponseEntity getMembers(@Valid @RequestBody PageInfo.Request request) {
+    public ResponseEntity<MemberListDto<MemberDto.Response>> getMembers(@Valid @RequestBody PageInfo.Request request) {
         Page<Member> pageMembers = memberService.findAllMembers(request.getPage() - 1, request.getSize());
         List<Member> members = pageMembers.getContent();
         return ResponseEntity.ok(new MemberListDto<>(mapper.membersToMemberResponses(members),pageMembers));
@@ -91,10 +89,15 @@ public class MemberController {
 
     // 회원 탈퇴 구현
     @DeleteMapping("/withdraw")
-    public ResponseEntity deleteMember(@AuthenticationPrincipal String email,
-                                       @Valid @RequestBody Member member) {
-        memberService.deleteMember(email);
-        return null;
-    }
+    public ResponseEntity<ResponseEntity.BodyBuilder> deleteMember(@AuthenticationPrincipal String email,
+                                                                   @Valid @RequestBody Member member) {
+        Member findMember = memberService.findPassword(email);
 
+        if (passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
+            memberService.deleteMember(email);
+            return ResponseEntity.ok().build();
+        }
+        else
+            return ResponseEntity.badRequest().build();
+    }
 }
