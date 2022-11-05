@@ -13,18 +13,21 @@ export default function Header() {
     signup: false,
   });
 
+  const logIn = useSelector(state => state.isLogin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const openModalHandler = el => {
     let temp = el.target.id;
     let change = !modalOpen[temp];
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
     } else if (logIn && temp === "logout") {
-      setLogin(false);
+      dispatch(loginActions.logout());
+      localStorage.clear();
+    } else if (logIn && temp === "myprofile") {
+      navigate("/auth/member");
     }
-  };
-
-  const closeLogin = () => {
-    setModalOpen({ ...modalOpen, login: false });
   };
 
   const userMenu = useRef(null);
@@ -35,7 +38,7 @@ export default function Header() {
       return;
     } else if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
   };
-
+aa
   useEffect(() => {
     window.addEventListener("mousedown", modalCloseHandler);
     return () => {
@@ -62,7 +65,7 @@ export default function Header() {
             {!logIn ? (
               <HeaderButton name="로그인" id="login" openModalHandler={openModalHandler} />
             ) : (
-              <HeaderButton name="마이페이지" />
+              <HeaderButton name="마이페이지" id="myprofile" openModalHandler={openModalHandler} />
             )}
           </div>
           <div className="flex h-full text-sm w-20 dark:bg-slate-800">
@@ -80,7 +83,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal userMenu={userMenu} closeLogin={closeLogin} setLogin={setLogin} /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} setModalOpen={setModalOpen} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </div>
   );

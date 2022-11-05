@@ -1,13 +1,63 @@
-import Header from "../components/header/Header.jsx";
-import Footer from "../components/footer/Footer.jsx";
-import Navigation from "../components/navigation/Navigation.jsx";
-import ScrollTop from "../components/buttons/ScrollTop.jsx";
-import Mypage from "../components/mypage/Mypage.jsx";
+// import Header from "../components/header/Header.jsx";
+// import Footer from "../components/footer/Footer.jsx";
+// import Navigation from "../components/navigation/Navigation.jsx";
+import OptoutModal from "../modal/Optout.jsx";
+import { useState, useRef, useEffect } from "react";
 
-const Myprofile = () => {
+const Mypage = () => {
+  const [optoutcheck, setOptoutCheck] = useState(false);
+  const [editcheck, setEditCheck] = useState(false);
+
+  function openModalHandler(el) {
+    let id = el.target.id;
+    if (id === "optout") setOptoutCheck(!optoutcheck);
+    if (id === "edit") setEditCheck(!editcheck);
+    if (id === "cancel") setEditCheck(false);
+    if (id === "editdone") editProcess;
+  }
+
+  const userMenu = useRef(null);
+
+  const modalCloseHandler = ({ target }) => {
+    if (typeof userMenu.current === "undefined" || userMenu.current === null) {
+      return;
+    } else if (!userMenu.current.contains(target)) setOptoutCheck(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousedown", modalCloseHandler);
+    return () => {
+      window.removeEventListener("mousedown", modalCloseHandler);
+    };
+  });
+
+  const editProcess = async data => {
+    data.preventDefault();
+    let info = {
+      email: data.target[0].value,
+      nickname: data.target[1].value,
+      password: data.target[2].vaule,
+    };
+
+    //prettier-ignore
+    const response = await fetch("/auth/login", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", authorization: localStorage.authorization },
+      body: JSON.stringify(info),
+      })
+    let res = response;
+    if (!res.ok) {
+      await res.json().then(data => alert(data));
+    } else {
+      await res.json().then(data => console.log(data));
+      // setLogin(true);
+      // return location.reload();
+    }
+  };
+
   return (
     <>
-      <div className="w-4/5 flex bg-slate-300 dark:bg-slate-900 dark:text-gray-400" id="profileheader">
+      <div className="w-4/5 flex" id="profileheader">
         <section className="py-8 w-full mr-8">
           <div className="flex justify-between h-16 pl-10 mb-4">
             {editcheck ? (
@@ -16,7 +66,7 @@ const Myprofile = () => {
               <h1 className="items-center flex text-3xl mt-1 font-medium">My Profile</h1>
             )}
             {/* 이미지 사진 불러오기, 만약 사진을 못불러오면 기존에 있는 이미지 추가 */}
-            <img className="max-w-auto h-auto" src={require("../components/images/temp_profile.png")} alt="" />
+            <img className="max-w-auto h-auto" src={require("../images/temp_profile.png")} alt="" />
           </div>
           <div className="flex justify-between h-16 pl-14 mb-4">
             <h1 className="items-center flex text-2xl mt-1 font-medium">Email</h1>
@@ -79,10 +129,9 @@ const Myprofile = () => {
           </div>
         </section>
       </div>
-      <Footer />
-      <ScrollTop />
+      {optoutcheck ? <OptoutModal userMenu={userMenu} /> : null}
     </>
   );
 };
 
-export default Myprofile;
+export default Mypage;

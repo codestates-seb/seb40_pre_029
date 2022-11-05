@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
-export default function LoginModal(props) {
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../redux/store.jsx";
+
+export default function LoginModal({ userMenu }) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -10,9 +13,11 @@ export default function LoginModal(props) {
     email: false,
     pw: false,
   });
+
   const idpattern = new RegExp("^[a-zA-Z0-9@.]+$");
   const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onChange = ele => {
     const { value, name } = ele.target;
@@ -46,9 +51,8 @@ export default function LoginModal(props) {
       email: data.target[0].value,
       password: data.target[1].value,
     };
-
     //prettier-ignore
-    const response = await fetch("/login", {
+    const response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
@@ -57,12 +61,8 @@ export default function LoginModal(props) {
     if (!res.ok) {
       await res.json().then(data => alert(data.message));
     } else {
-      await res
-        .json()
-        .then(data => console.log(data))
-        .then(props.closeLogin, props.setLogin(true))
-        .then(navigate("/"));
-      // alert("로그인이 완료되었습니다");
+      await res.json().then();
+      alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
         pw: "",
@@ -77,7 +77,8 @@ export default function LoginModal(props) {
       localStorage.setItem("authorization", response.headers.get("authorization"));
 
       //여기 navigate("/"); 으로 구현하려고했으나 실패
-      // return location.reload();
+      return location.reload();
+      // return navigate("/");
 
       // setLogin(true);
       // return location.reload();
