@@ -57,12 +57,9 @@ export default function LoginModal(props) {
     if (!res.ok) {
       await res.json().then(data => alert(data.message));
     } else {
-      await res
-        .json()
-        .then(data => console.log(data))
-        .then(props.closeLogin, props.setLogin(true))
-        .then(navigate("/"));
-      // alert("로그인이 완료되었습니다");
+      await res.json().then();
+      dispatch(loginActions.logout());
+      alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
         pw: "",
@@ -87,7 +84,7 @@ export default function LoginModal(props) {
   return (
     <>
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
-        <div className="flex z-50 justify-center items-center" ref={props.userMenu}>
+        <div className="flex z-50 justify-center items-center" ref={userMenu}>
           <form
             className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12 dark:bg-slate-800 dark:text-gray-400"
             onSubmit={loginProcess}>
