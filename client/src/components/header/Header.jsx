@@ -4,9 +4,11 @@ import LoginModal from "../modal/Login.jsx";
 import SignupModal from "../modal/Signup.jsx";
 import { useState, useRef, useEffect } from "react";
 import ThemeButton from "../buttons/ThemeButton.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginActions } from "../../redux/store.jsx";
 
 export default function Header() {
-  const [logIn, setLogin] = useState(false);
   const [darkButton, setDarkButton] = useState(false);
   const [modalOpen, setModalOpen] = useState({
     login: false,
@@ -38,7 +40,7 @@ export default function Header() {
       return;
     } else if (!userMenu.current.contains(target)) setModalOpen({ login: false, signup: false });
   };
-aa
+
   useEffect(() => {
     window.addEventListener("mousedown", modalCloseHandler);
     return () => {
