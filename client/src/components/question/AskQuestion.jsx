@@ -44,7 +44,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
     if (!onEditMode) {
       await fetch("/auth/question/post", {
         method: "POST",
-        headers: { "Content-Type": "application/json", authorization: localStorage.authorization },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(question),
       }).then(res => console.log(res));
     } else {
@@ -52,7 +52,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
       await fetch(`/auth/question/patch/${params.id}`, {
         withCredentials: true,
         method: "PATCH",
-        headers: { "Content-Type": "application/json", authorization: localStorage.authorization },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(question),
       });
     }
