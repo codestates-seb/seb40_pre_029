@@ -1,6 +1,7 @@
-package fuckingrullet.server.security.jwt;
+package fuckingrullet.server.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fuckingrullet.server.auth.jwt.JwtTokenizer;
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.member.dto.MemberLoginDto;
 import lombok.SneakyThrows;
@@ -41,10 +42,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    public void successfulAuthentication(HttpServletRequest request,
-                                         HttpServletResponse response,
-                                         FilterChain chain,
-                                         Authentication authResult) throws ServletException, IOException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult) throws ServletException, IOException {
         Member member = (Member) authResult.getPrincipal();
 
         String accessToken = delegateAccessToken(member);
@@ -58,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", member.getEmail());
+        claims.put("username", member.getEmail());
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();

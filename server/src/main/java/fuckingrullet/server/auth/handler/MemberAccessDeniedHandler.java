@@ -1,6 +1,6 @@
-package fuckingrullet.server.security.handler;
+package fuckingrullet.server.auth.handler;
 
-import fuckingrullet.server.exception.ErrorResponder;
+import fuckingrullet.server.auth.utils.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

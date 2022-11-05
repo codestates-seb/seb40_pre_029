@@ -1,4 +1,4 @@
-package fuckingrullet.server.security.handler;
+package fuckingrullet.server.auth.handler;
 
 import fuckingrullet.server.exception.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;

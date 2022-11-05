@@ -10,6 +10,11 @@
 
 # production
 /build
+/client/**
+/client
+.jsx
+.css
+.html
 
 # misc
 .DS_Store
