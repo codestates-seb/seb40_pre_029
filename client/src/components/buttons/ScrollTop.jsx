@@ -27,7 +27,7 @@ export default function ScrollTop() {
     <>
       {showButton && (
         <button
-          className="group/button hover:bg-emerald-500 fixed bottom-6 right-12 w-16 h-16 bg-gray-100 flex flex-row justify-center items-center rounded-2xl shadow-xl"
+          className="group/button hover:bg-emerald-500 fixed bottom-6 right-12 w-16 h-16 bg-gray-100 flex flex-row justify-center items-center rounded-2xl shadow-xl dark:bg-slate-900 dark:hover:bg-emerald-500"
           onClick={scrollToTop}>
           <span className="material-icons text-3xl text-slate-400 group-hover/button:text-white">arrow_upward</span>
         </button>

@@ -7,13 +7,15 @@ import ScrollTop from "../components/buttons/ScrollTop.jsx";
 const Question = () => {
   return (
     <>
-      <Header />
-      <div className="flex xl:w-[80rem] max-xl:w-full mx-auto">
-        <Navigation />
-        <Details />
+      <div className="bg-slate-300 dark:bg-slate-900 dark:text-gray-400">
+        <Header />
+        <div className="flex xl:w-[80rem] max-xl:w-full mx-auto">
+          <Navigation />
+          <Details />
+        </div>
+        <Footer />
+        <ScrollTop />
       </div>
-      <Footer />
-      <ScrollTop />
     </>
   );
 };

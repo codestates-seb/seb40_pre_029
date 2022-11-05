@@ -5,7 +5,7 @@ import ScrollTop from "../components/buttons/ScrollTop.jsx";
 
 const Ask = () => {
   return (
-    <div className="bg-slate-300">
+    <div className="bg-slate-300 dark:bg-slate-900 dark:text-gray-400">
       <Header />
       <AskQuestion />
       <Footer />
