@@ -24,9 +24,9 @@ export default function OptoutModal() {
       password: data.target.value,
     };
 
-    const response = await fetch("/auth/optout", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json", authorization: localStorage.authorization },
+    const response = await fetch("/optout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(info),
     });
 
