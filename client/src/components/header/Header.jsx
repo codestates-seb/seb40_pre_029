@@ -7,6 +7,7 @@ import ThemeButton from "../buttons/ThemeButton.jsx";
 
 export default function Header() {
   const [logIn, setLogin] = useState(false);
+  const [darkButton, setDarkButton] = useState(false);
   const [modalOpen, setModalOpen] = useState({
     login: false,
     signup: false,
@@ -51,7 +52,12 @@ export default function Header() {
             <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
           </a>
           <SearchBar />
-          {localStorage.contains("dark") ? <ThemeButton icon="dark_mode" /> : <ThemeButton icon="light_mode" />}
+
+          {darkButton ? (
+            <ThemeButton icon="light_mode" darkButton={darkButton} setDarkButton={setDarkButton} />
+          ) : (
+            <ThemeButton icon="dark_mode" darkButton={darkButton} setDarkButton={setDarkButton} />
+          )}
           <div className="flex h-full text-sm w-20 dark:bg-slate-800">
             {!logIn ? (
               <HeaderButton name="로그인" id="login" openModalHandler={openModalHandler} />
