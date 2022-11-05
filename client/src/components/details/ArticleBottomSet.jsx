@@ -10,7 +10,7 @@ export default function ArticleBottomSet({ date, nickname }) {
   const params = useParams();
   const navigate = useNavigate();
   const onEditClick = e => {
-    navigate(`/auth/question/patch/${params.id}`);
+    navigate(`/question/edit/${params.id}`);
     console.log(e);
   };
   return (

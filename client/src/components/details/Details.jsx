@@ -12,7 +12,7 @@ export default function Details() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/auth/question/${params.id}`)
+    fetch(`/question/${params.id}`)
       .then(res => res.json())
       .then(data => {
         console.log(data.data);

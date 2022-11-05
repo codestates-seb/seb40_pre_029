@@ -9,7 +9,7 @@ const EditQuestion = () => {
 
   useEffect(() => {
     async function getData() {
-      fetch(`http://localhost:8080/auth/question/${params.id}`)
+      fetch(`/question/${params.id}`)
         .then(res => res.json())
         .then(data => {
           setEditData(data.data);

@@ -57,7 +57,7 @@ export default function QuestionList() {
   ];
   //if this is on, have to [GET] for its relating data
   const onTitleClick = e => {
-    navigate(`/question/${e.target.value}`);
+    navigate(`/questions/${e.target.value}`);
   };
   const filterOnClick = idx => {
     setIdOn(idx);
