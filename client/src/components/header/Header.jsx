@@ -52,12 +52,12 @@ export default function Header() {
             <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
           </a>
           <SearchBar />
-
           {darkButton ? (
             <ThemeButton icon="light_mode" darkButton={darkButton} setDarkButton={setDarkButton} />
           ) : (
             <ThemeButton icon="dark_mode" darkButton={darkButton} setDarkButton={setDarkButton} />
           )}
+
           <div className="flex h-full text-sm w-20 dark:bg-slate-800">
             {!logIn ? (
               <HeaderButton name="로그인" id="login" openModalHandler={openModalHandler} />
