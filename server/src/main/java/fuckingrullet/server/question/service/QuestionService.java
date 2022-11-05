@@ -4,7 +4,6 @@ import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.question.repository.QuestionRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class QuestionService {
-//    private final MemberService memberService;
+    //    private final MemberService memberService;
     private final QuestionRepository questionRepository;
+    private final TagService tagService;
+
+    public QuestionService(QuestionRepository questionRepository, TagService tagService) {
+        this.questionRepository = questionRepository;
+        this.tagService = tagService;
+    }
 
     public Question updateQuestion(Question question){
 
@@ -34,6 +38,12 @@ public class QuestionService {
                 .ifPresent(findQuestion::setQuestionStatus);
 
         Question updateQuestion = questionRepository.save(findQuestion);
+
+        if(!question.getTags().isEmpty()){
+            tagService.deleteTags(question);
+            tagService.createTags(question.getTags());
+        }
+        updateQuestion.setTags(tagService.findVerifiedTags(updateQuestion));
         return updateQuestion;
     }
 
@@ -46,6 +56,7 @@ public class QuestionService {
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
         questionRepository.save(findQuestion);
+        findQuestion.setTags(tagService.findVerifiedTags(findQuestion));
 
         return findQuestion;
     }

@@ -9,9 +9,11 @@ import fuckingrullet.server.question.dto.QuestionPostDto;
 import fuckingrullet.server.question.dto.SingleResponseDto;
 import fuckingrullet.server.question.mapper.QuestionMapper;
 import fuckingrullet.server.question.service.QuestionService;
+import fuckingrullet.server.question.service.TagService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,19 +27,21 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
-//    private final MemberService memberService;
+    //    private final MemberService memberService;
 //    private final MemberMapper memberMapper;
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
+    private final TagService tagService;
 
     public QuestionController(QuestionService questionService, QuestionMapper mapper, /*MemberService memberService, MemberMapper memberMapper,*/
-                              AnswerService answerService, AnswerMapper answerMapper){
+                              AnswerService answerService, AnswerMapper answerMapper, TagService tagService){
         this.questionService = questionService;
         this.mapper = mapper;
 //        this.memberService = memberService;
 //        this.memberMapper = memberMapper;
         this.answerService = answerService;
         this.answerMapper = answerMapper;
+        this.tagService = tagService;
     }
 
     @PostMapping("/auth/question/post") // 맴버 제외
@@ -59,16 +63,19 @@ public class QuestionController {
     }
 
     @GetMapping("/auth/question") //수정필요(dto추가)
+    @Transactional(readOnly = true)
     public ResponseEntity getQuestions(@Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                        @Positive @RequestParam(value = "size", defaultValue = "5") int size,
                                        @RequestParam(value = "sort", defaultValue = "createAt") String sort){
         Page<Question> pageQuestions = questionService.findQuestions(page-1,size,sort);
         List<Question> questions = pageQuestions.getContent();
+        questions.stream().forEach(question -> question.setTags(tagService.findVerifiedTags(question)));
 
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),pageQuestions), HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),pageQuestions), HttpStatus.OK);
     }
 
     @GetMapping("/auth/question/{question-id}")
+    @Transactional(readOnly = true)
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId,
                                       @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
                                       @Positive @RequestParam(value = "size" , defaultValue = "50") int answerSize,
@@ -79,13 +86,15 @@ public class QuestionController {
     }
 
     @GetMapping("/auth/question/search")
+    @Transactional(readOnly = true)
     public ResponseEntity getQuestions(@RequestParam("search") String keyWord, @Positive @RequestParam(value = "page",
             defaultValue = "1") int page, @Positive @RequestParam(value = "size",defaultValue = "5") int size,
                                        @RequestParam(value = "sort",defaultValue = "createAt") String sort) {
         Page<Question> searchResult = questionService.searchQuestions(keyWord,page-1,size,sort);
         List<Question> questions = searchResult.getContent();
+        questions.stream().forEach(question -> question.setTags(tagService.findVerifiedTags(question)));
 
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),
                 searchResult),HttpStatus.OK);
     }
 }

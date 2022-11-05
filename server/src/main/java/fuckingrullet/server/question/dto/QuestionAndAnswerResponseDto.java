@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +25,5 @@ public class QuestionAndAnswerResponseDto {
     private Integer answern;
 
     private Question.QuestionStatus questionStatus;
+    private List<TagResponseDto> tags;
 }

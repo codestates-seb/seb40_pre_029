@@ -1,13 +1,17 @@
 package fuckingrullet.server.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Question {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +56,8 @@ public class Question {
     @Column
     private Integer answern;
 
-    @ManyToOne
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
+    @OneToMany(mappedBy = "question",cascade = CascadeType.PERSIST)
+    private List<Tag> Tags = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "STATUS")

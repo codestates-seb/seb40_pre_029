@@ -5,13 +5,16 @@ import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
 import fuckingrullet.server.domain.Answer;
 import fuckingrullet.server.domain.Question;
+import fuckingrullet.server.domain.Tag;
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.question.dto.*;
 import fuckingrullet.server.question.service.QuestionService;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
@@ -25,9 +28,20 @@ public interface QuestionMapper {
         question.getModifiedAt();
         question.setAnswern(0);
         /*question.setMember(memberService.getLoginMember);*/
+        List<Tag> tags = tagsDtosToTags(questionPostDto.getTags(),question);
+        question.setTags(tags);
 
         return question;
 
+    }
+
+    default List<Tag> tagsDtosToTags(List<TagDto> tagsDtos, Question question){
+        return tagsDtos.stream().map(tagDto -> {
+            Tag tag = new Tag();
+            tag.addQuestion(question);
+            tag.setTagName(tagDto.getTagName());
+            return tag;
+        }).collect(Collectors.toList());
     }
 
     default Question questionPatchDtoToQuestion(QuestionService questionService, QuestionPatchDto questionPatchDto){
@@ -36,7 +50,11 @@ public interface QuestionMapper {
         question.setTitle(questionPatchDto.getTitle());
         question.setArticle(questionPatchDto.getArticle());
         question.setQuestionStatus(questionPatchDto.getQuestionStatus());
-
+        if(questionPatchDto.getTags()==null){
+            questionPatchDto.setTags(new ArrayList<>());
+        }
+        List<Tag> tags = tagsDtosToTags(questionPatchDto.getTags(),question);
+        question.setTags(tags);
         return question;
     }
 
@@ -51,12 +69,23 @@ public interface QuestionMapper {
         questionResponseDto.setAnswern(question.getAnswern());
         questionResponseDto.setQuestionStatus(question.getQuestionStatus());
 
+        List<Tag> tags = question.getTags();
+        questionResponseDto.setTags(tagsToTagResponseDtos(
+                question.getTags()
+        ));
+
 //        Member member = question.getMember();
         /*questionResponseDto.setMember(memberMapper.memberRegisterDtoToMember(member));*/
         return questionResponseDto;
     }
 
-    List<QuestionResponseDto> questionToQuestionResponseDtos(List <Question> questions);
+    default List<TagResponseDto> tagsToTagResponseDtos(
+            List<Tag> tags){
+        return tags.stream().map(tag -> TagResponseDto.
+                builder().tagName(tag.getTagName()).build()).collect(Collectors.toList());
+    }
+
+    List<QuestionResponseDto> questionsToQuestionResponseDtos(List <Question> questions);
 
     default QuestionAndAnswerResponseDto questionToQuestionAndAnswerResponseDto(AnswerService answerService, AnswerMapper answerMapper,
                                                                                 Question question, Integer answerPage, Integer answerSize, String answerSort){
@@ -69,6 +98,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
+        questionAndAnswerResponseDto.setTags(tagsToTagResponseDtos(question.getTags()));
 
         try{
             Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
