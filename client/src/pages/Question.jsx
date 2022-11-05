@@ -9,8 +9,8 @@ const Question = () => {
     <>
       <Header />
       <div className="flex xl:w-[80rem] max-xl:w-full mx-auto">
-        <Navigation className="" />
-        <Details className="grow" />
+        <Navigation />
+        <Details />
       </div>
       <Footer />
       <ScrollTop />

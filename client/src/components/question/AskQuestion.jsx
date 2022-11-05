@@ -2,26 +2,43 @@
 // /ask [POST] => { title , body , tags }
 // /edit [PATCH]
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import Tag from "./Tag.jsx";
 
 const AskQuestion = ({ onEditMode, editData }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const params = useParams();
   const [question, setQuestion] = useState({ title: "", article: "", tagList: [] });
   const [title, setTitle] = useState("");
   const [article, setArticle] = useState("");
   const [tagList, setTagList] = useState([]);
-
+  //처음 fetch data 상태화
+  console.log(editData);
   useEffect(() => {
     if (onEditMode) {
       setTitle(editData.title);
       setArticle(editData.article);
     }
   }, [editData]);
-  //prettier-ignore
+
+  const onPostClick = () => {
+    setQuestion({ title, article, tagList });
+    postData(question);
+    if (!onEditMode) {
+      navigate("/");
+      window.location.reload();
+    } else {
+      console.log(editData);
+      navigate(`/questions/${editData.questionId}`);
+    }
+  };
+
+  const handleOnChange = e => {
+    setArticle(e.target.value);
+    setQuestion({ title, article: e.target.value });
+  };
+
   const postData = async question => {
     //만약 edit 버튼을 통해 컴포넌트에 접근을 하지 않았다면 (ask question 버튼을 눌렀다면)
     if (!onEditMode) {
@@ -41,21 +58,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
     }
   };
 
-  const onPostClick = () => {
-    setQuestion({ title, article, tagList });
-    postData(question);
-    // if (!onEditMode) {
-    //   navigate("/");
-    // } else navigate(`/question/${params.id}`);
-    // window.location.reload();
-    console.log(question);
-  };
-
-  const handleOnChange = e => {
-    setArticle(e.target.value);
-    setQuestion({ title, article: e.target.value });
-  };
-
+  console.log(question);
   return (
     <div className="flex xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center">
       <section>
