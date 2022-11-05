@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../redux/store.jsx";
 
 export default function LoginModal(props) {
   const [inputs, setInputs] = useState({
@@ -13,6 +15,7 @@ export default function LoginModal(props) {
   const idpattern = new RegExp("^[a-zA-Z0-9@.]+$");
   const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onChange = ele => {
     const { value, name } = ele.target;
@@ -48,7 +51,7 @@ export default function LoginModal(props) {
     };
 
     //prettier-ignore
-    const response = await fetch("/login", {
+    const response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify(info),
@@ -58,7 +61,7 @@ export default function LoginModal(props) {
       await res.json().then(data => alert(data.message));
     } else {
       await res.json().then();
-      dispatch(loginActions.logout());
+      dispatch(loginActions.login());
       alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
@@ -74,6 +77,7 @@ export default function LoginModal(props) {
       localStorage.setItem("authorization", response.headers.get("authorization"));
 
       //여기 navigate("/"); 으로 구현하려고했으나 실패
+      navigate("/");
       // return location.reload();
 
       // setLogin(true);
@@ -84,7 +88,7 @@ export default function LoginModal(props) {
   return (
     <>
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
-        <div className="flex z-50 justify-center items-center" ref={userMenu}>
+        <div className="flex z-50 justify-center items-center" ref={props.userMenu}>
           <form
             className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12 dark:bg-slate-800 dark:text-gray-400"
             onSubmit={loginProcess}>

@@ -14,6 +14,9 @@ export default function Header() {
     login: false,
     signup: false,
   });
+  const dispatch = useDispatch();
+  const logIn = useSelector(state => state.isLogin);
+  const navigate = useNavigate();
 
   const openModalHandler = el => {
     let temp = el.target.id;
@@ -21,12 +24,9 @@ export default function Header() {
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
     } else if (logIn && temp === "logout") {
-      setLogin(false);
+      dispatch(loginActions.logout());
+      navigate("/");
     }
-  };
-
-  const closeLogin = () => {
-    setModalOpen({ ...modalOpen, login: false });
   };
 
   const userMenu = useRef(null);
@@ -82,7 +82,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal userMenu={userMenu} closeLogin={closeLogin} setLogin={setLogin} /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </div>
   );
