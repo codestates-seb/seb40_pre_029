@@ -23,6 +23,10 @@ export default function Header() {
     }
   };
 
+  const closeLogin = () => {
+    setModalOpen({ ...modalOpen, login: false });
+  };
+
   const userMenu = useRef(null);
   // console.log(userMenu);
 
@@ -74,7 +78,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal userMenu={userMenu} setModalOpen={setModalOpen} /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} closeLogin={closeLogin} setLogin={setLogin} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
     </div>
   );

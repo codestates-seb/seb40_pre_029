@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-export default function LoginModal({ userMenu }) {
+export default function LoginModal(props) {
   const [inputs, setInputs] = useState({
     email: "",
     pw: "",
@@ -13,7 +13,6 @@ export default function LoginModal({ userMenu }) {
   const idpattern = new RegExp("^[a-zA-Z0-9@.]+$");
   const pwpattern = new RegExp("^[a-zA-Z0-9!@#$%^*+=-]+$");
   const navigate = useNavigate();
-  console.log(navigate);
 
   const onChange = ele => {
     const { value, name } = ele.target;
@@ -43,7 +42,6 @@ export default function LoginModal({ userMenu }) {
 
   const loginProcess = async data => {
     data.preventDefault();
-    console.log(data);
     let info = {
       email: data.target[0].value,
       password: data.target[1].value,
@@ -59,8 +57,12 @@ export default function LoginModal({ userMenu }) {
     if (!res.ok) {
       await res.json().then(data => alert(data.message));
     } else {
-      await res.json().then(data => console.log(data));
-      alert("로그인이 완료되었습니다");
+      await res
+        .json()
+        .then(data => console.log(data))
+        .then(props.closeLogin, props.setLogin(true))
+        .then(navigate("/"));
+      // alert("로그인이 완료되었습니다");
       setInputs({
         email: "",
         pw: "",
@@ -75,8 +77,7 @@ export default function LoginModal({ userMenu }) {
       localStorage.setItem("authorization", response.headers.get("authorization"));
 
       //여기 navigate("/"); 으로 구현하려고했으나 실패
-      return location.reload();
-      // return navigate("/");
+      // return location.reload();
 
       // setLogin(true);
       // return location.reload();
@@ -86,7 +87,7 @@ export default function LoginModal({ userMenu }) {
   return (
     <>
       <div className="flex fixed inset-0 bg-gray-900 bg-opacity-80 h-full w-full z-40 justify-center items-center">
-        <div className="flex z-50 justify-center items-center" ref={userMenu}>
+        <div className="flex z-50 justify-center items-center" ref={props.userMenu}>
           <form className="flex flex-col w-[28rem] h-[40rem] bg-white rounded-2xl pt-12 px-12" onSubmit={loginProcess}>
             <span className="text-3xl font-medium mb-8 text-center">Login</span>
             <div className="flex flex-col mb-6">
