@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function SearchBar() {
   const [keywords, setKeywords] = useState("");
-  console.log(keywords);
+
   return (
     <form className="grow min-w-40 ml-10 mr-4 relative">
       <span className="material-icons absolute left-3 h-10 leading-10 text-emerald-500 text-3xl">search</span>

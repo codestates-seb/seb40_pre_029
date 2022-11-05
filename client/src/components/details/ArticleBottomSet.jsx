@@ -1,12 +1,7 @@
 import ProfileCard from "./ProfileCard.jsx";
-import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function ArticleBottomSet({ date, nickname }) {
-  ArticleBottomSet.propTypes = {
-    date: PropTypes.string,
-    nickname: PropTypes.string,
-  };
   const params = useParams();
   const navigate = useNavigate();
   const onEditClick = e => {
