@@ -29,7 +29,10 @@ public interface AnswerMapper {
     default AnswerResponseDto answerToAnswerResponseDto(Answer answer){
         AnswerResponseDto answerResponseDto = new AnswerResponseDto();
         answerResponseDto.setAnswerId(answer.getAnswerId());
+        answerResponseDto.setQuestionId(answer.getQuestion().getQuestionId());
         answerResponseDto.setArticle(answer.getArticle());
+        answerResponseDto.setAnswerAuthor(answer.getAnswerAuthor());
+        answerResponseDto.setMemberId(answer.getMemberId());
         answerResponseDto.setCreateAt(answer.getCreateAt());
         answerResponseDto.setModifiedAt(answer.getModifiedAt());
 

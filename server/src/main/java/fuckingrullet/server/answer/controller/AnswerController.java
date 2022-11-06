@@ -36,23 +36,23 @@ public class AnswerController {
      * 답변 작성 API
      **/
     @PostMapping("/answer/post")
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
-        Answer answer = answerService.createAnswer(
+    public ResponseEntity postAnswer(@AuthenticationPrincipal String email,
+                                     @Valid @RequestBody AnswerPostDto answerPostDto) {
+        Answer answer = answerService.createAnswer(email,
                 mapper.answerPostDtoToAnswer(questionService, memberService, answerPostDto));
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer)), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/answer/patch/{answer-id}")
-    public ResponseEntity patchAnswer(@PathVariable("answer-id") Long answerId,
+    @PatchMapping("/answer/patch")
+    public ResponseEntity patchAnswer(@AuthenticationPrincipal String email,
                                       @Valid @RequestBody AnswerPatchDto answerPatchDto) {
-        answerPatchDto.setAnswerId(answerId);
         Answer answer = mapper.answerPatchDtoToAnswer(answerService, answerPatchDto);
-        Answer updateAnswer = answerService.updateAnswer(answer);
-        return ResponseEntity.ok(updateAnswer);
+        Answer updateAnswer = answerService.updateAnswer(email ,answer);
+        return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updateAnswer));
     }
 
-    @DeleteMapping("/answer/delete/{answer-id}")
+    @DeleteMapping("/answer/delete")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") Long answerId) {
         answerService.deleteAnswer(answerId);
         return null;

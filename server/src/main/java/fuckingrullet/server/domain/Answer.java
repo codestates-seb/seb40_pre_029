@@ -18,8 +18,11 @@ public class Answer {
     @Column(name = "ANSWER_ID")
     private Long answerId;
 
-    @Column(name = "RECOMMENT_ID")
-    private Long recommentId;
+    @Column(nullable = false, updatable = false) // 처음 작성후 작성자를 체크하기 위해 수정을 금지한다.
+    private Long memberId;
+
+    @Column(nullable = false)
+    private String answerAuthor;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String article;

@@ -30,9 +30,6 @@ public class QuestionService {
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
         Member member = findVerifiedMember(findMemberId(email));
 
-        log.info("question = {}", question.getMemberId());
-        log.info("member = {}", member.getMemberId());
-
         if(!findQuestion.getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_PATCH);
         }
