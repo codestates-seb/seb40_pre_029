@@ -107,7 +107,7 @@ export default function QuestionList() {
       </div>
       <div className="flex flex-row justify-between items-center pl-10 mb-4">
         <div className="text-2xl flex items-center">
-          <div className="mr-1 font-medium inline-block pt-0.5">{data.pageInfo.totalElements}</div>
+          <div className="mr-1 font-medium inline-block">{data.pageInfo.totalElements}</div>
           <span className="text-gray-700 font-normal text-xl">questions</span>
         </div>
         <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
