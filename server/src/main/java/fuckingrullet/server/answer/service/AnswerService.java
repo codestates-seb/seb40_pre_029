@@ -8,6 +8,7 @@ import fuckingrullet.server.domain.Question;
 
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
+import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +22,11 @@ import java.util.Optional;
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
-    public AnswerService(AnswerRepository answerRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
     }
 
     public Answer createAnswer(Answer answer){
@@ -56,6 +59,9 @@ public class AnswerService {
     }
 
     public void deleteAnswer(Long answerId) {
+        Question question = answerRepository.findById(answerId).get().getQuestion();
+        question.setAnswern(question.getAnswern()-1);
+        questionRepository.save(question);
         answerRepository.deleteById(findId(answerId));
     }
 

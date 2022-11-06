@@ -30,14 +30,6 @@ public class Question {
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
-    public void addAnswer(Integer answern){
-        this.answern = answern+1;
-    }
-
-//    public void deleteAnswer(Integer answern){
-//        this.answern = answern-1;
-//    }
-
     @Column(nullable = false)
     private String title;
 
