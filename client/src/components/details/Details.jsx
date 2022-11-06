@@ -6,8 +6,10 @@ import DefaultButton from "../buttons/DefaultButton.jsx";
 import Spinner from "../spinner/Spinner.jsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Details() {
+  const isLogin = useSelector(state => state.isLogin);
   const params = useParams();
   const [comment, setComment] = useState("");
   const [data, setData] = useState([]);
@@ -39,7 +41,9 @@ export default function Details() {
           <TitleBottomInfo
             element="Modified"
             value={
-              getParsedDate(data.createAt) === getParsedDate(data.modifiedAt) ? "Today" : getParsedDate(data.modifiedAt)
+              getParsedDate(data.createAt) === getParsedDate(data.modifiedAt)
+                ? getParsedDate(data.createAt)
+                : getParsedDate(data.modifiedAt)
             }
           />
           <TitleBottomInfo element="Viewed" value={data.views} />
@@ -56,17 +60,19 @@ export default function Details() {
       <div className="py-8 pl-12 flex flex-col border-b border-gray-300">
         <QuestionAnswer data={data} />
       </div>
-      <div className="py-8 pr-8 pl-12">
-        <span className="text-2xl">Your Answer</span>
-        <form className="w-full mt-4 rounded mb-10">
-          <textarea
-            value={comment}
-            onChange={e => setComment(e.target.value)}
-            rows={12}
-            className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500"></textarea>
-        </form>
-        <DefaultButton name="Post Your Answer" data={comment} />
-      </div>
+      {isLogin ? (
+        <div className="py-8 pr-8 pl-12">
+          <span className="text-2xl">Your Answer</span>
+          <form className="w-full mt-4 rounded mb-10">
+            <textarea
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              rows={12}
+              className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 dark:bg-gray-400"></textarea>
+          </form>
+          <DefaultButton name="Post Your Answer" data={comment} />
+        </div>
+      ) : null}
     </div>
   );
 }

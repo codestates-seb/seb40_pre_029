@@ -4,15 +4,12 @@ import LoginModal from "../modal/Login.jsx";
 import SignupModal from "../modal/Signup.jsx";
 import { useState, useRef, useEffect } from "react";
 import ThemeButton from "../buttons/ThemeButton.jsx";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginActions } from "../../redux/store.jsx";
 // import VerifyModal from "../modal/Verify.jsx";
 
-
 export default function Header() {
-  const [logIn, setLogin] = useState(false);
   const [darkButton, setDarkButton] = useState(false);
   const [modalOpen, setModalOpen] = useState({
     login: false,
@@ -71,14 +68,18 @@ export default function Header() {
     }
   };
 
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="sticky top-0 z-50 shadow">
       <div className="h-1 bg-emerald-500"></div>
       <div className="bg-slate-100 dark:bg-slate-900 dark:text-gray-400">
         <div className="xl:w-[80rem] max-xl:w-full mx-auto px-4 h-16 flex flex-row items-center ">
-          <a href="/" className="flex-none">
+          <button onClick={handleHomeClick} className="flex-none">
             <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
-          </a>
+          </button>
           <SearchBar />
           {darkButton ? (
             <ThemeButton icon="light_mode" darkButton={darkButton} setDarkButton={setDarkButton} />

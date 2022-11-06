@@ -1,20 +1,23 @@
-//author 누르면 페이지 이동 title 클릭하면 질문페이지로 이동
-//tag 부분 유효성검사 구현
-// import AskButton from "../buttons/AskButton.jsx";
 import { useState, useEffect } from "react";
 import DefaultButton from "../buttons/DefaultButton.jsx";
 import TabDefault from "../tabs/TabDefault.jsx";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import Spinner from "../spinner/Spinner.jsx";
-
-// import Pagination from "../pagination/Pagination.jsx";
+import { useSelector } from "react-redux";
 
 export default function QuestionList() {
+  //handling filter click tab event
+  const isLogin = useSelector(state => state.isLogin);
+
+  const filterMap = [
+    { name: "Recent", id: 0 },
+    { name: "Interesting", id: 1 },
+    { name: "Comments", id: 2 },
+  ];
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");
   };
-
   const navigate = useNavigate();
   const [filterClicked, setFilterClicked] = useState(false);
   const [idOn, setIdOn] = useState(0);
@@ -24,22 +27,55 @@ export default function QuestionList() {
   const [totalPage, setTotalPage] = useState(0);
 
   async function getData() {
-    await fetch(`/auth/question?page=${page}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setTotalPage(() => makeButton(data.pageInfo.totalPages));
-        setContent(data.data);
-        setData(data);
-      });
+    if (idOn === 0) {
+      await fetch(`/auth/question?page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
+          setData(data);
+        });
+    }
+    if (idOn === 1) {
+      await fetch(`/auth/question?sort=views&page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
+          setData(data);
+        });
+    }
+    if (idOn === 2) {
+      await fetch(`/auth/question?sort=answern&page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data.filter(el => el.answern !== 0));
+          setData(data);
+        });
+    }
   }
 
   useEffect(() => {
     getData();
   }, [page]);
+
+  useEffect(() => {
+    getData();
+  }, [idOn]);
+
+  useEffect(() => {
+    getData();
+  }, [idOn]);
 
   const makeButton = function (totalPages) {
     const pagination = [];
@@ -49,16 +85,11 @@ export default function QuestionList() {
     return pagination;
   };
 
-  //handling filter click tab event
-  const filterMap = [
-    { name: "Interesting", id: 0 },
-    { name: "Week", id: 1 },
-    { name: "Month", id: 2 },
-  ];
   //if this is on, have to [GET] for its relating data
   const onTitleClick = e => {
     navigate(`/questions/${e.target.value}`);
   };
+
   const filterOnClick = idx => {
     setIdOn(idx);
     setFilterClicked(!filterClicked);
@@ -66,12 +97,13 @@ export default function QuestionList() {
       setFilterClicked(true);
     }
   };
+
   if (content.length === 0) return <Spinner />;
   return (
     <section className="py-8 w-full mr-8">
       <div className="flex justify-between pl-10 mb-4">
         <h1 className="text-3xl mt-1 font-medium">All Questions</h1>
-        <DefaultButton name="Ask Question" />
+        {isLogin ? <DefaultButton name="Ask Question" /> : null}
       </div>
       <div className="flex flex-row justify-between items-center pl-10 mb-4">
         <div className="text-2xl flex items-center">
@@ -152,7 +184,7 @@ export default function QuestionList() {
           })}
         </div>
         <button
-          onClick={() => setPage(data.totalPages)}
+          onClick={() => setPage(totalPage.length)}
           className="border border-emerald-500 hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
           끝으로
         </button>

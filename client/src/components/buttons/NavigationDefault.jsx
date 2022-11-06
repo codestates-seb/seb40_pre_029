@@ -1,4 +1,10 @@
-export default function NavigationDefault({ name, icon, onClick }) {
+import { useNavigate } from "react-router-dom";
+
+export default function NavigationDefault({ name, icon }) {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/");
+  };
   return (
     <button
       onClick={onClick}

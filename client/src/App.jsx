@@ -13,11 +13,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Main />}></Route>
-          <Route exact path="/myprofile" element={<MyProfile />}></Route>
-          <Route exact path="/ask" element={<Ask />}></Route>
-          <Route exact path={`/questions/:id`} element={<Question />}></Route>
-          <Route exact path={`/question/edit/:id`} element={<Edit />}></Route>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/myprofile" element={<MyProfile />}></Route>
+          <Route path="/ask" element={<Ask />}></Route>
+          <Route path={`/questions/:id`} element={<Question />}></Route>
+          <Route path={`/question/edit/:id`} element={<Edit />}></Route>
         </Routes>
       </BrowserRouter>
     </>

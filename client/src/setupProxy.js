@@ -7,6 +7,7 @@ module.exports = function (app) {
         "/api",
         "/auth",
         "/auth/questions",
+        "/auth/question",
         "/auth/register",
         "/api/auth/login",
         "/auth/logout",
