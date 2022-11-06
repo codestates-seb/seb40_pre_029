@@ -1,18 +1,16 @@
 package fuckingrullet.server.answer.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import fuckingrullet.server.domain.Question;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-@Getter
-@NoArgsConstructor
+@Getter @Setter
+@AllArgsConstructor
+@JsonAutoDetect
 public class AnswerPostDto {
 
-    @NotBlank
-    //@Pattern(regexp = "^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,100}$", message = "내용은 최소 2자 최대 100자 까지 허용됩니다.")
-    private String article;
-
-    private Long questionId; //postdto에 게시글아이디추가
-
-
+    private String article; // 답변 내용
+    private Question question; // 질문글 아이디
 }

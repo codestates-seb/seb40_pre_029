@@ -1,28 +1,41 @@
 package fuckingrullet.server.question.service;
 
+import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
+import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class QuestionService {
-//    private final MemberService memberService;
     private final QuestionRepository questionRepository;
+    private final MemberRepository memberRepository;
 
-    public Question updateQuestion(Question question){
+    public Question updateQuestion(String email ,Question question){
 
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
+        Member member = findVerifiedMember(findMemberId(email));
+
+        log.info("question = {}", question.getMemberId());
+        log.info("member = {}", member.getMemberId());
+
+        if(!findQuestion.getMemberId().equals(member.getMemberId())) {
+            throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_PATCH);
+        }
 
         Optional.ofNullable(question.getModifiedAt())
                 .ifPresent(findQuestion::setModifiedAt);
@@ -37,8 +50,16 @@ public class QuestionService {
         return updateQuestion;
     }
 
-    public Question createQuestion(Question question){
+    public Question createQuestion(String email ,Question question){
         verifyExistsTitle(question.getTitle());
+
+        Member member = findVerifiedMember(findMemberId(email));
+        log.info("member = {}", member.getEmail());
+        log.info("member = {}", member.getDisplayName());
+        log.info("member = {}", member.getMemberId());
+        question.setMemberId(member.getMemberId());
+        question.setQuestionAuthor(member.getDisplayName());
+
         return questionRepository.save(question);
     }
 
@@ -91,5 +112,19 @@ public class QuestionService {
         Page<Question> questions = new PageImpl<>(searchResult.subList(start, end),pageRequest, searchResult.size());
         VerifiedNoQuestion(questions);
         return questions;
+    }
+
+    public Long findMemberId(String email) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember.getMemberId();
+    }
+
+    @Transactional(readOnly = true)
+    public Member findVerifiedMember(long memberId) {
+        Optional<Member> optionalMember =
+                memberRepository.findById(memberId);
+        return optionalMember.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }

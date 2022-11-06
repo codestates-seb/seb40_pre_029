@@ -12,11 +12,11 @@ import fuckingrullet.server.question.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -41,21 +41,19 @@ public class QuestionController {
     }
 
     @PostMapping("/auth/question/post") // 맴버 제외
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto){
-        Question question = questionService.createQuestion(
-                mapper.questionPostDtoToQuestion(questionPostDto));
+    public ResponseEntity postQuestion(@AuthenticationPrincipal String email,
+                                       @Valid @RequestBody QuestionPostDto questionPostDto){
+        Question question = questionService.createQuestion(email, mapper.questionPostDtoToQuestion(questionPostDto));
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.CREATED);
     }
 
-    @PatchMapping("/auth/question/patch/{question-id}") // 로그인 제외
-    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive @NotNull Long questionId,
+    @PatchMapping("/auth/question") // 로그인 제외
+    public ResponseEntity patchQuestion(@AuthenticationPrincipal String email,
                                         @Valid @RequestBody QuestionPatchDto questionPatchDto){
-        questionPatchDto.setQuestionId(questionId);
-        Question question = mapper.questionPatchDtoToQuestion(questionService, /*memberService,*/ questionPatchDto);
-        Question updateQuestion = questionService.updateQuestion(question);
+        Question question = mapper.questionPatchDtoToQuestion(questionService, questionPatchDto);
+        Question updateQuestion = questionService.updateQuestion(email, question);
 
         return new ResponseEntity<>(updateQuestion,HttpStatus.OK);
-
     }
 
     @GetMapping("/auth/question") //수정필요(dto추가)

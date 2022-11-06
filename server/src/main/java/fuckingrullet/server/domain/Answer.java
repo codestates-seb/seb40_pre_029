@@ -18,10 +18,6 @@ public class Answer {
     @Column(name = "ANSWER_ID")
     private Long answerId;
 
-    @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = true)
-    private Member member;
-
     @Column(name = "RECOMMENT_ID")
     private Long recommentId;
 
@@ -35,7 +31,7 @@ public class Answer {
     private LocalDateTime modifiedAt;
 
 
-    private Boolean pick;
+    private Boolean pick = false;
 
     @OneToOne
     @JoinColumn(name = "RECOMMEND_ID", nullable = true)

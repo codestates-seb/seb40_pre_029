@@ -1,46 +1,29 @@
 package fuckingrullet.server.answer.mapper;
 
-import fuckingrullet.server.answer.dto.AnswerResponseDto;
+import fuckingrullet.server.answer.dto.AnswerPostDto;
 import fuckingrullet.server.domain.Answer;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-11-05T22:46:19+0900",
+    date = "2022-11-06T19:30:40+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16.1 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerMapperImpl implements AnswerMapper {
 
     @Override
-    public List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers) {
-        if ( answers == null ) {
+    public Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto) {
+        if ( answerPostDto == null ) {
             return null;
         }
 
-        List<AnswerResponseDto> list = new ArrayList<AnswerResponseDto>( answers.size() );
-        for ( Answer answer : answers ) {
-            list.add( answerToAnswerResponseDto( answer ) );
-        }
+        Answer answer = new Answer();
 
-        return list;
-    }
+        answer.setArticle( answerPostDto.getArticle() );
+        answer.setQuestion( answerPostDto.getQuestion() );
 
-    protected AnswerResponseDto answerToAnswerResponseDto(Answer answer) {
-        if ( answer == null ) {
-            return null;
-        }
-
-        AnswerResponseDto answerResponseDto = new AnswerResponseDto();
-
-        if ( answer.getAnswerId() != null ) {
-            answerResponseDto.setAnswerId( answer.getAnswerId() );
-        }
-        answerResponseDto.setArticle( answer.getArticle() );
-
-        return answerResponseDto;
+        return answer;
     }
 }

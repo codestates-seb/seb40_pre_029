@@ -24,9 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-/**
- * authenticationEntryPoint와 accessDeniedHandler 추가
- */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -78,6 +75,7 @@ public class SecurityConfiguration {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
+        // API 주소 명세 -> api/auth/class/methed (api/auth/login)
         return source;
     }
 

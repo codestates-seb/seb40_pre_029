@@ -14,13 +14,11 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private Long questionId;
 
-    @OneToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = true)
-    private Member member;
+    @Column(nullable = false, updatable = false) // 처음 작성후 작성자를 체크하기 위해 수정을 금지한다.
+    private Long memberId;
 
-    public void addMember(Member member){
-        this.member = member;
-    }
+    @Column(nullable = false)
+    private String questionAuthor;
 
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")

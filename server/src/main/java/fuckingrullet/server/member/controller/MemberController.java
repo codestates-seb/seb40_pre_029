@@ -36,40 +36,35 @@ public class MemberController {
 
     // 회원 가입 구현 -> 보안인증[O]
     @PostMapping("/register")
-    public ResponseEntity<Member> registerMember(@Valid @RequestBody MemberRegisterDto register) {
+    public ResponseEntity registerMember(@Valid @RequestBody MemberRegisterDto register) {
         Member member = mapper.memberRegisterToMember(register);
         Member registerMember = memberService.registerMember(member);
         return ResponseEntity.ok(registerMember);
     }
 
-    // 회원 로그인 구현 -> 시큐리티 사용으로 인해 SecurityConfiguration 에서 구현 되었음.
+    // 회원 로그인 구현 -> "/api/auth/login" 시큐리티 사용으로 인해 SecurityConfiguration 에서 구현 되었음.
 
-    // 회원 로그아웃 구현 -> 보안인증[O]
-//    @GetMapping("/logout")
-//    public void logoutMember(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-//        response.sendRedirect("/");
-//    }
+    // 회원 로그아웃 구현 -> 보안인증[O] Optinal
 
     // 회원 내 정보 구현 -> 보안인증[O]
     @GetMapping("/member")
-    public ResponseEntity<MemberDto.Response> getMember(@AuthenticationPrincipal String email) {
+    public ResponseEntity getMember(@AuthenticationPrincipal String email) {
         Member member = memberService.findMember(email);
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
 
     // 회원 내 정보 수정 -> 보안인증[O]
     @PatchMapping("/member")
-    public ResponseEntity<MemberDto.Response> patchMember(@AuthenticationPrincipal String email,
-                                                          @Valid @RequestBody MemberDto.Patch patch) {
+    public ResponseEntity patchMember(@AuthenticationPrincipal String email,
+                                      @Valid @RequestBody MemberDto.Patch patch) {
         Member member = memberService.updateMember(email ,mapper.memberPatchToMember(patch));
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
 
     // 패스워드 검증 구현 -> 보안인증 [O]
-    @GetMapping("/verify")
-    public ResponseEntity<ResponseEntity.BodyBuilder> getPassword(@AuthenticationPrincipal String email,
-                                                                  @Valid @RequestBody Member member) {
+    @PostMapping("/verify")
+    public ResponseEntity getPassword(@AuthenticationPrincipal String email,
+                                      @Valid @RequestBody Member member) {
         Member findMember = memberService.findPassword(email);
 
         if (passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
@@ -80,8 +75,8 @@ public class MemberController {
     }
 
     // 전체 회원 목록 구현 -> 보안인증[x] 필요하지 않음
-    @GetMapping("/members")
-    public ResponseEntity<MemberListDto<MemberDto.Response>> getMembers(@Valid @RequestBody PageInfo.Request request) {
+    @PostMapping("/members")
+    public ResponseEntity getMembers(@Valid @RequestBody PageInfo.Request request) {
         Page<Member> pageMembers = memberService.findAllMembers(request.getPage() - 1, request.getSize());
         List<Member> members = pageMembers.getContent();
         return ResponseEntity.ok(new MemberListDto<>(mapper.membersToMemberResponses(members),pageMembers));
@@ -89,8 +84,8 @@ public class MemberController {
 
     // 회원 탈퇴 구현
     @DeleteMapping("/withdraw")
-    public ResponseEntity<ResponseEntity.BodyBuilder> deleteMember(@AuthenticationPrincipal String email,
-                                                                   @Valid @RequestBody Member member) {
+    public ResponseEntity deleteMember(@AuthenticationPrincipal String email,
+                                       @Valid @RequestBody Member member) {
         Member findMember = memberService.findPassword(email);
 
         if (passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {

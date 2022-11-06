@@ -54,17 +54,17 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member findMember(String email) {
-        Long id = findId(email);
+        Long id = findMemberId(email);
         return findVerifiedMember(id);
     }
 
     public Member findPassword(String email) {
-        return findVerifiedMember(findId(email));
+        return findVerifiedMember(findMemberId(email));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(String email ,Member member) {
-        Member findMember = findVerifiedMember(findId(email));
+        Member findMember = findVerifiedMember(findMemberId(email));
 
         Optional.ofNullable(member.getEmail())
                 .ifPresent(findMember::setEmail);
@@ -87,7 +87,7 @@ public class MemberService {
     }
 
     public void deleteMember(String email) {
-        memberRepository.deleteById(findId(email));
+        memberRepository.deleteById(findMemberId(email));
     }
 
     private void verifyExistsEmail(String email) {
@@ -96,7 +96,7 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
-    public Long findId(String email) {
+    public Long findMemberId(String email) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember.getMemberId();
