@@ -7,12 +7,14 @@ import ThemeButton from "../buttons/ThemeButton.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginActions } from "../../redux/store.jsx";
+// import VerifyModal from "../modal/Verify.jsx";
 
 export default function Header() {
   const [darkButton, setDarkButton] = useState(false);
   const [modalOpen, setModalOpen] = useState({
     login: false,
     signup: false,
+    myprofile: false,
   });
   const dispatch = useDispatch();
   const logIn = useSelector(state => state.isLogin);
@@ -23,9 +25,15 @@ export default function Header() {
     let change = !modalOpen[temp];
     if (!logIn) {
       setModalOpen({ ...modalOpen, [temp]: change });
-    } else if (logIn && temp === "logout") {
-      dispatch(loginActions.logout());
-      navigate("/");
+    } else {
+      if (temp === "logout") {
+        dispatch(loginActions.logout());
+        localStorage.removeItem("refresh");
+        localStorage.removeItem("authorization");
+        navigate("/");
+      } else if (temp === "myprofile") {
+        bringmydata();
+      }
     }
   };
 
@@ -44,6 +52,21 @@ export default function Header() {
       window.removeEventListener("mousedown", modalCloseHandler);
     };
   });
+
+  const bringmydata = async () => {
+    //prettier-ignore
+    const response = await fetch("/api/auth/member", {
+      method: "GET",
+      headers: { "Content-Type": "application/json", authorization: localStorage.getItem("authorization")},
+      })
+
+    let res = response;
+    if (!res.ok) {
+      return;
+    } else {
+      await res.json().then(data => navigate("/myprofile", { state: data }));
+    }
+  };
 
   return (
     <div className="sticky top-0 z-50 shadow">
@@ -64,7 +87,7 @@ export default function Header() {
             {!logIn ? (
               <HeaderButton name="로그인" id="login" openModalHandler={openModalHandler} />
             ) : (
-              <HeaderButton name="마이페이지" />
+              <HeaderButton name="마이페이지" id="myprofile" openModalHandler={openModalHandler} />
             )}
           </div>
           <div className="flex h-full text-sm w-20 dark:bg-slate-800">
@@ -82,8 +105,9 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {modalOpen.login ? <LoginModal userMenu={userMenu} /> : null}
+      {modalOpen.login ? <LoginModal userMenu={userMenu} setModalOpen={setModalOpen} /> : null}
       {modalOpen.signup ? <SignupModal userMenu={userMenu} /> : null}
+      {/* {modalOpen.myprofile ? <VerifyModal userMenu={userMenu} /> : null} */}
     </div>
   );
 }

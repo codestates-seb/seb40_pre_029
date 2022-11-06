@@ -30,6 +30,7 @@ export default function QuestionList() {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         setTotalPage(() => makeButton(data.pageInfo.totalPages));
         setContent(data.data);
         setData(data);

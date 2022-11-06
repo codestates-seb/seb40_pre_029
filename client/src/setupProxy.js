@@ -4,15 +4,17 @@ module.exports = function (app) {
   app.use(
     createProxyMiddleware(
       [
-        "/auth/question",
+        "/api",
+        "/auth",
         "/auth/questions",
-        "/api/members",
         "/auth/register",
-        "/auth/login",
+        "/api/auth/login",
         "/auth/logout",
         "/auth/members",
-        "/auth/myprofile",
+        "/auth/member",
         "/answer/post",
+        "/auth/verify",
+        "/auth/withdraw",
       ],
       {
         target: "http://localhost:8080",

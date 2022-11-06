@@ -1,20 +1,21 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initialToken = localStorage.getItem("accessToken");
+const initialToken = localStorage.getItem("authorization");
 const initialState = {
   isLogin: initialToken ? true : false,
-  accessToken: initialToken,
+  authorization: initialToken,
 };
 
 const loginStore = createSlice({
   name: "isLogin",
   initialState,
-  reducer: {
+  reducers: {
     login(state) {
       state.isLogin = true;
     },
     logout(state) {
       state.isLogin = false;
+      state.authorization = "";
     },
   },
 });
