@@ -22,5 +22,4 @@ public class QuestionResponseDto {
     @Positive
     private int answern;
     private Question.QuestionStatus questionStatus;
-    private List<TagResponseDto> tags;
 }

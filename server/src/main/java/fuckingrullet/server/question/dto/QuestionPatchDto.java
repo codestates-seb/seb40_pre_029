@@ -17,6 +17,4 @@ public class QuestionPatchDto {
     private String article;
 
     private Question.QuestionStatus questionStatus;
-    @Setter
-    private List<TagDto> tags;
 }

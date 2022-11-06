@@ -56,8 +56,9 @@ public class Question {
     @Column
     private Integer answern;
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.PERSIST)
-    private List<Tag> Tags = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "STATUS")

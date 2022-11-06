@@ -6,6 +6,8 @@ import fuckingrullet.server.answer.repository.AnswerRepository;
 import fuckingrullet.server.domain.Answer;
 import fuckingrullet.server.domain.Question;
 
+import fuckingrullet.server.exception.BusinessLogicException;
+import fuckingrullet.server.exception.ExceptionCode;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,19 +30,23 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
-    public Answer updateAnswer(long answerId, AnswerPatchDto answerPatchDto) {
-        Answer findAnswer = findVerifiedAnswer(answerId);//요청된 답이 DB에 없으면 에러
+    public Answer updateAnswer(Answer answer) {
+        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());//요청된 답이 DB에 없으면 에러
 
-        Optional.ofNullable(answerPatchDto.getArticle()) //내용수정
+        Optional.ofNullable(answer.getModifiedAt()) //내용수정
+                .ifPresent(findAnswer::setModifiedAt);
+        Optional.ofNullable(answer.getArticle())
                 .ifPresent(findAnswer::setArticle);
+        Answer updateAnswer = answerRepository.save(findAnswer);
 
-        return findAnswer;
+        return updateAnswer;
     }
 
 
     private Answer findVerifiedAnswer(long answerId) {
-        return answerRepository.findById(answerId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 답변이 존재하지 않습니다."));
+        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
+        Answer findAnswer = optionalAnswer.orElseThrow(() -> new IllegalArgumentException("해당 답변이 존재하지 않습니다."));
+        return findAnswer;
     }
 
     public Page<Answer> findAnswers(Question question, int answerPage, int answerSize, String answerSort) {
@@ -49,4 +55,13 @@ public class AnswerService {
         return findAllAnswer;
     }
 
+    public void deleteAnswer(Long answerId) {
+        answerRepository.deleteById(findId(answerId));
+    }
+
+    private Long findId(Long answerId) {
+        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
+        Answer findAnswer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+        return findAnswer.getAnswerId();
+    }
 }

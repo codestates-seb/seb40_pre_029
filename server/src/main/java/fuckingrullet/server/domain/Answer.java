@@ -28,11 +28,11 @@ public class Answer {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String article;
 
-    @Column(nullable = true)
-    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime createAt = LocalDateTime.now();
 
-    @Column(nullable = true)
-    private LocalDateTime modifiedAt;
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
 
     private Boolean pick;

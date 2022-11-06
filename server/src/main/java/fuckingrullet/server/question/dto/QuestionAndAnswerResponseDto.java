@@ -25,5 +25,4 @@ public class QuestionAndAnswerResponseDto {
     private Integer answern;
 
     private Question.QuestionStatus questionStatus;
-    private List<TagResponseDto> tags;
 }

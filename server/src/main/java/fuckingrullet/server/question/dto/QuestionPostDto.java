@@ -19,7 +19,4 @@ public class QuestionPostDto {
     @NotBlank(message = "내용을 입력해야 합니다.")
     private String article;
 
-    @NotNull(message = "태그를 입력해야 합니다.")
-    private List<TagDto> tags;
-
 }

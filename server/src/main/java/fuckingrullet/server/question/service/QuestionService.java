@@ -3,6 +3,7 @@ package fuckingrullet.server.question.service;
 import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
+import fuckingrullet.server.member.service.MemberService;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,13 +16,11 @@ import java.util.Optional;
 
 @Service
 public class QuestionService {
-    //    private final MemberService memberService;
+    private MemberService memberService;
     private final QuestionRepository questionRepository;
-    private final TagService tagService;
 
-    public QuestionService(QuestionRepository questionRepository, TagService tagService) {
+    public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        this.tagService = tagService;
     }
 
     public Question updateQuestion(Question question){
@@ -39,11 +38,6 @@ public class QuestionService {
 
         Question updateQuestion = questionRepository.save(findQuestion);
 
-        if(!question.getTags().isEmpty()){
-            tagService.deleteTags(question);
-            tagService.createTags(question.getTags());
-        }
-        updateQuestion.setTags(tagService.findVerifiedTags(updateQuestion));
         return updateQuestion;
     }
 
@@ -56,7 +50,6 @@ public class QuestionService {
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
         questionRepository.save(findQuestion);
-        findQuestion.setTags(tagService.findVerifiedTags(findQuestion));
 
         return findQuestion;
     }
@@ -74,13 +67,6 @@ public class QuestionService {
         VerifiedNoQuestion(findAllQuestion);
         return findAllQuestion;
     }
-
-//    public Page<Question> findTagQuestions(int page, int size, String sort){
-//        Page<Question> findAllQuestion = questionRepository.findAllByQuestionStatus(PageRequest.of(
-//                page,size, Sort.by(sort).descending()),Question.QuestionStatus.QUESTION_ACTIVE);
-//        VerifiedNoQuestion(findAllQuestion);
-//        return findAllQuestion;
-//    }
 
     private void verifyExistsTitle(String title){
         Optional<Question> question = questionRepository.findByTitle(title);
