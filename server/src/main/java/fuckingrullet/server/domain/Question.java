@@ -1,13 +1,17 @@
 package fuckingrullet.server.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Question {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +27,6 @@ public class Question {
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
-
-    public void addAnswer(Integer answern){
-        this.answern = answern+1;
-    }
-
-//    public void deleteAnswer(Integer answern){
-//        this.answern = answern-1;
-//    }
 
     @Column(nullable = false)
     private String title;
@@ -50,7 +46,7 @@ public class Question {
     @Column
     private Integer answern;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
 

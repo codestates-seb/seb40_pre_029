@@ -21,4 +21,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "         final_q where final_q.status = 'QUESTION_ACTIVE'",
             nativeQuery = true)
     List<Question> searchQuestionByKeyWord(@Param("keyWord") String keyWord);
+
 }
