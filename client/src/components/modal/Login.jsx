@@ -58,7 +58,6 @@ export default function LoginModal(props) {
     if (!res.ok) {
       await res.json().then(data => alert(data.message));
     } else {
-
       // await res.json();
       dispatch(loginActions.login());
       alert("로그인이 완료되었습니다");

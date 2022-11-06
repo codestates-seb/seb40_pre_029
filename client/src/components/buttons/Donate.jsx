@@ -2,7 +2,7 @@
 export default function Donate() {
   return (
     <button className="px-4 pb-1 my-8 w-full shadow-slate-400 shadow-tline border border-slate-600 h-12 bg-slate-500 rounded text-white">
-      <span>Donate</span>
+      <a href="https://www.unicef.or.kr/donate">Donate</a>
     </button>
     // <a
     //   href="https://naver.com"

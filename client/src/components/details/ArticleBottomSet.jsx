@@ -1,12 +1,17 @@
 import ProfileCard from "./ProfileCard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function ArticleBottomSet({ date, nickname }) {
+export default function ArticleBottomSet({ answerEditMode, idx, date, nickname }) {
   const params = useParams();
   const navigate = useNavigate();
-  const onEditClick = e => {
-    navigate(`/question/edit/${params.id}`);
-    console.log(e);
+  console.log(answerEditMode, idx);
+
+  const onEditClick = () => {
+    if (!answerEditMode) {
+      navigate(`/question/edit/${params.id}`);
+    } else if (answerEditMode) {
+      console.log("아직 구현중~");
+    }
   };
   return (
     <>
