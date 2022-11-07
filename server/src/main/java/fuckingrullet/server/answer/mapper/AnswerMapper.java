@@ -33,6 +33,7 @@ public interface AnswerMapper {
         answerResponseDto.setArticle(answer.getArticle());
         answerResponseDto.setAnswerAuthor(answer.getAnswerAuthor());
         answerResponseDto.setMemberId(answer.getMemberId());
+        answerResponseDto.setLikeId(answer.getLikeId());
         answerResponseDto.setCreateAt(answer.getCreateAt());
         answerResponseDto.setModifiedAt(answer.getModifiedAt());
 

@@ -21,6 +21,9 @@ public class Answer {
     @Column(nullable = false, updatable = false) // 처음 작성후 작성자를 체크하기 위해 수정을 금지한다.
     private Long memberId;
 
+    @Column(nullable = false, updatable = false) // 추천 기능은 변경할 수 없다.
+    private Long likeId;
+
     @Column(nullable = false)
     private String answerAuthor;
 
@@ -33,12 +36,7 @@ public class Answer {
     @Column(nullable = false)
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-
     private Boolean pick = false;
-
-    @OneToOne
-    @JoinColumn(name = "RECOMMEND_ID", nullable = true)
-    private Likes recommends;
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")

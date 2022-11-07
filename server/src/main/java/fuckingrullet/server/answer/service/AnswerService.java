@@ -3,6 +3,7 @@ package fuckingrullet.server.answer.service;
 
 import fuckingrullet.server.answer.repository.AnswerRepository;
 import fuckingrullet.server.domain.Answer;
+import fuckingrullet.server.domain.Likes;
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.domain.Question;
 
@@ -33,10 +34,11 @@ public class AnswerService {
         this.memberRepository = memberRepository;
     }
 
-    public Answer createAnswer(String email, Answer answer){
+    public Answer createAnswer(String email, Likes likes, Answer answer){
         Member member = findVerifiedMember(findMemberId(email));
         answer.setAnswerAuthor(member.getDisplayName());
         answer.setMemberId(member.getMemberId());
+        answer.setLikeId(likes.getLikeId());
         return answerRepository.save(answer);
     }
 

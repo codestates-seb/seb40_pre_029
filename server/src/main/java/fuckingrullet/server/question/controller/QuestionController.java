@@ -2,7 +2,9 @@ package fuckingrullet.server.question.controller;
 
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
+import fuckingrullet.server.domain.Likes;
 import fuckingrullet.server.domain.Question;
+import fuckingrullet.server.like.service.LikeService;
 import fuckingrullet.server.question.dto.MultiResponseDto;
 import fuckingrullet.server.question.dto.QuestionPatchDto;
 import fuckingrullet.server.question.dto.QuestionPostDto;
@@ -26,25 +28,24 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
-//    private final MemberService memberService;
-//    private final MemberMapper memberMapper;
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
+    private final LikeService likeService;
 
     public QuestionController(QuestionService questionService, QuestionMapper mapper, /*MemberService memberService, MemberMapper memberMapper,*/
-                              AnswerService answerService, AnswerMapper answerMapper){
+                              AnswerService answerService, AnswerMapper answerMapper, LikeService likeService){
         this.questionService = questionService;
         this.mapper = mapper;
-//        this.memberService = memberService;
-//        this.memberMapper = memberMapper;
         this.answerService = answerService;
         this.answerMapper = answerMapper;
+        this.likeService = likeService;
     }
 
     @PostMapping("/question/post") // 맴버 제외
     public ResponseEntity postQuestion(@AuthenticationPrincipal String email,
                                        @Valid @RequestBody QuestionPostDto questionPostDto){
-        Question question = questionService.createQuestion(email, mapper.questionPostDtoToQuestion(questionPostDto));
+        Likes likes = likeService.createLikes(email);
+        Question question = questionService.createQuestion(email, likes,mapper.questionPostDtoToQuestion(questionPostDto));
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.CREATED);
     }
 

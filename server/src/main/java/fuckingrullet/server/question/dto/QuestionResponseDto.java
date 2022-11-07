@@ -13,6 +13,7 @@ import java.util.List;
 public class QuestionResponseDto {
     private Long questionId;
     private Long memberId;
+    private Long likeId;
     private String title;
     private String article;
     private String questionAuthor;

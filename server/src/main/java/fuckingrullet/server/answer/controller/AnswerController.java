@@ -5,7 +5,9 @@ import fuckingrullet.server.answer.dto.AnswerPostDto;
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
 import fuckingrullet.server.domain.Answer;
+import fuckingrullet.server.domain.Likes;
 import fuckingrullet.server.domain.Member;
+import fuckingrullet.server.like.service.LikeService;
 import fuckingrullet.server.member.mapper.MemberMapper;
 import fuckingrullet.server.member.service.MemberService;
 import fuckingrullet.server.question.dto.SingleResponseDto;
@@ -31,6 +33,7 @@ public class AnswerController {
     private MemberService memberService;
     private MemberMapper memberMapper;
     private QuestionService questionService;
+    private LikeService likeService;
 
     /**
      * 답변 작성 API
@@ -38,7 +41,8 @@ public class AnswerController {
     @PostMapping("/answer/post")
     public ResponseEntity postAnswer(@AuthenticationPrincipal String email,
                                      @Valid @RequestBody AnswerPostDto answerPostDto) {
-        Answer answer = answerService.createAnswer(email,
+        Likes likes = likeService.createLikes(email);
+        Answer answer = answerService.createAnswer(email, likes,
                 mapper.answerPostDtoToAnswer(questionService, memberService, answerPostDto));
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer)), HttpStatus.CREATED);

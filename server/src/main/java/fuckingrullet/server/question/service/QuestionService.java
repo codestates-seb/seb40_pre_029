@@ -1,5 +1,6 @@
 package fuckingrullet.server.question.service;
 
+import fuckingrullet.server.domain.Likes;
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,15 +49,14 @@ public class QuestionService {
         return updateQuestion;
     }
 
-    public Question createQuestion(String email ,Question question){
+    public Question createQuestion(String email, Likes likes, Question question){
         verifyExistsTitle(question.getTitle());
 
         Member member = findVerifiedMember(findMemberId(email));
-        log.info("member = {}", member.getEmail());
-        log.info("member = {}", member.getDisplayName());
-        log.info("member = {}", member.getMemberId());
         question.setMemberId(member.getMemberId());
         question.setQuestionAuthor(member.getDisplayName());
+
+        question.setLikeId(likes.getLikeId());
 
         return questionRepository.save(question);
     }
