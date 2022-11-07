@@ -79,7 +79,7 @@ export default function Header() {
       <div className="bg-slate-100 dark:bg-slate-900 dark:text-gray-400">
         <div className="xl:w-[80rem] max-xl:w-full mx-auto px-4 h-16 flex flex-row items-center ">
           <button onClick={handleHomeClick} className="flex-none">
-            <img src={require("../images/stack_overflow.png")} alt="" className="inline-block w-48 mb-2" />
+            <img src={require("../images/unstack_overflow.png")} alt="" className="inline-block w-56 mb-2" />
           </button>
           <SearchBar />
           {darkButton ? (

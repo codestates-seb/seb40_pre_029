@@ -6,7 +6,7 @@ import NavigationDefault from "../buttons/NavigationDefault.jsx";
 export default function Navigation() {
   return (
     <>
-      <div className="flex flex-none flex-col justify-between w-60 border-r border-gray-300 py-4 dark:bg-slate-900 dark:text-gray-400 ">
+      <div className="flex flex-none flex-col justify-between w-48 max-xl:w-64 border-r border-gray-300 pt-4 dark:bg-slate-900 dark:text-gray-400 ">
         <div>
           <NavigationDefault name="Questions" icon="public" />
           <NavigationDefault name="Users" icon="group" />

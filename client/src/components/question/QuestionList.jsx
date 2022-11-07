@@ -24,65 +24,62 @@ export default function QuestionList() {
   const [content, setContent] = useState([]);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-
-  async function getData() {
-    if (idOn === 0) {
-      await fetch(`/api/auth/question?page=${page}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(res => res.json())
-        .then(data => {
-          setTotalPage(() => makeButton(data.pageInfo.totalPages));
-          setContent(data.data);
-          setData(data);
-        });
-    }
-    if (idOn === 1) {
-      await fetch(`/auth/question?sort=views&page=${page}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(res => res.json())
-        .then(data => {
-          setTotalPage(() => makeButton(data.pageInfo.totalPages));
-          setContent(data.data);
-          setData(data);
-        });
-    }
-    if (idOn === 2) {
-      await fetch(`/auth/question?sort=answern&page=${page}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(res => res.json())
-        .then(data => {
-          setTotalPage(() => makeButton(data.pageInfo.totalPages));
-          setContent(data.data.filter(el => el.answern !== 0));
-          setData(data);
-        });
-    }
-  }
+  const [totalPage, setTotalPage] = useState([]);
+  // const [pagination, setPagination] = useState([]);
 
   useEffect(() => {
-    getData();
-  }, [page]);
-
-  useEffect(() => {
-    getData();
-  }, [idOn]);
-
-  useEffect(() => {
-    getData();
-  }, [idOn]);
-
-  const makeButton = function (totalPages) {
-    const pagination = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pagination.push(i);
+    async function getData() {
+      if (idOn === 0) {
+        await fetch(`/api/auth/question?page=${page}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            setTotalPage(() => makeButton(page, data.pageInfo.totalPages));
+            setContent(data.data);
+            setData(data);
+          });
+      }
+      if (idOn === 1) {
+        await fetch(`/api/auth/question?sort=views&page=${page}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then(res => res.json())
+          .then(data => {
+            setTotalPage(() => makeButton(page, data.pageInfo.totalPages));
+            setContent(data.data);
+            setData(data);
+          });
+      }
+      if (idOn === 2) {
+        await fetch(`/api/auth/question?sort=answern&page=${page}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then(res => res.json())
+          .then(data => {
+            setTotalPage(() => makeButton(page, data.pageInfo.totalPages));
+            setContent(data.data.filter(el => el.answern !== 0));
+            setData(data);
+          });
+      }
     }
-    return pagination;
+    getData();
+  }, [page, idOn]);
+
+  const makeButton = function (page, totalPages) {
+    const pagination = [1, 2, 3, 4, 5];
+    if (pagination.find(el => el == page)) {
+      return pagination.filter(num => num <= totalPages);
+    } else {
+      while (pagination.find(el => el == page)) {
+        pagination.map(el => el + 5);
+      }
+      return pagination.filter(num => num <= totalPages);
+    }
   };
 
   //if this is on, have to [GET] for its relating data
@@ -100,7 +97,7 @@ export default function QuestionList() {
 
   if (content.length === 0) return <Spinner />;
   return (
-    <section className="py-8 w-full mr-8 xl:h-[60rem]">
+    <section className="py-8 w-full mr-8">
       <div className="flex justify-between pl-10 mb-4">
         <h1 className="text-3xl mt-1 font-medium">All Questions</h1>
         {isLogin ? <DefaultButton name="Ask Question" /> : null}
@@ -112,7 +109,7 @@ export default function QuestionList() {
         </div>
         <TabDefault target={filterMap} func={filterOnClick} state={idOn} />
       </div>
-      <ul className="questions-container relative">
+      <ul className="questions-container relative mb-12">
         {content.map((article, idx) => {
           return (
             <div className="flex py-6 border-t border-gray-300" key={idx}>
@@ -148,7 +145,7 @@ export default function QuestionList() {
                   className="text-left text-2xl text-sky-700 mb-2 break-keep">
                   {article.title}
                 </button>
-                <div className="flex justify-between flex-wrap">
+                <div className="flex justify-end flex-wrap">
                   {/* <BodyTags target={article.tags} /> */}
                   <div className="inline-block">
                     {/* <span className="text-sky-700 mr-1.5">{article.MEMBER_ID}</span> */}
@@ -161,13 +158,22 @@ export default function QuestionList() {
         })}
       </ul>
       {/* <Pagination /> */}
-      <div className="pl-10 mb-4 flex justify-between">
+      <div className="pl-10 flex justify-between">
         <button
           onClick={() => setPage(1)}
-          className="border border-emerald-500 hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
+          className="border border-slate-300 hover:bg-slate-100 text-slate-600 px-3 h-10 mr-1 rounded mb-1">
           처음으로
         </button>
         <div>
+          {page - 1 > 0 ? (
+            <button
+              onClick={() => setPage(() => page - 1)}
+              className="hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
+              이전
+            </button>
+          ) : (
+            ""
+          )}
           {totalPage.map((button, idx) => {
             return (
               <button
@@ -182,10 +188,19 @@ export default function QuestionList() {
               </button>
             );
           })}
+          {page + 1 <= data.pageInfo.totalPages ? (
+            <button
+              onClick={() => setPage(() => page + 1)}
+              className="hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
+              다음
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         <button
-          onClick={() => setPage(totalPage.length)}
-          className="border border-emerald-500 hover:bg-emerald-100 text-emerald-600 px-3 h-10 mr-1 rounded mb-1">
+          onClick={() => setPage(data.pageInfo.totalPages)}
+          className="border border-slate-300 hover:bg-slate-100 text-slate-600 px-3 h-10 mr-1 rounded mb-1">
           끝으로
         </button>
         {/* <button onClick={() => navigate(`/questions/${totalPages}`)}>{page}</button> */}
