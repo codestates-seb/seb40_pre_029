@@ -3,10 +3,13 @@ package fuckingrullet.server.question.mapper;
 
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
+import fuckingrullet.server.domain.Answer;
 import fuckingrullet.server.domain.Question;
+import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.question.dto.*;
 import fuckingrullet.server.question.service.QuestionService;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -69,11 +72,11 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
 
-//        try{
-//            Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
-//            List<Answer> answers = pageAnswers.getContent();
-//            questionAndAnswerResponseDto.setAnswers(new MultiResponseDto<>(answerMapper.answersToAnswerResponseDtos(answers),pageAnswers));
-//        }catch (BusinessLogicException e){}
+        try{
+            Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
+            List<Answer> answers = pageAnswers.getContent();
+            questionAndAnswerResponseDto.setAnswers(new MultiResponseDto<>(answerMapper.answersToAnswerResponseDtos(answers),pageAnswers));
+        }catch (BusinessLogicException e){}
         return questionAndAnswerResponseDto;
     }
 }
