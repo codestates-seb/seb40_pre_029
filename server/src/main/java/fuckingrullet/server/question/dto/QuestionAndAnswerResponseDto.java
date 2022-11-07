@@ -24,4 +24,5 @@ public class QuestionAndAnswerResponseDto {
     private Integer answern;
 
     private Question.QuestionStatus questionStatus;
+    private String tagName;
 }

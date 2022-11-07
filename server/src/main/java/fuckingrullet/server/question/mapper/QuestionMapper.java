@@ -24,7 +24,7 @@ public interface QuestionMapper {
         question.getCreateAt();
         question.getModifiedAt();
         question.setAnswern(0);
-        /*question.setMember(memberService.getLoginMember);*/
+        question.setQuestionTag(questionPostDto.getTagName());
 
         return question;
 
@@ -36,6 +36,7 @@ public interface QuestionMapper {
         question.setTitle(questionPatchDto.getTitle());
         question.setArticle(questionPatchDto.getArticle());
         question.setQuestionStatus(questionPatchDto.getQuestionStatus());
+        question.setQuestionTag(questionPatchDto.getTagName());
 
         return question;
     }
@@ -52,6 +53,7 @@ public interface QuestionMapper {
         questionResponseDto.setModifiedAt(question.getModifiedAt());
         questionResponseDto.setAnswern(question.getAnswern());
         questionResponseDto.setQuestionStatus(question.getQuestionStatus());
+        questionResponseDto.setTagName(question.getQuestionTag());
 
 //        Member member = question.getMember();
         /*questionResponseDto.setMember(memberMapper.memberRegisterDtoToMember(member));*/
@@ -71,6 +73,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
+        questionAndAnswerResponseDto.setTagName(question.getQuestionTag());
 
         try{
             Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
@@ -79,4 +82,6 @@ public interface QuestionMapper {
         }catch (BusinessLogicException e){}
         return questionAndAnswerResponseDto;
     }
+
+    List<QuestionResponseDto> questionsToQuestionResponseDtos(List<Question> tagQuestions);
 }

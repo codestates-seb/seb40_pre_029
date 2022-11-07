@@ -6,8 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -67,5 +65,8 @@ public class Question {
 //    @OneToOne
 //    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
 //    private Recommends recommends;
+
+    @Column
+    private String questionTag;
 
 }

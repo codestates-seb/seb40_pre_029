@@ -124,4 +124,14 @@ public class QuestionService {
         return optionalMember.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
+
+    public Page<Question> searchTagQuestions(String keyKeyWord, int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
+        List<Question> searchResult = questionRepository.searchTagQuestionByKeyKeyWord(keyKeyWord);
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end),pageRequest, searchResult.size());
+        VerifiedNoQuestion(questions);
+        return questions;
+    }
 }
