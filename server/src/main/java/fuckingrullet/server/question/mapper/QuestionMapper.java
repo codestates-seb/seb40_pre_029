@@ -30,10 +30,11 @@ public interface QuestionMapper {
 
     }
 
-    default Question questionPatchDtoToQuestion(QuestionService questionService, QuestionPatchDto questionPatchDto){
+    default Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto){
         Question question = new Question();
         question.setQuestionId(questionPatchDto.getQuestionId());
         question.setTitle(questionPatchDto.getTitle());
+        question.setLikeId(questionPatchDto.getLikeId());
         question.setArticle(questionPatchDto.getArticle());
         question.setQuestionStatus(questionPatchDto.getQuestionStatus());
         question.setQuestionTag(questionPatchDto.getTagName());

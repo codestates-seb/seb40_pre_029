@@ -53,9 +53,9 @@ public class QuestionController {
     @PatchMapping("/question") // 로그인 제외
     public ResponseEntity patchQuestion(@AuthenticationPrincipal String email,
                                         @Valid @RequestBody QuestionPatchDto questionPatchDto){
-        Question question = mapper.questionPatchDtoToQuestion(questionService, questionPatchDto);
+        Question question = mapper.questionPatchDtoToQuestion(questionPatchDto);
         Question updateQuestion = questionService.updateQuestion(email, question);
-        Long likesData = likeService.findLikesData(question.getLikeId());
+        Long likesData = likeService.findLikesData(updateQuestion.getLikeId());
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(updateQuestion, likesData)),HttpStatus.OK);
     }
