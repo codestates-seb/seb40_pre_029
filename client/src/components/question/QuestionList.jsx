@@ -24,10 +24,6 @@ export default function QuestionList() {
   const [content, setContent] = useState([]);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-<<<<<<< Updated upstream
-  const [totalPage, setTotalPage] = useState([]);
-  // const [pagination, setPagination] = useState([]);
-=======
   const [totalPage, setTotalPage] = useState(0);
 
   async function getData() {
@@ -76,7 +72,6 @@ export default function QuestionList() {
   useEffect(() => {
     getData();
   }, [idOn]);
->>>>>>> Stashed changes
 
   useEffect(() => {
     async function getData() {
