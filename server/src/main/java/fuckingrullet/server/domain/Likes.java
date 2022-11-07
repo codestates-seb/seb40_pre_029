@@ -18,6 +18,9 @@ public class Likes {
     @Column(nullable = false)
     private Long likes;
 
+    @Column
+    private Long plusMinus;
+
     @ElementCollection
     private List<Long> members = new ArrayList<>();
 

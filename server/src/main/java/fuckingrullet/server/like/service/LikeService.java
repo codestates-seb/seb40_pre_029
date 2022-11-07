@@ -47,7 +47,7 @@ public class LikeService {
 
         if(loadLikes.getLikes() <= -30) throw new BusinessLogicException(ExceptionCode.LIKE_NOT_LIMIT) ;
 
-        if(likes.getLikes() == 1) { // 값이 1일경우 추천 기능 구현
+        if(likes.getPlusMinus() == 1) { // 값이 1일경우 추천 기능 구현
             likes.setLikeId(loadLikes.getLikeId());
             likes.setLikes(loadLikes.getLikes() + 1);
 
@@ -57,7 +57,7 @@ public class LikeService {
             likes.setMembers(members);
         }
 
-        if(likes.getLikes() == 0) { // 값이 0일경우 비추천 기능 구현
+        if(likes.getPlusMinus() == 0) { // 값이 0일경우 비추천 기능 구현
             likes.setLikeId(loadLikes.getLikeId());
             likes.setLikes(loadLikes.getLikes() - 1);
 

@@ -11,7 +11,6 @@ import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.question.repository.QuestionRepository;
-import fuckingrullet.server.question.service.QuestionService;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,12 +28,12 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
     private final QuestionService questionService;
+    private final LikeRepository likeRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository, QuestionService questionService) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
-        this.questionService = questionService;
     }
 
     public Answer createAnswer(String email, Likes likes, Answer answer){
@@ -43,6 +42,7 @@ public class AnswerService {
         answer.setMemberId(member.getMemberId());
         answer.setLikeId(likes.getLikeId());
         answer.setPick(false);
+        answer.setLikes(likes.getLikes());
         return answerRepository.save(answer);
     }
 
@@ -92,6 +92,35 @@ public class AnswerService {
         Page<Answer> findAllAnswer = answerRepository.findAllByQuestion(
                 PageRequest.of(answerPage-1,answerSize, Sort.by(answerSort).descending()),question);
         return findAllAnswer;
+    }
+
+    public Likes findVerifiedLikes(Long likeId) {
+        Optional<Likes> optionalLikes =
+                likeRepository.findById(likeId);
+        return optionalLikes.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+    }
+
+    public Likes findLike(long likeId){
+        Likes findLike = findVerifiedLikes(likeId);
+        return findLike;
+    }
+
+//    public Question findQuestion(long questionId){
+//        Question findQuestion = findVerifiedQuestion(questionId);
+//        findQuestion.setViews(findQuestion.getViews()+1);
+//        findQuestion.setLikes(findLike(findQuestion.getLikeId()).getLikes());
+//        questionRepository.save(findQuestion);
+//
+//        return findQuestion;
+//    }
+
+    public Answer findAnswer(long answerId){
+        Answer findAnswer = findVerifiedAnswer(answerId);
+        findAnswer.setLikeId(findLike(findAnswer.getLikeId()).getLikeId());
+        findAnswer.setLikes(findLike(findAnswer.getLikeId()).getLikes());
+        answerRepository.save(findAnswer);
+        return findAnswer;
     }
 
     public void deleteAnswer(Long answerId) {

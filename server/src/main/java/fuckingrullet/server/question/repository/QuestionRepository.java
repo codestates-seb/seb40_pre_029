@@ -22,4 +22,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             nativeQuery = true)
     List<Question> searchQuestionByKeyWord(@Param("keyWord") String keyWord);
 
+    @Query(value = "select * from ((select * from question a\n" +
+            "         where upper(question_tag) like upper(concat('%',:keyWord,'%'))))\n" +
+            "         final_q where final_q.status = 'QUESTION_ACTIVE'",
+            nativeQuery = true)
+    List<Question> searchTagQuestionByKeyKeyWord(@Param("keyWord") String keyKeyWord);
 }

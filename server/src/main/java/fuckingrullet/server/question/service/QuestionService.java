@@ -58,6 +58,7 @@ public class QuestionService {
 
         question.setLikeId(likes.getLikeId());
         question.setPick(false);
+        question.setLikes(likes.getLikes());
 
         return questionRepository.save(question);
     }
@@ -65,9 +66,21 @@ public class QuestionService {
     public Question findQuestion(long questionId){
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
+        findQuestion.setLikes(findLike(findQuestion.getLikeId()).getLikes());
         questionRepository.save(findQuestion);
 
         return findQuestion;
+    }
+
+    public Likes findLike(long likeId){
+        Likes findLike = findVerifiedLikes(likeId);
+        return findLike;
+    }
+    public Likes findVerifiedLikes(Long likeId) {
+        Optional<Likes> optionalLikes =
+                likeRepository.findById(likeId);
+        return optionalLikes.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
     }
 
     public Question plusAnswer(long questionId){
@@ -125,5 +138,15 @@ public class QuestionService {
                 memberRepository.findById(memberId);
         return optionalMember.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    public Page<Question> searchTagQuestions(String keyKeyWord, int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort).descending());
+        List<Question> searchResult = questionRepository.searchTagQuestionByKeyKeyWord(keyKeyWord);
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+        Page<Question> questions = new PageImpl<>(searchResult.subList(start, end),pageRequest, searchResult.size());
+        VerifiedNoQuestion(questions);
+        return questions;
     }
 }

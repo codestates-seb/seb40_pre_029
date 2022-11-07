@@ -89,4 +89,15 @@ public class QuestionController {
                 searchResult),HttpStatus.OK);
     }
 
+    @GetMapping("/tag/search")
+    public ResponseEntity getTagQuestions(@RequestParam("search") String keyKeyWord, @Positive @RequestParam(value = "page",
+            defaultValue = "1") int page, @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                          @RequestParam(value = "sort",defaultValue = "createAt") String sort) {
+        Page<Question> searchResults = questionService.searchTagQuestions(keyKeyWord,page-1,size,sort);
+        List<Question> tagQuestions = searchResults.getContent();
+
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(tagQuestions),
+                searchResults),HttpStatus.OK);
+    }
+
 }

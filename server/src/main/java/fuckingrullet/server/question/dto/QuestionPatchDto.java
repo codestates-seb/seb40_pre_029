@@ -4,8 +4,6 @@ import fuckingrullet.server.domain.Question;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 
 @Getter
 public class QuestionPatchDto {
@@ -17,4 +15,5 @@ public class QuestionPatchDto {
     private String article;
 
     private Question.QuestionStatus questionStatus;
+    private String tagName;
 }
