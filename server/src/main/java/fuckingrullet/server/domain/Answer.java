@@ -38,7 +38,7 @@ public class Answer {
 
     @OneToOne
     @JoinColumn(name = "RECOMMEND_ID", nullable = true)
-    private Recommends recommends;
+    private Likes recommends;
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
