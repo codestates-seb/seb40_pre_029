@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Custom git ignore set ###
+!src/main/resources/application.yml
+/client/**
+/client
+*.jsx
+application-prod.yml
+application-dev.yml
