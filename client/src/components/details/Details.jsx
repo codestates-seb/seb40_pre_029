@@ -21,7 +21,6 @@ export default function Details() {
       fetch(`/api/auth/question/${params.id}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           setData(data.data);
         });
     }, 500);
@@ -53,7 +52,7 @@ export default function Details() {
         </div>
       </div>
       <div className="py-8 pl-12 flex flex-row">
-        <UsefulSet questionid={params.id} likes={isNaN(data.likes) ? data.likes : "-"} />
+        <UsefulSet data={data} />
         <QuestionBody data={data} />
       </div>
       <div className="mt-4 pl-12 ">

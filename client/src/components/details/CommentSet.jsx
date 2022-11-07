@@ -3,11 +3,12 @@ import ArrowDropUp from "../buttons/ArrowDropUp.jsx";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-export default function UsefulSet({ data }) {
+export default function CommentSet({ data }) {
   const token = useSelector(state => state.authorization);
   const [likeData, setLikeData] = useState(data.likes);
 
   const buttonClick = el => {
+    console.log(likeData);
     setLikeData(data.likes);
     let redir = el.target.id;
     if (redir === "upbutton") postLikes(1);
@@ -35,7 +36,7 @@ export default function UsefulSet({ data }) {
   return (
     <div className="flex flex-col">
       <ArrowDropUp fill="#babfc4" onClick={buttonClick} />
-      <div className="text-center text-3xl my-3">{likeData}</div>
+      <div className="text-center text-3xl my-3">0</div>
       <ArrowDropDown fill="#babfc4" onClick={buttonClick} />
       <span className="material-symbols-outlined text-center text-3xl text-gray-300 my-1">bookmark</span>
       <span className="material-icons text-center text-3xl text-gray-300 my-1">history</span>
