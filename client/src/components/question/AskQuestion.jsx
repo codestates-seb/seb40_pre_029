@@ -60,6 +60,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
 
   return (
     <div className="flex xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center xl:h-[60rem]">
+
       <section>
         <form
           className="question-title-container w-full mb-4 rounded bg-white shadow-md dark:bg-slate-800 dark:text-gray-400"
