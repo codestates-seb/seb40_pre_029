@@ -1,6 +1,7 @@
 package fuckingrullet.server.answer.mapper;
 
 import fuckingrullet.server.answer.dto.AnswerPatchDto;
+import fuckingrullet.server.answer.dto.AnswerPickDto;
 import fuckingrullet.server.answer.dto.AnswerPostDto;
 import fuckingrullet.server.answer.dto.AnswerResponseDto;
 import fuckingrullet.server.answer.service.AnswerService;
@@ -23,6 +24,8 @@ public interface AnswerMapper {
 
         return answer;
     }
+
+    Answer answerPickDtoToAnswer(AnswerPickDto.Post post);
 
     List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers);//리스트 추가
 

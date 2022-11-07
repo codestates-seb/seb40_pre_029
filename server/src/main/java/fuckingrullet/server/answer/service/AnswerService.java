@@ -11,6 +11,7 @@ import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
 import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.question.repository.QuestionRepository;
+import fuckingrullet.server.question.service.QuestionService;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,11 +28,13 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
+    private final QuestionService questionService;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository, QuestionService questionService) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
+        this.questionService = questionService;
     }
 
     public Answer createAnswer(String email, Likes likes, Answer answer){
@@ -39,7 +42,26 @@ public class AnswerService {
         answer.setAnswerAuthor(member.getDisplayName());
         answer.setMemberId(member.getMemberId());
         answer.setLikeId(likes.getLikeId());
+        answer.setPick(false);
         return answerRepository.save(answer);
+    }
+
+    public Answer pickAnswer(String email, Answer answer) {
+        Question findQuestion = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId()); // 질문 객체
+        Member findMember = findVerifiedMember(findMemberId(email)); // 멤버 객체
+        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId()); // 답변 객체
+
+        if(!findQuestion.getMemberId().equals(findMember.getMemberId())) { // 지금 api 호출자가 질문 작성자인가?
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_WRITER); // 아니면 에러 반환
+        }
+
+        if (findQuestion.getPick() || findAnswer.getPick()) { // 이미 채택됬는지 검증
+            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_PICK); // 채택이면 에러 반환
+        }
+
+        findAnswer.setPick(true); // 선택된 답변의 pick을 true로 변경
+        Answer save = answerRepository.save(findAnswer);
+        return save;
     }
 
     public Answer updateAnswer(String  email, Answer answer) {

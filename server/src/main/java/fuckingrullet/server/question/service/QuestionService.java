@@ -57,6 +57,7 @@ public class QuestionService {
         question.setQuestionAuthor(member.getDisplayName());
 
         question.setLikeId(likes.getLikeId());
+        question.setPick(false);
 
         return questionRepository.save(question);
     }

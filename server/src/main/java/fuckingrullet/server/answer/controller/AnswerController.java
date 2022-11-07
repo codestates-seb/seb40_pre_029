@@ -1,6 +1,7 @@
 package fuckingrullet.server.answer.controller;
 
 import fuckingrullet.server.answer.dto.AnswerPatchDto;
+import fuckingrullet.server.answer.dto.AnswerPickDto;
 import fuckingrullet.server.answer.dto.AnswerPostDto;
 import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
@@ -46,6 +47,14 @@ public class AnswerController {
                 mapper.answerPostDtoToAnswer(questionService, memberService, answerPostDto));
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer)), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/answer/pick")
+    public ResponseEntity pickAnswer(@AuthenticationPrincipal String email,
+                                     @Valid @RequestBody AnswerPickDto.Post post) {
+        Answer answer = mapper.answerPickDtoToAnswer(post);
+        Answer pickAnswer = answerService.pickAnswer(email, answer);
+        return ResponseEntity.ok(pickAnswer);
     }
 
     @PatchMapping("/answer/patch")

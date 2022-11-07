@@ -49,9 +49,10 @@ public class Question {
     @Column
     private Integer answern;
 
-    @OneToOne
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
+    @Column
+    private String questionTag;
+
+    private Boolean pick = false;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "STATUS")
