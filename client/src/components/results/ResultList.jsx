@@ -13,6 +13,7 @@ export default function ResultList() {
   const [content, setContent] = useState([]);
   const [totalElements, setTotalElements] = useState(0);
   const [fail, setFail] = useState(false);
+<<<<<<< Updated upstream
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState([]);
   const [data, setData] = useState({});
@@ -24,6 +25,9 @@ export default function ResultList() {
     return new Date(createdAt).toLocaleDateString("ko-KR");
   };
 
+=======
+  console.log(totalElements);
+>>>>>>> Stashed changes
   useEffect(() => {
     async function getData() {
       try {

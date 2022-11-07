@@ -1,18 +1,29 @@
 import ArticleBottomSet from "./ArticleBottomSet.jsx";
 import UsefulSet from "./UsefulSet.jsx";
 import { useState } from "react";
-export default function QuestionAnswer({ data }) {
-  const answers = data.answers.data;
+export default function QuestionAnswer({ data, setEditData, setAnswerEdit }) {
   const [answerEditMode] = useState(true);
+  const getParsedDate = createdAt => {
+    return new Date(createdAt).toLocaleDateString("ko-KR");
+  };
+
   return (
     <>
-      {answers.map((el, idx) => {
+      {data.answers.data.map((el, idx) => {
         return (
           <div className="flex" key={idx}>
             <UsefulSet />
             <div className="ml-6 mr-8 w-full">
               <p className="text-lg ">{el.article}</p>
-              <ArticleBottomSet answerEditMode={answerEditMode} idx={idx} date="2020.10.20" nickname="박해커" />
+              <ArticleBottomSet
+                setAnswerEdit={setAnswerEdit}
+                setEditData={setEditData}
+                answerEditMode={answerEditMode}
+                idx={idx}
+                date={getParsedDate(el.createAt)}
+                nickname={el.answerAuthor}
+                data={data}
+              />
             </div>
           </div>
         );

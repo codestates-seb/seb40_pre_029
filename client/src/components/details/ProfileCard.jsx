@@ -1,9 +1,4 @@
-import PropTypes from "prop-types";
 export default function ProfileCard({ date, nickname }) {
-  ProfileCard.propTypes = {
-    date: PropTypes.string,
-    nickname: PropTypes.string,
-  };
   return (
     // <div className="bg-slate-50 w-64 h-24 rounded-lg">
     <div className="bg-slate-100 border border-slate-200 pr-4 pl-4 py-2 w-64 h-24 rounded-lg">

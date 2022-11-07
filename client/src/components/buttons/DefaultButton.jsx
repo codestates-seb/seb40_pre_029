@@ -1,34 +1,38 @@
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function DefaultButton({ name, data }) {
+export default function DefaultButton({ name, data, editData, answerEdit }) {
+  const token = localStorage.getItem("authorization");
   const navigate = useNavigate();
   const params = useParams();
   const askOnClick = () => {
     navigate("/ask");
   };
-
-  // const postData = async answerData => {
-  //   await fetch("/answer/post", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(answerData),
-  //   }).then(res => console.log(res));
-  // };
-  //댓글 남기기 버튼을 누르면 comment data post 요청함
-
   const postOnClick = () => {
-    let answerData = {
-      article: data,
-      questionId: params.id,
-    };
-    fetch("/answer/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(answerData),
-    });
-    window.location.reload();
+    if (!answerEdit) {
+      let answerData = {
+        article: data,
+        questionId: params.id,
+      };
+      fetch("/api/auth/answer/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", authorization: token },
+        body: JSON.stringify(answerData),
+      }).then(res => console.log(res));
+      window.location.reload();
+    } else {
+      let answerData = {
+        article: editData.article,
+        answerId: editData.answerId,
+      };
+      console.log(answerData);
+      fetch("/api/auth/answer/patch", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", authorization: token },
+        body: JSON.stringify(answerData),
+      }).then(res => console.log(res));
+      window.location.reload();
+    }
   };
-
   if (name === "Post Your Answer") {
     return (
       <button
