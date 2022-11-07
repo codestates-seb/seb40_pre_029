@@ -69,6 +69,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setQuestionId(question.getQuestionId());
         questionAndAnswerResponseDto.setTitle(question.getTitle());
         questionAndAnswerResponseDto.setArticle(question.getArticle());
+        questionAndAnswerResponseDto.setQuestionAuthor(question.getQuestionAuthor());
         questionAndAnswerResponseDto.setViews(question.getViews());
         questionAndAnswerResponseDto.setCreateAt(question.getCreateAt());
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
