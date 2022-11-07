@@ -30,7 +30,4 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    private List<Recommends> recommends = new ArrayList<>();
 }

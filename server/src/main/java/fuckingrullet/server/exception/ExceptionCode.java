@@ -9,7 +9,10 @@ public enum ExceptionCode {
     QUESTION_EXISTS(409,"질문이 이미 존재합니다."),
     QUESTION_NOT_PATCH(409,"질문 작성자가 아니라서 수정할 수 없습니다."),
     ANSWER_NOT_FOUND(404,"답글을 찾을 수 없습니다." ),
-    ANSWER_NOT_PATCH(409,"답글 작성자가 아니라서 수정할 수 없습니다.");
+    ANSWER_NOT_PATCH(409,"답글 작성자가 아니라서 수정할 수 없습니다."),
+    LIKE_NOT_FOUND(404, "추천 데이터를 찾을 수 없습니다."),
+    LIKE_NOT_LIMIT(400, "추천의 최대 음수에 도달했습니다."),
+    LIKE_NOT_ALLOW(400, "이미 추천 또는 비추천을 클릭했습니다.");
 
     @Getter
     private int status;
