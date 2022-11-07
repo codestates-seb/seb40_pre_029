@@ -13,6 +13,8 @@ export default function Details() {
   const params = useParams();
   const [comment, setComment] = useState("");
   const [data, setData] = useState([]);
+  const [editData, setEditData] = useState({});
+  const [answerEdit, setAnswerEdit] = useState(false);
   //질문 detail fetching
   useEffect(() => {
     setTimeout(() => {
@@ -55,13 +57,13 @@ export default function Details() {
         <QuestionBody data={data} />
       </div>
       <div className="mt-4 pl-12 ">
-        <span className="text-2xl mr-4">{data.answers.data.length}</span>
-        <span className="text-2xl">{data.answers.data.length <= 1 ? "Answer" : "Answers"}</span>
+        <span className="text-2xl mr-4">{data.answers.article}</span>
+        <span className="text-2xl">{data.answers.data.length === 1 ? "Answer" : "Answers"}</span>
       </div>
       <div className="py-8 pl-12 flex flex-col border-b border-gray-300">
-        <QuestionAnswer data={data} />
+        <QuestionAnswer setEditData={setEditData} setAnswerEdit={setAnswerEdit} data={data} />
       </div>
-      {isLogin ? (
+      {isLogin === false ? (
         <div className="py-8 pr-8 pl-12">
           <span className="text-2xl">Your Answer</span>
           <form className="w-full mt-4 rounded mb-10">
@@ -72,6 +74,32 @@ export default function Details() {
               className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 dark:bg-gray-400"></textarea>
           </form>
           <DefaultButton name="Post Your Answer" data={comment} />
+        </div>
+      ) : null}
+      {isLogin === true && answerEdit === false ? (
+        <div className="py-8 pr-8 pl-12">
+          <span className="text-2xl">Your Answer</span>
+          <form className="w-full mt-4 rounded mb-10">
+            <textarea
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              rows={12}
+              className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 dark:bg-gray-400"></textarea>
+          </form>
+          <DefaultButton name="Post Your Answer" data={comment} />
+        </div>
+      ) : null}
+      {isLogin === true && answerEdit === true ? (
+        <div className="py-8 pr-8 pl-12">
+          <span className="text-2xl">Your Answer</span>
+          <form className="w-full mt-4 rounded mb-10">
+            <textarea
+              value={editData.article}
+              onChange={e => setEditData({ ...editData, article: e.target.value })}
+              rows={12}
+              className="w-full p-2 bg-#F1F2F3 rounded border border-gray-300 focus:text-black focus:outline-none focus:border-emerald-500 focus:ring-4 focus:border focus:ring-emerald-100 text-gray-500 dark:bg-gray-400"></textarea>
+          </form>
+          <DefaultButton name="Post Your Answer" data={comment} editData={editData} answerEdit={answerEdit} />
         </div>
       ) : null}
     </div>

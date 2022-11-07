@@ -7,8 +7,10 @@ const Tag = props => {
 
   const onKeyPress = e => {
     // enter 키가 눌리고 중복되는 값이 없을 때
-    if (e.target.value !== "" && e.key === "Enter" && tagList.indexOf(e.target.value) === -1) {
-      submitTagItem();
+    if (e.target.value !== "" && e.key === "Enter") {
+      // && tagList.indexOf(e.target.value) === -1 => 중복값 필요 없음
+      submitTagItem(e);
+      props.setTagName(tagItem);
     }
   };
 
@@ -20,16 +22,16 @@ const Tag = props => {
     }
   };
 
-  const submitTagItem = () => {
-    if (tagAmount < 5) {
+  const submitTagItem = e => {
+    if (tagAmount < 1) {
       let updatedTagList = [...tagList];
       updatedTagList.push(tagItem);
       setTagList(updatedTagList);
-      props.setTagList(updatedTagList);
       setTagItem("");
       setTagAmout(tagAmount + 1);
     } else {
-      window.alert("maximum 5 tags");
+      e.target.value = null;
+      window.alert("Only 1 tag");
     }
   };
 
@@ -46,7 +48,7 @@ const Tag = props => {
       <div className="question-tag py-6 px-8 bg-#FFFFFF dark:bg-slate-800 dark:text-gray-400">
         <div className="text-xl font-medium ">Tags</div>
         <div className="text-sm text-gray-500 mb-4 mt-2">
-          Add up to 5 tags to describe what your question is about. Start typing to see suggestions.
+          Choose between JavaScript, Python, Java, C++, CSS, AWS, AI, Open.
         </div>
         <div className="py-0.5 flex items-center flex-wrap w-full border border-gray-400 rounded focus-within:text-black focus-within:outline-none focus-within:border-emerald-500 focus-within:ring-4 focus-within:border focus-within:ring-emerald-100">
           {tagList.length > 0
@@ -55,7 +57,7 @@ const Tag = props => {
                   <div
                     className="px-2 h-8 mr-1 my-0.5 flex flex-row items-center justify-center items-center rounded bg-emerald-100 text-sm text-black"
                     key={index}>
-                    <div className="mr-1">{tagItem}</div>
+                    <div className="mr-1">{props.tagName}</div>
                     <button onClick={deleteTagItem}>❎</button>
                   </div>
                 );

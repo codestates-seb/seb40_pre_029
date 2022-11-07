@@ -7,9 +7,6 @@ import ResultList from "../components/results/ResultList.jsx";
 
 export default function SearchResult() {
   const location = useLocation();
-  // console.log(location.search);
-  // console.log(location.detail);
-  // console.log(location);
   return (
     <>
       <div className="dark:bg-slate-900 dark:text-gray-400">

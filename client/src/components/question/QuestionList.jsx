@@ -24,8 +24,59 @@ export default function QuestionList() {
   const [content, setContent] = useState([]);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
+<<<<<<< Updated upstream
   const [totalPage, setTotalPage] = useState([]);
   // const [pagination, setPagination] = useState([]);
+=======
+  const [totalPage, setTotalPage] = useState(0);
+
+  async function getData() {
+    if (idOn === 0) {
+      await fetch(`/api/auth/question?page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
+          setData(data);
+        });
+    }
+    if (idOn === 1) {
+      await fetch(`/api/auth/question?sort=views&page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data);
+          setData(data);
+        });
+    }
+    if (idOn === 2) {
+      await fetch(`/api/auth/question?sort=answern&page=${page}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTotalPage(() => makeButton(data.pageInfo.totalPages));
+          setContent(data.data.filter(el => el.answern !== 0));
+          setData(data);
+        });
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, [page]);
+
+  useEffect(() => {
+    getData();
+  }, [idOn]);
+>>>>>>> Stashed changes
 
   useEffect(() => {
     async function getData() {
@@ -148,7 +199,7 @@ export default function QuestionList() {
                 <div className="flex justify-end flex-wrap">
                   {/* <BodyTags target={article.tags} /> */}
                   <div className="inline-block">
-                    {/* <span className="text-sky-700 mr-1.5">{article.MEMBER_ID}</span> */}
+                    <span className="text-sky-700 mr-1.5">{article.questionAuthor}</span>
                     <span className="text-gray-500">•&nbsp;&nbsp;{getParsedDate(article.createAt)}</span>
                   </div>
                 </div>
