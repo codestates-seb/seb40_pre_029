@@ -1,13 +1,15 @@
+# 🎰 Team Roulette (feat.29) 
+<br /> <br />
+
+## Logo 
 <p align="center">
   <img src="https://i.imgur.com/dU8a9Hw.png">
 </p>
 
-
+## Stacks
 ![image](https://user-images.githubusercontent.com/107447964/200229035-1993b2ed-3bb2-48f5-b157-dbdc95f7bf7b.png)
 
-
-
-# 🎰 Team Roulette (feat.29)
+## Functions
 질문 작성<br>
 질문 수정<br>
 질문 삭제<br>
@@ -26,7 +28,7 @@
 태그 필터링<br>
 투 더 탑 버튼<br>
 다크모드<br>
-
+<br /> <br />
 
 ## ✨ 팀원 소개
 🥇**최동환**|🥈**김광민**|🥈**류지환**|🥈**정준일**|🥈**김창일**|🥈**이혜광**|🥈**정회승**
