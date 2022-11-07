@@ -59,7 +59,6 @@ public class QuestionService {
 
         question.setLikeId(likes.getLikeId());
         question.setPick(false);
-        question.setLikes(likes.getLikes());
 
         return questionRepository.save(question);
     }
@@ -67,21 +66,9 @@ public class QuestionService {
     public Question findQuestion(long questionId){
         Question findQuestion = findVerifiedQuestion(questionId);
         findQuestion.setViews(findQuestion.getViews()+1);
-        findQuestion.setLikes(findLike(findQuestion.getLikeId()).getLikes());
         questionRepository.save(findQuestion);
 
         return findQuestion;
-    }
-
-    public Likes findLike(long likeId){
-        Likes findLike = findVerifiedLikes(likeId);
-        return findLike;
-    }
-    public Likes findVerifiedLikes(Long likeId) {
-        Optional<Likes> optionalLikes =
-                likeRepository.findById(likeId);
-        return optionalLikes.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
     }
 
     public Question plusAnswer(long questionId){

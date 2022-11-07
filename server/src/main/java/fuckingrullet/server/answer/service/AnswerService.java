@@ -48,7 +48,6 @@ public class AnswerService {
         answer.setMemberId(member.getMemberId());
         answer.setLikeId(likes.getLikeId());
         answer.setPick(false);
-        answer.setLikes(likes.getLikes());
         return answerRepository.save(answer);
     }
 
@@ -103,35 +102,6 @@ public class AnswerService {
         Page<Answer> findAllAnswer = answerRepository.findAllByQuestion(
                 PageRequest.of(answerPage-1,answerSize, Sort.by(answerSort).descending()),question);
         return findAllAnswer;
-    }
-
-    public Likes findVerifiedLikes(Long likeId) {
-        Optional<Likes> optionalLikes =
-                likeRepository.findById(likeId);
-        return optionalLikes.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
-    }
-
-    public Likes findLike(long likeId){
-        Likes findLike = findVerifiedLikes(likeId);
-        return findLike;
-    }
-
-//    public Question findQuestion(long questionId){
-//        Question findQuestion = findVerifiedQuestion(questionId);
-//        findQuestion.setViews(findQuestion.getViews()+1);
-//        findQuestion.setLikes(findLike(findQuestion.getLikeId()).getLikes());
-//        questionRepository.save(findQuestion);
-//
-//        return findQuestion;
-//    }
-
-    public Answer findAnswer(long answerId){
-        Answer findAnswer = findVerifiedAnswer(answerId);
-        findAnswer.setLikeId(findLike(findAnswer.getLikeId()).getLikeId());
-        findAnswer.setLikes(findLike(findAnswer.getLikeId()).getLikes());
-        answerRepository.save(findAnswer);
-        return findAnswer;
     }
 
     public void deleteAnswer(Long answerId) {

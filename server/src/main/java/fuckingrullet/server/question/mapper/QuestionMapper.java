@@ -25,7 +25,6 @@ public interface QuestionMapper {
         question.getModifiedAt();
         question.setAnswern(0);
         question.setQuestionTag(questionPostDto.getTagName());
-        question.setLikes(0L);
 
         return question;
 
@@ -42,11 +41,12 @@ public interface QuestionMapper {
         return question;
     }
 
-    default QuestionResponseDto questionToQuestionResponseDto(Question question){
+    default QuestionResponseDto questionToQuestionResponseDto(Question question, Long likeData){
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
         questionResponseDto.setQuestionId(question.getQuestionId());
         questionResponseDto.setMemberId(question.getMemberId());
         questionResponseDto.setLikeId(question.getLikeId());
+        questionResponseDto.setLikes(likeData);
         questionResponseDto.setTitle(question.getTitle());
         questionResponseDto.setArticle(question.getArticle());
         questionResponseDto.setQuestionAuthor(question.getQuestionAuthor());
@@ -56,7 +56,6 @@ public interface QuestionMapper {
         questionResponseDto.setAnswern(question.getAnswern());
         questionResponseDto.setQuestionStatus(question.getQuestionStatus());
         questionResponseDto.setTagName(question.getQuestionTag());
-        questionResponseDto.setLikes(question.getLikes());
         questionResponseDto.setPick(question.getPick());
 
 //        Member member = question.getMember();
@@ -66,20 +65,22 @@ public interface QuestionMapper {
 
     List<QuestionResponseDto> questionToQuestionResponseDtos(List <Question> questions);
 
-    default QuestionAndAnswerResponseDto questionToQuestionAndAnswerResponseDto(AnswerService answerService, AnswerMapper answerMapper,
+    default QuestionAndAnswerResponseDto questionToQuestionAndAnswerResponseDto(AnswerService answerService, AnswerMapper answerMapper, Long likeData,
                                                                                 Question question, Integer answerPage, Integer answerSize, String answerSort){
         QuestionAndAnswerResponseDto questionAndAnswerResponseDto = new QuestionAndAnswerResponseDto();
         questionAndAnswerResponseDto.setQuestionId(question.getQuestionId());
         questionAndAnswerResponseDto.setTitle(question.getTitle());
         questionAndAnswerResponseDto.setArticle(question.getArticle());
         questionAndAnswerResponseDto.setQuestionAuthor(question.getQuestionAuthor());
+        questionAndAnswerResponseDto.setQuestionId(question.getQuestionId());
         questionAndAnswerResponseDto.setViews(question.getViews());
+        questionAndAnswerResponseDto.setLikeId(question.getLikeId());
+        questionAndAnswerResponseDto.setLikes(likeData);
         questionAndAnswerResponseDto.setCreateAt(question.getCreateAt());
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
         questionAndAnswerResponseDto.setTagName(question.getQuestionTag());
-        questionAndAnswerResponseDto.setLikes(question.getLikes());
         questionAndAnswerResponseDto.setPick(question.getPick());
 
         try{
