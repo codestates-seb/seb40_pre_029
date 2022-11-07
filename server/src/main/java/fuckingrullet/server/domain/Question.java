@@ -6,8 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -23,6 +21,9 @@ public class Question {
 
     @Column(nullable = false, updatable = false) // 추천 기능은 변경할 수 없다.
     private Long likeId;
+
+    @Column
+    private Long likes;
 
     @Column(nullable = false)
     private String questionAuthor;
@@ -48,10 +49,6 @@ public class Question {
 
     @Column
     private Integer answern;
-
-    @OneToOne
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "STATUS")

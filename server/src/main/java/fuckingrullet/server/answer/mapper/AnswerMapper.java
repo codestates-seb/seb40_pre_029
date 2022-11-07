@@ -36,6 +36,7 @@ public interface AnswerMapper {
         answerResponseDto.setLikeId(answer.getLikeId());
         answerResponseDto.setCreateAt(answer.getCreateAt());
         answerResponseDto.setModifiedAt(answer.getModifiedAt());
+        answerResponseDto.setLikes(answer.getLikes());
 
         return answerResponseDto;
     }

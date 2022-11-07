@@ -9,6 +9,7 @@ import fuckingrullet.server.domain.Question;
 
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
+import fuckingrullet.server.like.repository.LikeRepository;
 import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.Setter;
@@ -27,11 +28,14 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
+    private final LikeRepository likeRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, MemberRepository memberRepository,
+                         LikeRepository likeRepository) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
+        this.likeRepository = likeRepository;
     }
 
     public Answer createAnswer(String email, Likes likes, Answer answer){
@@ -39,6 +43,7 @@ public class AnswerService {
         answer.setAnswerAuthor(member.getDisplayName());
         answer.setMemberId(member.getMemberId());
         answer.setLikeId(likes.getLikeId());
+        answer.setLikes(likes.getLikes());
         return answerRepository.save(answer);
     }
 
@@ -72,14 +77,43 @@ public class AnswerService {
         return findAllAnswer;
     }
 
+    public Likes findVerifiedLikes(Long likeId) {
+        Optional<Likes> optionalLikes =
+                likeRepository.findById(likeId);
+        return optionalLikes.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+    }
+
+    public Likes findLike(long likeId){
+        Likes findLike = findVerifiedLikes(likeId);
+        return findLike;
+    }
+
+//    public Question findQuestion(long questionId){
+//        Question findQuestion = findVerifiedQuestion(questionId);
+//        findQuestion.setViews(findQuestion.getViews()+1);
+//        findQuestion.setLikes(findLike(findQuestion.getLikeId()).getLikes());
+//        questionRepository.save(findQuestion);
+//
+//        return findQuestion;
+//    }
+
+    public Answer findAnswer(long answerId){
+        Answer findAnswer = findVerifiedAnswer(answerId);
+        findAnswer.setLikeId(findLike(findAnswer.getLikeId()).getLikeId());
+        findAnswer.setLikes(findLike(findAnswer.getLikeId()).getLikes());
+        answerRepository.save(findAnswer);
+        return findAnswer;
+    }
+
     public void deleteAnswer(Long answerId) {
         Question question = answerRepository.findById(answerId).get().getQuestion();
         question.setAnswern(question.getAnswern()-1);
         questionRepository.save(question);
-        answerRepository.deleteById(findAmswerId(answerId));
+        answerRepository.deleteById(findAnswerId(answerId));
     }
 
-    private Long findAmswerId(Long answerId) {
+    private Long findAnswerId(Long answerId) {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
         Answer findAnswer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer.getAnswerId();

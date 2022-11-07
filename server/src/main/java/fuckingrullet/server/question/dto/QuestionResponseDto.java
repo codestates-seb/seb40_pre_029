@@ -25,4 +25,5 @@ public class QuestionResponseDto {
     private int answern;
     private Question.QuestionStatus questionStatus;
     private String tagName;
+    private Long likes;
 }

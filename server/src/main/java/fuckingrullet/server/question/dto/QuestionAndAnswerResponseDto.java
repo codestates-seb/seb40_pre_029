@@ -26,4 +26,5 @@ public class QuestionAndAnswerResponseDto {
 
     private Question.QuestionStatus questionStatus;
     private String tagName;
+    private Long likes;
 }
