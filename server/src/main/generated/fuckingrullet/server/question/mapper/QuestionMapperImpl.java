@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-11-07T20:56:02+0900",
+    date = "2022-11-07T22:55:21+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16.1 (Azul Systems, Inc.)"
 )
 @Component
@@ -41,5 +41,32 @@ public class QuestionMapperImpl implements QuestionMapper {
         }
 
         return list;
+    }
+
+    protected QuestionResponseDto questionToQuestionResponseDto(Question question) {
+        if ( question == null ) {
+            return null;
+        }
+
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+
+        questionResponseDto.setQuestionId( question.getQuestionId() );
+        questionResponseDto.setMemberId( question.getMemberId() );
+        questionResponseDto.setLikeId( question.getLikeId() );
+        questionResponseDto.setTitle( question.getTitle() );
+        questionResponseDto.setArticle( question.getArticle() );
+        questionResponseDto.setQuestionAuthor( question.getQuestionAuthor() );
+        if ( question.getViews() != null ) {
+            questionResponseDto.setViews( question.getViews() );
+        }
+        questionResponseDto.setCreateAt( question.getCreateAt() );
+        questionResponseDto.setModifiedAt( question.getModifiedAt() );
+        if ( question.getAnswern() != null ) {
+            questionResponseDto.setAnswern( question.getAnswern() );
+        }
+        questionResponseDto.setQuestionStatus( question.getQuestionStatus() );
+        questionResponseDto.setPick( question.getPick() );
+
+        return questionResponseDto;
     }
 }

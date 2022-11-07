@@ -29,7 +29,7 @@ public interface AnswerMapper {
 
     List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers);//리스트 추가
 
-    default AnswerResponseDto answerToAnswerResponseDto(Answer answer){
+    default AnswerResponseDto answerToAnswerResponseDto(Answer answer, Long likeNum){
         AnswerResponseDto answerResponseDto = new AnswerResponseDto();
         answerResponseDto.setAnswerId(answer.getAnswerId());
         answerResponseDto.setQuestionId(answer.getQuestion().getQuestionId());
@@ -37,9 +37,9 @@ public interface AnswerMapper {
         answerResponseDto.setAnswerAuthor(answer.getAnswerAuthor());
         answerResponseDto.setMemberId(answer.getMemberId());
         answerResponseDto.setLikeId(answer.getLikeId());
+        answerResponseDto.setLikes(likeNum);
         answerResponseDto.setCreateAt(answer.getCreateAt());
         answerResponseDto.setModifiedAt(answer.getModifiedAt());
-        answerResponseDto.setLikes(answer.getLikes());
         answerResponseDto.setPick(answer.getPick());
 
         return answerResponseDto;

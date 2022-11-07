@@ -18,7 +18,5 @@ public class LikesDto {
         private Long likes;
 
         private List<Long> members;
-
-        private Long plusMinus;
     }
 }
