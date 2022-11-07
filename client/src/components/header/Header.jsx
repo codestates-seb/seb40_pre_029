@@ -18,6 +18,7 @@ export default function Header() {
   });
   const dispatch = useDispatch();
   const logIn = useSelector(state => state.isLogin);
+  const token = useSelector(state => state.authorization);
   const navigate = useNavigate();
 
   const openModalHandler = el => {
@@ -57,12 +58,12 @@ export default function Header() {
     //prettier-ignore
     const response = await fetch("/api/auth/member", {
       method: "GET",
-      headers: { "Content-Type": "application/json", authorization: localStorage.getItem("authorization")},
-      })
+      headers: { "Content-Type": "application/json", authorization: token },
+    });
 
     let res = response;
     if (!res.ok) {
-      return;
+      return alert("에러가 발생하였습니다");
     } else {
       await res.json().then(data => navigate("/myprofile", { state: data }));
     }
