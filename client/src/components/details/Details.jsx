@@ -51,7 +51,7 @@ export default function Details() {
         </div>
       </div>
       <div className="py-8 pl-12 flex flex-row">
-        <UsefulSet />
+        <UsefulSet questionid={params.id} likes={isNaN(data.likes) ? data.likes : "-"} />
         <QuestionBody data={data} />
       </div>
       <div className="mt-4 pl-12 ">
