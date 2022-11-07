@@ -40,7 +40,7 @@ export default function UsefulSet(questionid, likes) {
   return (
     <div className="flex flex-col">
       <ArrowDropUp fill="#babfc4" onClick={buttonClick} />
-      <select className="text-center text-3xl my-3">0</select>
+      <div className="text-center text-3xl my-3">0</div>
       <ArrowDropDown fill="#babfc4" onClick={buttonClick} />
       <span className="material-symbols-outlined text-center text-3xl text-gray-300 my-1">bookmark</span>
       <span className="material-icons text-center text-3xl text-gray-300 my-1">history</span>
