@@ -2,6 +2,9 @@
   <img src="https://i.imgur.com/dU8a9Hw.png">
 </p>
 
+
+![스크린샷 2022-11-07 오후 1 44 01](https://user-images.githubusercontent.com/107447964/200228342-95c5bcf1-a469-4194-93d1-f5a440631ae6.png)
+
 # 🎰 Team Roulette (feat.29)
 코드스테이츠 소프트엔지니어링 부트캠프 프리 프로젝트.
 > 🚬 나는 생각한다. 고로 나는 존재한다. - 데카르트
