@@ -59,10 +59,11 @@ const AskQuestion = ({ onEditMode, editData }) => {
   };
 
   return (
-    <div className="flex xl:h-[60rem] xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center">
+    <div className="flex xl:w-[80rem] max-xl:w-full mx-auto py-8 justify-center xl:h-[60rem]">
+
       <section>
         <form
-          className="question-title-container w-full mb-4 rounded bg-white shadow-md"
+          className="question-title-container w-full mb-4 rounded bg-white shadow-md dark:bg-slate-800 dark:text-gray-400"
           onSubmit={e => e.preventDefault()}>
           <div className="py-6 px-8 bg-#FFFFFF">
             <div className="text-xl font-medium ">Title</div>
@@ -77,7 +78,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
               placeholder="e.g Is there an R funtion for finding the index of an element in a vector?"></input>
           </div>
         </form>
-        <form className="w-full mb-4 rounded bg-white shadow-md">
+        <form className="w-full mb-4 rounded bg-white shadow-md dark:bg-slate-800 dark:text-gray-400">
           <div className="py-6 px-8 bg-#FFFFFF ">
             <div className="text-xl font-medium ">Body</div>
             <div className="text-sm text-gray-500 mb-4 mt-2">

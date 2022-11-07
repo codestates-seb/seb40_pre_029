@@ -100,8 +100,8 @@ export default function QuestionList() {
 
   if (content.length === 0) return <Spinner />;
   return (
-    <section className="py-8 w-full mr-8">
-      <div className="flex justify-between pl-10 mb-4 ">
+    <section className="py-8 w-full mr-8 xl:h-[60rem]">
+      <div className="flex justify-between pl-10 mb-4">
         <h1 className="text-3xl mt-1 font-medium">All Questions</h1>
         {isLogin ? <DefaultButton name="Ask Question" /> : null}
       </div>
