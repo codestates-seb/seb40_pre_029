@@ -1,8 +1,10 @@
 import ProfileCard from "./ProfileCard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function ArticleBottomSet({ answerEditMode, date, nickname, data, idx, setEditData, setAnswerEdit }) {
   const params = useParams();
+  const token = useSelector(state => state.authorization);
 
   const navigate = useNavigate();
   const onEditClick = () => {
@@ -15,6 +17,23 @@ export default function ArticleBottomSet({ answerEditMode, date, nickname, data,
     }
   };
 
+  const deleteArticle = async () => {
+    const deletedone = await fetch(`/api/auth/question/patch/${params.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: JSON.stringify({
+        questionStatus: "false",
+      }),
+    });
+
+    let del = deletedone;
+    if (!del.ok) {
+      return alert("에러가 발생하였습니다");
+    } else {
+      del.json().then(navigate("/"));
+    }
+  };
+
   return (
     <>
       <div className="my-4 flex justify-between">
@@ -23,7 +42,9 @@ export default function ArticleBottomSet({ answerEditMode, date, nickname, data,
           <button onClick={onEditClick} value={idx} className="text-slate-500 mr-2">
             Edit
           </button>
-          <button className="text-slate-500 mr-2">Delete</button>
+          <button className="text-slate-500 mr-2" onClick={deleteArticle}>
+            Delete
+          </button>
         </div>
         <ProfileCard date={date} nickname={nickname} />
       </div>
