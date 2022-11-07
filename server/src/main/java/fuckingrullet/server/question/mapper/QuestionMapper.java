@@ -24,19 +24,20 @@ public interface QuestionMapper {
         question.getCreateAt();
         question.getModifiedAt();
         question.setAnswern(0);
-        question.setQuestionTag(questionPostDto.getTagName());
+        //question.setQuestionTag(questionPostDto.getTagName());
 
         return question;
 
     }
 
-    default Question questionPatchDtoToQuestion(QuestionService questionService, QuestionPatchDto questionPatchDto){
+    default Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto){
         Question question = new Question();
         question.setQuestionId(questionPatchDto.getQuestionId());
         question.setTitle(questionPatchDto.getTitle());
+        question.setLikeId(questionPatchDto.getLikeId());
         question.setArticle(questionPatchDto.getArticle());
         question.setQuestionStatus(questionPatchDto.getQuestionStatus());
-        question.setQuestionTag(questionPatchDto.getTagName());
+       // question.setQuestionTag(questionPatchDto.getTagName());
 
         return question;
     }
@@ -55,7 +56,7 @@ public interface QuestionMapper {
         questionResponseDto.setModifiedAt(question.getModifiedAt());
         questionResponseDto.setAnswern(question.getAnswern());
         questionResponseDto.setQuestionStatus(question.getQuestionStatus());
-        questionResponseDto.setTagName(question.getQuestionTag());
+        //questionResponseDto.setTagName(question.getQuestionTag());
         questionResponseDto.setPick(question.getPick());
 
 //        Member member = question.getMember();
@@ -80,7 +81,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setModifiedAt(question.getModifiedAt());
         questionAndAnswerResponseDto.setAnswern(question.getAnswern());
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
-        questionAndAnswerResponseDto.setTagName(question.getQuestionTag());
+        //questionAndAnswerResponseDto.setTagName(question.getQuestionTag());
         questionAndAnswerResponseDto.setPick(question.getPick());
 
         try{

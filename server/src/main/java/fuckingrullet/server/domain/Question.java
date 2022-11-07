@@ -27,9 +27,9 @@ public class Question {
     @Column(nullable = false)
     private String questionAuthor;
 
-    @OneToOne
-    @JoinColumn(name = "ANSWER_ID")
-    private Answer answer;
+//    @OneToOne
+//    @JoinColumn(name = "ANSWER_ID")
+//    private Answer answer;
 
     @Column(nullable = false)
     private String title;
@@ -49,8 +49,8 @@ public class Question {
     @Column
     private Integer answern;
 
-    @Column
-    private String questionTag;
+//    @Column
+//    private String questionTag;
 
     private Boolean pick = false;
 

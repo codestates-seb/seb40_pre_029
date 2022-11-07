@@ -55,7 +55,6 @@ public class AnswerController {
     public ResponseEntity pickAnswer(@AuthenticationPrincipal String email,
                                      @Valid @RequestBody AnswerPickDto.Post post) {
         Answer answer = mapper.answerPickDtoToAnswer(post);
-        log.info("answer answerId = {}", answer.getAnswerId());
         Answer pickAnswer = answerService.pickAnswer(email, answer);
         return ResponseEntity.ok(pickAnswer);
     }
