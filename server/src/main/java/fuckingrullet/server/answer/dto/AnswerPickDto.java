@@ -1,9 +1,13 @@
 package fuckingrullet.server.answer.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
 public class AnswerPickDto {
-    //추천 수 수정
-    private boolean pick;
+
+    @Getter
+    @NoArgsConstructor
+    public static class Post {
+        private Long answerId;
+    }
 }

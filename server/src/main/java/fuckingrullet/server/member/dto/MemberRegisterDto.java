@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class MemberRegisterDto {
 
@@ -16,7 +16,7 @@ public class MemberRegisterDto {
     @NotBlank
     private String displayName;
 
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$", message = "비밀번호는 8자 이상 16자 이하 특수문자와 대소문자 영어및 숫자만 허용됩니다")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,16}$", message = "비밀번호는 8자 이상 16자 이하 특수문자와 대소문자 영어및 숫자만 허용됩니다")
     @NotBlank
     private String password;
 }

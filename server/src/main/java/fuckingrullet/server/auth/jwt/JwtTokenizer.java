@@ -1,4 +1,4 @@
-package fuckingrullet.server.security.jwt;
+package fuckingrullet.server.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

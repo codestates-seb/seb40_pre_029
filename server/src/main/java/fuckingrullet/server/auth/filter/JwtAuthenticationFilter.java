@@ -1,9 +1,9 @@
-package fuckingrullet.server.security.jwt;
+package fuckingrullet.server.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fuckingrullet.server.auth.jwt.JwtTokenizer;
 import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.member.dto.MemberLoginDto;
-import fuckingrullet.server.member.repository.MemberRepository;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,8 +22,6 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
-
-    private MemberRepository memberRepository;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
@@ -61,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", member.getEmail());
+        claims.put("username", member.getEmail());
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();
