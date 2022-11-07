@@ -15,6 +15,7 @@ public class QuestionAndAnswerResponseDto {
     private Long questionId;
     private String title;
     private String article;
+    private String questionAuthor;
     private Integer views;
     private MultiResponseDto<AnswerResponseDto> answers;
     private LocalDateTime createAt;
