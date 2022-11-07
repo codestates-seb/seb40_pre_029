@@ -45,6 +45,7 @@ public interface QuestionMapper {
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
         questionResponseDto.setQuestionId(question.getQuestionId());
         questionResponseDto.setMemberId(question.getMemberId());
+        questionResponseDto.setLikeId(question.getLikeId());
         questionResponseDto.setTitle(question.getTitle());
         questionResponseDto.setArticle(question.getArticle());
         questionResponseDto.setQuestionAuthor(question.getQuestionAuthor());

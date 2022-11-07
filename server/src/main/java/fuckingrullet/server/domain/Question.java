@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -18,6 +20,9 @@ public class Question {
 
     @Column(nullable = false, updatable = false) // 처음 작성후 작성자를 체크하기 위해 수정을 금지한다.
     private Long memberId;
+
+    @Column(nullable = false, updatable = false) // 추천 기능은 변경할 수 없다.
+    private Long likeId;
 
     @Column(nullable = false)
     private String questionAuthor;
@@ -61,10 +66,6 @@ public class Question {
 
         QuestionStatus(String status){this.status=status;}
     }
-
-//    @OneToOne
-//    @JoinColumn(name = "RECOMMEND_ID", nullable = false)
-//    private Recommends recommends;
 
     @Column
     private String questionTag;
