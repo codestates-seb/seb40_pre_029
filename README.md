@@ -3,7 +3,8 @@
 </p>
 
 
-![스크린샷 2022-11-07 오후 1 46 00](https://user-images.githubusercontent.com/107447964/200228471-8c288d14-1144-482b-9e22-11f5ddb26b02.png)
+![image](https://user-images.githubusercontent.com/107447964/200229035-1993b2ed-3bb2-48f5-b157-dbdc95f7bf7b.png)
+
 
 
 # 🎰 Team Roulette (feat.29)
