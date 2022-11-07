@@ -5,6 +5,7 @@ import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.domain.Question;
 import fuckingrullet.server.exception.BusinessLogicException;
 import fuckingrullet.server.exception.ExceptionCode;
+import fuckingrullet.server.like.repository.LikeRepository;
 import fuckingrullet.server.member.repository.MemberRepository;
 import fuckingrullet.server.question.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +26,7 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
+    private final LikeRepository likeRepository;
 
     public Question updateQuestion(String email ,Question question){
 

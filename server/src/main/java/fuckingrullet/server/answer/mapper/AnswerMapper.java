@@ -40,6 +40,7 @@ public interface AnswerMapper {
         answerResponseDto.setCreateAt(answer.getCreateAt());
         answerResponseDto.setModifiedAt(answer.getModifiedAt());
         answerResponseDto.setLikes(answer.getLikes());
+        answerResponseDto.setPick(answer.getPick());
 
         return answerResponseDto;
     }
@@ -50,5 +51,5 @@ public interface AnswerMapper {
         answer.setArticle(answerPatchDto.getArticle());
 
         return answer;
-    };
+    }
 }

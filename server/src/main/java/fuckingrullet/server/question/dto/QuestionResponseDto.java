@@ -26,4 +26,5 @@ public class QuestionResponseDto {
     private Question.QuestionStatus questionStatus;
     private String tagName;
     private Long likes;
+    private Boolean pick;
 }

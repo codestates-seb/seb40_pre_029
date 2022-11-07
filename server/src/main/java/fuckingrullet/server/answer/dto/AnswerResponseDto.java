@@ -15,6 +15,7 @@ public class AnswerResponseDto {
     private Long questionId;
     private Long likeId;
     private Long likes;
+    private boolean pick;
 
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;

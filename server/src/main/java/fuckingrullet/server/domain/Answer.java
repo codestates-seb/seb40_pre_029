@@ -44,6 +44,4 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
-    }
-
-
+}

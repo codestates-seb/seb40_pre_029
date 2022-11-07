@@ -7,13 +7,13 @@ import fuckingrullet.server.answer.mapper.AnswerMapper;
 import fuckingrullet.server.answer.service.AnswerService;
 import fuckingrullet.server.domain.Answer;
 import fuckingrullet.server.domain.Likes;
-import fuckingrullet.server.domain.Member;
 import fuckingrullet.server.like.service.LikeService;
 import fuckingrullet.server.member.mapper.MemberMapper;
 import fuckingrullet.server.member.service.MemberService;
 import fuckingrullet.server.question.dto.SingleResponseDto;
 import fuckingrullet.server.question.service.QuestionService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +26,7 @@ import javax.validation.Valid;
 @Validated
 @AllArgsConstructor
 @RestController
+@Log4j2
 @RequestMapping("/api/auth")
 public class AnswerController {
 
@@ -53,6 +54,7 @@ public class AnswerController {
     public ResponseEntity pickAnswer(@AuthenticationPrincipal String email,
                                      @Valid @RequestBody AnswerPickDto.Post post) {
         Answer answer = mapper.answerPickDtoToAnswer(post);
+        log.info("answer answerId = {}", answer.getAnswerId());
         Answer pickAnswer = answerService.pickAnswer(email, answer);
         return ResponseEntity.ok(pickAnswer);
     }

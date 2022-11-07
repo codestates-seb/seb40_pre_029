@@ -57,6 +57,7 @@ public interface QuestionMapper {
         questionResponseDto.setQuestionStatus(question.getQuestionStatus());
         questionResponseDto.setTagName(question.getQuestionTag());
         questionResponseDto.setLikes(question.getLikes());
+        questionResponseDto.setPick(question.getPick());
 
 //        Member member = question.getMember();
         /*questionResponseDto.setMember(memberMapper.memberRegisterDtoToMember(member));*/
@@ -79,6 +80,7 @@ public interface QuestionMapper {
         questionAndAnswerResponseDto.setQuestionStatus(question.getQuestionStatus());
         questionAndAnswerResponseDto.setTagName(question.getQuestionTag());
         questionAndAnswerResponseDto.setLikes(question.getLikes());
+        questionAndAnswerResponseDto.setPick(question.getPick());
 
         try{
             Page<Answer> pageAnswers = answerService.findAnswers(question,answerPage,answerSize,answerSort);
