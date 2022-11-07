@@ -68,7 +68,12 @@ const MyProfile = state => {
       return;
     } else {
       if (pw.nickname !== "" && nicknamepattern.test(pw.nickname)) info.displayName = pw.nickname;
-      else return alert("닉네임이 형식에 맞지 않습니다(한글,영문,숫자 가능)");
+      else {
+        if (pw.nickname !== "") {
+          console.log(pw.nickname);
+          return alert("닉네임이 형식에 맞지 않습니다(한글,영문,숫자 가능)" + pw.nickname);
+        }
+      }
       if (pw.pw !== "") {
         if (pw.pw !== "" && pwpattern.test(pw.pw)) info.password = pw.pw;
         else return alert("비밀번호가 형식에 맞지 않습니다(영문,숫자,특수문자 포함 8-16자)");

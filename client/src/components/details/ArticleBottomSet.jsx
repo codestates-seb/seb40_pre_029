@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function ArticleBottomSet({ answerEditMode, date, nickname, data, idx, setEditData, setAnswerEdit }) {
   const params = useParams();
+
   const navigate = useNavigate();
   const onEditClick = () => {
     if (!answerEditMode) {
