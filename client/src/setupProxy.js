@@ -16,6 +16,8 @@ module.exports = function (app) {
         "/answer/post",
         "/auth/verify",
         "/auth/withdraw",
+        "question",
+        "questions",
       ],
       {
         target: "http://localhost:8080",

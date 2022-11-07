@@ -28,7 +28,7 @@ export default function QuestionList() {
 
   async function getData() {
     if (idOn === 0) {
-      await fetch(`/auth/question?page=${page}`, {
+      await fetch(`/api/auth/question?page=${page}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })

@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Main />}></Route>
           <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/ask" element={<Ask />}></Route>
-          <Route path={`/question/:id`} element={<Question />}></Route>
+          <Route path={`/questions/:id`} element={<Question />}></Route>
           <Route path={`/auth/question/patch/:id`} element={<Edit />}></Route>
           <Route path={`/:searchParams`} element={<SearchResult />}></Route>
         </Routes>

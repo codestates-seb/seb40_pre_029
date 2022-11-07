@@ -16,9 +16,10 @@ export default function Details() {
   //질문 detail fetching
   useEffect(() => {
     setTimeout(() => {
-      fetch(`/auth/question/${params.id}`)
+      fetch(`/api/auth/question/${params.id}`)
         .then(res => res.json())
         .then(data => {
+          console.log(data);
           setData(data.data);
         });
     }, 500);
