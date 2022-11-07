@@ -34,7 +34,7 @@ export default function Details() {
 
   if (data.length === 0) return <Spinner />;
   return (
-    <div className="w-full pt-10 pb-4 mr-8 xl:h-[60rem]">
+    <div className="w-full pt-10 pb-4 mr-8">
       <div className="pl-12 pb-6 border-b border-gray-300">
         <h3 className="text-3xl mb-4 font-medium">{data.title}</h3>
         <div>
