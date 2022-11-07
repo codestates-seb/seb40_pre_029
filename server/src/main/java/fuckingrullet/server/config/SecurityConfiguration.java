@@ -10,6 +10,7 @@ import fuckingrullet.server.auth.jwt.JwtTokenizer;
 import fuckingrullet.server.auth.utils.CustomAuthorityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,7 +55,9 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .antMatchers(HttpMethod.POST,"/api/auth/register", "/api/auth/login").permitAll() // 지정된 URI에서 POST 메서드만 허용
+                        .antMatchers(HttpMethod.GET,"/api/auth/members", "/api/auth/question/**", "/api/auth/question/search/**").permitAll() // 지정된 URI에서 GET 메서드만 허용
+                        .anyRequest().hasRole("USER") // 나머지 모든 요청은 유저 권한이 있어야지 호출할 수 있다.
                 );
         return http.build();
     }
