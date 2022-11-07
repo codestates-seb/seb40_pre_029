@@ -27,10 +27,6 @@ public class Question {
     @Column(nullable = false)
     private String questionAuthor;
 
-//    @OneToOne
-//    @JoinColumn(name = "ANSWER_ID")
-//    private Answer answer;
-
     @Column(nullable = false)
     private String title;
 
@@ -45,6 +41,9 @@ public class Question {
 
     @Column(nullable = false)
     private Integer views;
+
+    @Column
+    private String questionTag;
 
     @Column
     private Integer answern;
