@@ -5,12 +5,15 @@ import NavigationDefault from "../buttons/NavigationDefault.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Navigation() {
-  const navigate = useNavigate();
+  const onClick = () => {
+    const navigate = useNavigate();
+    navigate("/");
+  };
   return (
     <>
       <div className="flex flex-none flex-col justify-between w-48 max-xl:w-64 border-r border-gray-300 pt-4 dark:bg-slate-900 dark:text-gray-400 ">
         <div>
-          <NavigationDefault name="Questions" icon="public" onClick={navigate("/")} />
+          <NavigationDefault name="Questions" icon="public" onClick={onClick} />
           <NavigationDefault name="Users" icon="group" />
           <NavigationDefault name="Companies" icon="apartment" />
           <Dropdown icon="tag" />

@@ -17,7 +17,7 @@ function App() {
           <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/ask" element={<Ask />}></Route>
           <Route path={`/questions/:id`} element={<Question />}></Route>
-          <Route path={`/auth/question/patch/:id`} element={<Edit />}></Route>
+          <Route path={`/question/edit/:id`} element={<Edit />}></Route>
           <Route path={`/:searchParams`} element={<SearchResult />}></Route>
         </Routes>
       </BrowserRouter>
