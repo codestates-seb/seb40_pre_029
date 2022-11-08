@@ -1,15 +1,27 @@
 # 🎰 Team Roulette (feat.29) 
 <br /> <br />
-https://unstackoverflow.nworld.dev/
-## Logo 
 <p align="center">
   <img src="https://i.imgur.com/dU8a9Hw.png">
 </p>
 
-## Stacks
+## 소개
+
+깃 레포지토리에 오신것을 환영합니다.<br />
+저희는 해외 코딩 커뮤니티인 스택오버플로우를 재해석해 클론코딩을 진행 했습니다.
+
+<br /><br />
+### 🔗 프리뷰 사이트(11월 13일 까지) 
+https://unstackoverflow.nworld.dev/
+
+<br /><br />
+### 🎨 서비스 미리보기
+![Screenshot_1](https://user-images.githubusercontent.com/32818386/200546933-c9f826e1-5d8d-4397-8fbf-15201bbd9078.png)
+
+<br /><br />
+## 사용 기술
 ![image](https://user-images.githubusercontent.com/107447964/200229035-1993b2ed-3bb2-48f5-b157-dbdc95f7bf7b.png)
 
-## Functions
+## 구현 기능
 질문 작성<br>
 질문 수정<br>
 질문 삭제<br>
