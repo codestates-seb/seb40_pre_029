@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.OPTIONS).permitAll()
                         .antMatchers(HttpMethod.POST,"/api/auth/register", "/api/auth/login").permitAll() // 지정된 URI에서 POST 메서드만 허용
                         .antMatchers(HttpMethod.GET,"/api/auth/members", "/api/auth/question/**", "/api/auth/question/search/**").permitAll() // 지정된 URI에서 GET 메서드만 허용
                         .anyRequest().hasRole("USER") // 나머지 모든 요청은 유저 권한이 있어야지 호출할 수 있다.
@@ -71,13 +72,14 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://localhost:3000"); // 프론트 접근 주소
-        configuration.addAllowedHeader("*"); // 허용 HTTP 헤더
-        configuration.addAllowedMethod("*"); // 허용 HTTP 메서드
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         // API 주소 명세 -> api/auth/class/methed (api/auth/login)
         return source;
     }
