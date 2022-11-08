@@ -14,8 +14,8 @@ public class AnswerResponseDto {
     private Long memberId;
     private Long questionId;
     private Long likeId;
-    private Long likes;
     private boolean pick;
+    private Long likes;
 
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;

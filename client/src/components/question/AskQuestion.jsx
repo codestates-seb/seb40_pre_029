@@ -29,7 +29,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
       if (question.article.length < 30) {
         window.alert("Body should have minimum 30 characters");
       }
-      setQuestion({ title, article });
+      setQuestion({ title, article, tagName });
       navigate("/");
       window.location.reload();
     } else {
@@ -43,7 +43,7 @@ const AskQuestion = ({ onEditMode, editData }) => {
     if (onEditMode) {
       setQuestion({ title, article: e.target.value, tagName, questionId: editData.questionId });
     } else {
-      setQuestion({ title, article: e.target.value });
+      setQuestion({ title, article: e.target.value, tagName });
     }
   };
 
@@ -63,7 +63,10 @@ const AskQuestion = ({ onEditMode, editData }) => {
         method: "PATCH",
         headers: { "Content-Type": "application/json", authorization: token },
         body: JSON.stringify(question),
-      });
+      })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+      console.log(question);
     }
   };
 

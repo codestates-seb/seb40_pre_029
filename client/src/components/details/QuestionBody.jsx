@@ -1,5 +1,4 @@
 import ArticleBottomSet from "./ArticleBottomSet.jsx";
-//BACKEND Tag 구현되면 추가해야함 지금 하드코딩 상태
 export default function QuestionBody({ data }) {
   const getParsedDate = createdAt => {
     return new Date(createdAt).toLocaleDateString("ko-KR");

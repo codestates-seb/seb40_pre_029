@@ -46,16 +46,18 @@ public class QuestionController {
                                        @Valid @RequestBody QuestionPostDto questionPostDto){
         Likes likes = likeService.createLikes(email);
         Question question = questionService.createQuestion(email, likes,mapper.questionPostDtoToQuestion(questionPostDto));
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.CREATED);
+        Long likesData = likeService.findLikesData(question.getLikeId());
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question, likesData)),HttpStatus.CREATED);
     }
 
     @PatchMapping("/question") // 로그인 제외
     public ResponseEntity patchQuestion(@AuthenticationPrincipal String email,
                                         @Valid @RequestBody QuestionPatchDto questionPatchDto){
-        Question question = mapper.questionPatchDtoToQuestion(questionService, questionPatchDto);
+        Question question = mapper.questionPatchDtoToQuestion(questionPatchDto);
         Question updateQuestion = questionService.updateQuestion(email, question);
+        Long likesData = likeService.findLikesData(updateQuestion.getLikeId());
 
-        return new ResponseEntity<>(updateQuestion,HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(updateQuestion, likesData)),HttpStatus.OK);
     }
 
     @GetMapping("/question") //수정필요(dto추가)
@@ -74,8 +76,9 @@ public class QuestionController {
                                       @Positive @RequestParam(value = "size" , defaultValue = "50") int answerSize,
                                       @RequestParam(value = "sort", defaultValue = "createAt") String answerSort){
         Question question = questionService.findQuestion(questionId);
+        Long likesData = likeService.findLikesData(question.getLikeId());
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionAndAnswerResponseDto(
-                answerService, answerMapper,/*memberMapper,*/question,answerPage,answerSize,answerSort)),HttpStatus.OK);
+                answerService, answerMapper, likesData,/*memberMapper,*/question,answerPage,answerSize,answerSort)),HttpStatus.OK);
     }
 
     @GetMapping("/question/search")

@@ -17,6 +17,7 @@ public class QuestionResponseDto {
     private String article;
     private String questionAuthor;
     private int views;
+    private Long likes;
     /*private MemberRegisterDto member;*/
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
@@ -25,6 +26,5 @@ public class QuestionResponseDto {
     private int answern;
     private Question.QuestionStatus questionStatus;
     private String tagName;
-    private Long likes;
     private Boolean pick;
 }

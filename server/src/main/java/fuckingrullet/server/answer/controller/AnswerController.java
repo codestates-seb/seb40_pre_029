@@ -46,15 +46,15 @@ public class AnswerController {
         Likes likes = likeService.createLikes(email);
         Answer answer = answerService.createAnswer(email, likes,
                 mapper.answerPostDtoToAnswer(questionService, memberService, answerPostDto));
+        Long likeNuM = likeService.findLikesData(answer.getAnswerId());
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer, likeNuM)), HttpStatus.CREATED);
     }
 
     @PostMapping("/answer/pick")
     public ResponseEntity pickAnswer(@AuthenticationPrincipal String email,
                                      @Valid @RequestBody AnswerPickDto.Post post) {
         Answer answer = mapper.answerPickDtoToAnswer(post);
-        log.info("answer answerId = {}", answer.getAnswerId());
         Answer pickAnswer = answerService.pickAnswer(email, answer);
         return ResponseEntity.ok(pickAnswer);
     }
@@ -64,7 +64,10 @@ public class AnswerController {
                                       @Valid @RequestBody AnswerPatchDto answerPatchDto) {
         Answer answer = mapper.answerPatchDtoToAnswer(answerService, answerPatchDto);
         Answer updateAnswer = answerService.updateAnswer(email ,answer);
-        return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updateAnswer));
+
+        Long likeNuM = likeService.findLikesData(updateAnswer.getAnswerId());
+
+        return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updateAnswer, likeNuM));
     }
 
     @DeleteMapping("/answer/delete")

@@ -24,9 +24,6 @@ public class Answer {
     @Column(nullable = false, updatable = false) // 추천 기능은 변경할 수 없다.
     private Long likeId;
 
-    @Column
-    private Long likes;
-
     @Column(nullable = false)
     private String answerAuthor;
 

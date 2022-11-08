@@ -2,10 +2,19 @@ import ProfileCard from "./ProfileCard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function ArticleBottomSet({ answerEditMode, date, nickname, data, idx, setEditData, setAnswerEdit }) {
+export default function ArticleBottomSet({
+  pick,
+  answerEditMode,
+  date,
+  nickname,
+  data,
+  idx,
+  setEditData,
+  setAnswerEdit,
+  setPick,
+}) {
   const params = useParams();
   const token = useSelector(state => state.authorization);
-
   const navigate = useNavigate();
   const onEditClick = () => {
     if (!answerEditMode) {
@@ -33,12 +42,31 @@ export default function ArticleBottomSet({ answerEditMode, date, nickname, data,
       del.json().then(navigate("/"));
     }
   };
+  const pickOnclick = async e => {
+    const pickData = data.answers.data[e.target.value];
+    const pickAnswer = await fetch(`/api/auth/answer/pick`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: JSON.stringify({
+        answerId: pickData.answerId,
+      }),
+    });
+    let res = pickAnswer;
+    if (!res.ok && res.status === 400) {
+      window.alert("Only author can pick answer!");
+    } else if (!res.ok && res.status === 409) {
+      window.alert("You already picked an answer");
+    }
+    setPick(pickData.pick);
+  };
 
   return (
     <>
       <div className="my-4 flex justify-between">
         <div>
-          <span className="text-slate-500 mr-2">Share</span>
+          <button onClick={pickOnclick} value={idx} className="text-slate-500 mr-2">
+            {pick}
+          </button>
           <button onClick={onEditClick} value={idx} className="text-slate-500 mr-2">
             Edit
           </button>

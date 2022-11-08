@@ -17,6 +17,8 @@ public class QuestionAndAnswerResponseDto {
     private String article;
     private String questionAuthor;
     private Integer views;
+    private Long likeId;
+    private Long likes;
     private MultiResponseDto<AnswerResponseDto> answers;
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
@@ -26,6 +28,5 @@ public class QuestionAndAnswerResponseDto {
 
     private Question.QuestionStatus questionStatus;
     private String tagName;
-    private Long likes;
     private boolean pick;
 }
