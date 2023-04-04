@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fuckingrullet'
-version = '1.1.8-Relese' // 정식 버전 선언.
+version = '1.1.9-Relese' // 정식 버전 선언.
 sourceCompatibility = '11'
 
 configurations {
