@@ -20,7 +20,7 @@ module.exports = function (app) {
         "questions",
       ],
       {
-        target: "http://localhost:8080",
+        target: "http://localhost:8086",
         changeOrigin: true,
       },
     ),
