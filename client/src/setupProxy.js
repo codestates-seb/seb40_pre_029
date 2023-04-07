@@ -20,7 +20,7 @@ module.exports = function (app) {
         "questions",
       ],
       {
-        target: "https://unstackoverflow.nworld.dev",
+        target: "http://localhost:8086",
         changeOrigin: true,
       },
     ),
